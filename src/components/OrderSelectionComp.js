@@ -49,6 +49,9 @@ export const OrderSelectionComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
+    /*
+  Inner Components
+  */
     const showProcessConfirmDialog = () => {
         confirmDialog({
             message: "Seguro desea procesar..",
@@ -61,10 +64,6 @@ export const OrderSelectionComp = observer((props) => {
             rejectIcon: "pi pi-times",
         });
     };
-
-    /*
-  Options
-  */
 
     /*
   Return

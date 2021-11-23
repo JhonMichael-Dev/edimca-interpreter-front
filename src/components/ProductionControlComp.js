@@ -71,25 +71,12 @@ export const ProductionControlComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const showMess = (message, severity) => {
+    const showMessage = (message, severity) => {
         growl.current.show({
             severity: severity,
             summary: "",
             detail: message,
             life: (message.length / 10) * 1000,
-        });
-    };
-
-    const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar un nuevo estado de cuenta (An8: " + selStore.jdeAn8 + " y Fecha: " + selDateTo.format("YYYY-MM-DD") + ") ?",
-            header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
-            accept: () => handleProcess(selStore),
-            reject: () => setVisible(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
         });
     };
 
@@ -103,7 +90,7 @@ export const ProductionControlComp = observer((props) => {
     return (
         <>
             <Toast ref={growl} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} />
+            <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
         </>
     );
 });
