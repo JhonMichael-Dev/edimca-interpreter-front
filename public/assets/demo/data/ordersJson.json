@@ -1,0 +1,74 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 123.12,
+                "status": "SERVICIOS_PENDIENTES",
+                "lstOrderDetail": [
+                    {
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 25.8,
+                        "status": "SERVICIO_FINALIZADO",
+                        "userpos": "GMERA"
+                    },
+                    {
+                        "product": {
+                            "code": "SERRUTS0023",
+                            "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                            "jdeId": 17767,
+                            "serviceType": "RUTEADO"
+                        },
+                        "quantity": 12.3,
+                        "status": "SERVICIO_EN_PROCESO",
+                        "userpos": "GMERA"
+                    },
+                    {
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 4,
+                        "status": "SERVICIO_EN_PAUSA",
+                        "userpos": "GMERA"
+                    },
+                    {
+                        "product": {
+                            "code": "SERECTS0004",
+                            "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
+                            "jdeId": 6285,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 8,
+                        "status": "SERVICIO_PENDIENTE",
+                        "userpos": null
+                    }
+                ]
+            }
+        ]
+    }
+}

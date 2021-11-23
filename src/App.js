@@ -9,6 +9,7 @@ import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
 
 import { Dashboard } from "./components/Dashboard";
+import { ProductionControlPage } from "./pages/ProductionControlPage";
 
 import { Crud } from "./pages/Crud";
 
@@ -21,6 +22,12 @@ import "prismjs/themes/prism-coy.css";
 import "./layout/flags/flags.css";
 import "./layout/layout.scss";
 import "./App.scss";
+
+/*
+Theme
+*/
+import "primereact/resources/themes/saga-orange/theme.css"; // + secondary button pink
+//import "primereact/resources/themes/mdc-light-indigo/theme.css"; // + secondary button pink
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -126,11 +133,11 @@ const App = () => {
 
     const menu = [
         {
-            label: "Home",
+            label: "Menú",
             items: [
                 {
-                    label: "Dashboard",
-                    icon: "pi pi-fw pi-home",
+                    label: "Control de producción",
+                    icon: "pi pi-fw pi-th-large",
                     to: "/",
                 },
             ],
@@ -269,7 +276,7 @@ const App = () => {
 
             <div className="layout-main-container">
                 <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
+                    <Route path="/" exact component={ProductionControlPage} />
                     {/*                 
                     <Route path="/formlayout" component={FormLayoutDemo} />
                     <Route path="/input" component={InputDemo} />

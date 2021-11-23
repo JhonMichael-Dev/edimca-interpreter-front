@@ -12,7 +12,7 @@ import UserPosDataService from "./service/UserPosDataService";
 // import PDFDataService from "./service/PDFDataService";
 // import printJS from "print-js";
 
-class PosStore {
+class DataStore {
     user = null;
     history = null;
     customer = null;
@@ -762,7 +762,7 @@ class PosStore {
     };
 }
 
-export default decorate(new PosStore(), {
+export default decorate(new DataStore(), {
     user: [persist("object"), observable],
     cashFront: [persist("object"), observable],
     // history: [observable],

@@ -1,0 +1,38 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "mcu": "2CM00101",
+                "name": "BODEGA FISICA MATRIZ QUITO",
+                "jdeCode": "124",
+                "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                "businessUnit": {
+                    "code": "BD",
+                    "description1": "Bodega"
+                }
+            },
+            {
+                "mcu": "2CM00601",
+                "name": "BODEGA FISICA TUMBACO",
+                "jdeCode": "154",
+                "address1": "AV.INTEROCEANICA S/N Y ELOY ALFARO",
+                "businessUnit": {
+                    "code": "BD",
+                    "description1": "Bodega"
+                }
+            },
+            {
+                "mcu": "2CM01401",
+                "name": "BODEGA FISICA J. GOMEZ GAULT  ",
+                "jdeCode": "203",
+                "address1": "JOSE GOMEZ GAULT 105-107",
+                "businessUnit": {
+                    "code": "BD",
+                    "description1": "Bodega"
+                }
+            }
+        ]
+    }
+}
