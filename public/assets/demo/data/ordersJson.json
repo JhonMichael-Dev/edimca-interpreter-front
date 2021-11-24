@@ -4,6 +4,7 @@
         "log": null,
         "obj": [
             {
+                "jdeOrderId": 12345,
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -21,7 +22,7 @@
                     }
                 },
                 "total": 123.12,
-                "status": "SERVICIOS_PENDIENTES",
+                "status": "SERVICIOS_EN_PROCESO",
                 "lstOrderDetail": [
                     {
                         "product": {
@@ -64,6 +65,51 @@
                             "serviceType": "ENCHAPE"
                         },
                         "quantity": 8,
+                        "status": "SERVICIO_PENDIENTE",
+                        "userpos": null
+                    }
+                ]
+            },
+            {
+                "jdeOrderId": 12346,
+                "client": {
+                    "jdeAn8": 2032,
+                    "identification": "1717463151",
+                    "firstName": "Marcia de las Mercedes",
+                    "lastName": "Flor Peralta"
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 183.88,
+                "status": "SERVICIOS_PENDIENTES",
+                "lstOrderDetail": [
+                    {
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 8,
+                        "status": "SERVICIO_PENDIENTE",
+                        "userpos": "null"
+                    },
+                    {
+                        "product": {
+                            "code": "SERECTS0004",
+                            "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
+                            "jdeId": 6285,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 16,
                         "status": "SERVICIO_PENDIENTE",
                         "userpos": null
                     }

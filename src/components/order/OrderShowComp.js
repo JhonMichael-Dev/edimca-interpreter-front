@@ -7,9 +7,9 @@ import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 // Services
-import StoreDataService from "../service/StoreDataService";
+//import OrderDataService from "../service/OrderDataService";
 
-export const OrderSelectionComp = observer((props) => {
+export const OrderShowComp = observer((props) => {
     /*
   Variables
   */
@@ -34,20 +34,13 @@ export const OrderSelectionComp = observer((props) => {
     /*
   Methods
   */
-    const loadAvailables = () => {
-        handleQueryOrders();
-    };
-
-    const handleQueryOrders = () => {
-        StoreDataService.queryStores().then((valid) => {
-            console.log("handleQueryStores:", valid);
-            if (valid.data && valid.data.success) {
-                setLstOrders(valid.data.obj);
-            }
-        });
-    };
+    const loadAvailables = () => {};
 
     const handleProcess = (ev) => {};
+
+    const handleSelectOrderHeader = (ev) => {
+        console.log("handleSelectOrderHeader", ev);
+    };
 
     /*
   Inner Components
@@ -69,16 +62,11 @@ export const OrderSelectionComp = observer((props) => {
   Return
   */
     return (
-        <>
-            {!props.rendered ? (
-                ""
-            ) : (
-                <Card title="Lista de órdenes pendientes" style={{ width: "100%", marginBottom: "2em" }}>
-                    <p className="p-m-0" style={{ lineHeight: "1.5" }}>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-                    </p>
-                </Card>
-            )}
-        </>
+        <div onClick={(ev) => handleSelectOrderHeader(props.selOrder)} className="p-grid">
+            <div className="p-fluid p-grid" style={{ marginBottom: "1em" }}>
+                <div className="p-field p-col-5 p-md-2">Hola</div>
+                <div className="p-field p-col-5 p-md-3">Cómo estás</div>
+            </div>
+        </div>
     );
 });

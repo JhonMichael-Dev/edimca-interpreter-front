@@ -109,9 +109,9 @@ export const Dashboard = () => {
             <div className="col-12 xl:col-6">
                 <div className="card">
                     <h5>Recent Sales</h5>
-                    <DataTable value={products} className="p-datatable-customers" rows={5} paginator>
+                    <DataTable value={products} className="p-datatable-customers" rows={5} paginator columnResizeMode="fit">
                         <Column header="Image" body={(data) => <img src={`assets/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
-                        <Column field="name" header="Name" sortable />
+                        <Column field="name" header="Name" sortable style={{ innerHeight: "189" }} />
                         <Column field="price" header="Price" sortable body={(data) => formatCurrency(data.price)} />
                         <Column
                             header="View"
