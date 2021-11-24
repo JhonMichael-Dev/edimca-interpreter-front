@@ -59,11 +59,13 @@ export const StoreSelectionComp = observer((props) => {
 
     const handleQueryStore = () => {
         StoreDataService.queryStores().then((valid) => {
-            valid.obj.map((storeX) => {
-                setLstStoreData((oldArray) => [storeX, ...oldArray]);
-            });
-            if (valid.obj && valid.success) {
-                let datax = valid.obj.map((storeX) => {
+            console.log("handleQueryStore", valid);
+            if (valid.data && valid.data.success) {
+                valid.data.obj.map((storeX) => {
+                    setLstStoreData((oldArray) => [storeX, ...oldArray]);
+                });
+
+                let datax = valid.data.obj.map((storeX) => {
                     return {
                         label: storeX.mcu + " - " + storeX.name,
                         value: storeX.mcu,
@@ -99,6 +101,7 @@ export const StoreSelectionComp = observer((props) => {
 
     const onSelecStoreTbl = (e) => {
         selDlgPassword(true);
+        props.handleSelectStore(e);
     };
     const onHide = () => {
         selDlgPassword(false);
