@@ -136,9 +136,14 @@ const App = () => {
             label: "Menú",
             items: [
                 {
+                    label: "Dashboard",
+                    icon: "pi pi-fw pi-home",
+                    to: "/",
+                },
+                {
                     label: "Control de producción",
                     icon: "pi pi-fw pi-th-large",
-                    to: "/",
+                    to: "/productionControl",
                 },
             ],
         },
@@ -276,7 +281,8 @@ const App = () => {
 
             <div className="layout-main-container">
                 <div className="layout-main">
-                    <Route path="/" exact component={ProductionControlPage} />
+                    <Route path="/" exact component={Dashboard} />
+                    <Route path="/productionControl" exact component={ProductionControlPage} />
                     {/*                 
                     <Route path="/formlayout" component={FormLayoutDemo} />
                     <Route path="/input" component={InputDemo} />
