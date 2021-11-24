@@ -6,7 +6,7 @@ import { Badge } from "primereact/badge";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 // Images
-import iconLostSale from "../../images/ruteadoIcon.png";
+//import iconLostSale from "../../images/ruteadoIcon.png";
 
 // Services
 //import OrderDataService from "../service/OrderDataService";

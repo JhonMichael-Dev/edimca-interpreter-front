@@ -43,9 +43,13 @@ export const Dashboard = () => {
         return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
     };
 
+    const onEnvClick = (e) => {
+        console.log(e);
+    };
+
     return (
         <div className="grid">
-            <div className="col-12 lg:col-6 xl:col-3">
+            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClick(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>

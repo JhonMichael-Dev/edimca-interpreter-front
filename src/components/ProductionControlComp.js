@@ -10,6 +10,10 @@ import { Toast } from "primereact/toast";
 import moment from "moment";
 
 // Own components
+//import { OrderSelectionComp } from "./OrderSelectionComp";
+import { Dashboard } from "./Dashboard";
+import { StoreSelectionComp } from "./StoreSelectionComp";
+import { PasswordOperationComp } from "./PasswordOperationComp";
 import { OrderLstComp } from "./order/OrderLstComp";
 
 // Services
@@ -65,10 +69,14 @@ export const ProductionControlComp = observer((props) => {
             console.log("handleQueryStores:", valid);
             if (valid.data && valid.data.success) {
                 setLstStores(valid.data.obj);
-                setSelStore(valid.data.obj[0]);
+                //setSelStore(valid.data.obj[0]);
                 console.log("valid.data.obj[0]", valid.data.obj[0]);
             }
         });
+    };
+
+    const handleSelectStore = (ev) => {
+        setSelStore(ev);
     };
 
     const handleProcess = (ev) => {};
@@ -93,6 +101,10 @@ export const ProductionControlComp = observer((props) => {
     return (
         <div className="p-fluid p-grid">
             <Toast ref={growl} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {/*             <Dashboard DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
+            <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
+            <StoreSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
+            {/*           <PasswordOperationComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
             {orderLstComp}
         </div>
     );
