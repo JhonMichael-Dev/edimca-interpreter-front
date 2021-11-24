@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 
 // Prime components
 import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 
 // Services
 import StoreDataService from "../service/StoreDataService";

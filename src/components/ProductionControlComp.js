@@ -11,7 +11,9 @@ import moment from "moment";
 
 // Own components
 import { OrderSelectionComp } from "./OrderSelectionComp";
-
+import { Dashboard } from "./Dashboard";
+import { StoreSelectionComp } from "./StoreSelectionComp";
+import { PasswordOperationComp } from "./PasswordOperationComp";
 // Services
 import StoreDataService from "../service/StoreDataService";
 
@@ -90,7 +92,10 @@ export const ProductionControlComp = observer((props) => {
     return (
         <>
             <Toast ref={growl} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
+            {/*             <Dashboard DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
+            <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
+            <StoreSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
+            {/*           <PasswordOperationComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
         </>
     );
 });
