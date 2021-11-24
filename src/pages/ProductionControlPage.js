@@ -5,6 +5,7 @@ import { computed } from "mobx";
 
 import { ProductionControlComp } from "../components/ProductionControlComp";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 //import { InputFloatLabel } from "../components/InputFloatLabel";
 
 export class ProductionControlPage extends Component {

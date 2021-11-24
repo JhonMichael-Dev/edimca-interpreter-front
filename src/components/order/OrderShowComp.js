@@ -62,10 +62,10 @@ export const OrderShowComp = observer((props) => {
   Return
   */
     return (
-        <div onClick={(ev) => handleSelectOrderHeader(props.selOrder)} className="p-grid">
-            <div className="p-fluid p-grid" style={{ marginBottom: "1em" }}>
-                <div className="p-field p-col-5 p-md-2">Hola</div>
-                <div className="p-field p-col-5 p-md-3">Cómo estás</div>
+        <div onClick={(ev) => handleSelectOrderHeader(props.selOrder)} className="grid" style={{ width: "90vw" }}>
+            <div className="grid" style={{ marginBottom: "1em" }}>
+                <div className="col-12 lg:col-6 xl:col-4">Hola</div>
+                <div className="col-12 lg:col-6 xl:col-3">Cómo estás</div>
             </div>
         </div>
     );

@@ -5,6 +5,7 @@
         "obj": [
             {
                 "jdeOrderId": 12345,
+                "jdeOrderType": { "code": "VM" },
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -22,7 +23,7 @@
                     }
                 },
                 "total": 123.12,
-                "status": "SERVICIOS_EN_PROCESO",
+                "status": "EN_PROCESO",
                 "lstOrderDetail": [
                     {
                         "product": {
@@ -32,7 +33,7 @@
                             "serviceType": "CORTE"
                         },
                         "quantity": 25.8,
-                        "status": "SERVICIO_FINALIZADO",
+                        "status": "SERVICIO_COMPLETADO",
                         "userpos": "GMERA"
                     },
                     {
@@ -72,6 +73,7 @@
             },
             {
                 "jdeOrderId": 12346,
+                "jdeOrderType": { "code": "VM" },
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -89,7 +91,7 @@
                     }
                 },
                 "total": 183.88,
-                "status": "SERVICIOS_PENDIENTES",
+                "status": "PENDIENTE",
                 "lstOrderDetail": [
                     {
                         "product": {
@@ -100,7 +102,7 @@
                         },
                         "quantity": 8,
                         "status": "SERVICIO_PENDIENTE",
-                        "userpos": "null"
+                        "userpos": null
                     },
                     {
                         "product": {
@@ -112,6 +114,52 @@
                         "quantity": 16,
                         "status": "SERVICIO_PENDIENTE",
                         "userpos": null
+                    }
+                ]
+            },
+            {
+                "jdeOrderId": 12347,
+                "jdeOrderType": { "code": "VM" },
+                "client": {
+                    "jdeAn8": 2034,
+                    "identification": "1717463152",
+                    "firstName": "Susana",
+                    "lastName": "Flor Peralta"
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 183.88,
+                "status": "COMPLETADO",
+                "lstOrderDetail": [
+                    {
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 8,
+                        "status": "SERVICIO_COMPLETADO",
+                        "userpos": "GMERA"
+                    },
+                    {
+                        "product": {
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
+                            "jdeId": 6285,
+                            "serviceType": "PERFORADO"
+                        },
+                        "quantity": 16,
+                        "status": "SERVICIO_COMPLETADO",
+                        "userpos": "GMERA"
                     }
                 ]
             }
