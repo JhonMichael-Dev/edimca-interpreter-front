@@ -7,6 +7,7 @@ import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
 import { Checkbox } from "primereact/checkbox";
+import { SelectButton } from "primereact/selectbutton";
 
 // Services
 import OrderDataService from "../../service/OrderDataService";
@@ -23,6 +24,8 @@ export const OrderLstComp = observer((props) => {
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const [lstOrders, setLstOrders] = useState([]);
+    const dt = useRef(null);
+    const [selOrder, setSelOrder] = useState(null);
 
     /*
   Init
@@ -43,22 +46,40 @@ export const OrderLstComp = observer((props) => {
   Methods
   */
     const loadAvailables = () => {
-        handleQueryOrders();
+        handleQueryOrders(onlyPendingOrders);
     };
 
-    const handleQueryOrders = () => {
+    const handleQueryOrders = (onlyPendingOrders) => {
+        let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
         console.log("props.selStore", props.selStore);
         if (props.selStore) {
+            props.setLoading(true);
             OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
                 console.log("handleQueryOrders:", valid);
                 if (valid.data && valid.data.success) {
-                    setLstOrders(valid.data.obj);
+                    let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
+                    //setLstOrders(valid.data.obj);
+                    setLstOrders(lstFiltered);
                 }
+                props.setLoading(false);
             });
         }
     };
 
+    const handleFilterOrders = (ev) => {
+        handleQueryOrders(ev);
+        setOnlyPendingOrders(ev);
+    };
+
     const handleProcess = (ev) => {};
+
+    const onRowSelect = (event) => {
+        props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
+    };
+
+    const onRowUnselect = (event) => {
+        props.showMessage({ severity: "warn", summary: "Product Unselected", message: `Name: ${event.data.name}`, life: 3000 });
+    };
 
     /*
   Inner Components
@@ -99,7 +120,11 @@ export const OrderLstComp = observer((props) => {
             : "";
 
     let orderServicesIconResumeComp = (rowData) => {
-        return <OrderServicesIconResumeComp selOrder={rowData} />;
+        return (
+            <div key={rowData.jdeOrderId}>
+                <OrderServicesIconResumeComp selOrder={rowData} />
+            </div>
+        );
     };
 
     let clientComp = (rowData) => {
@@ -120,7 +145,7 @@ export const OrderLstComp = observer((props) => {
 
     let statusComp = (rowData) => {
         return (
-            <Button className={"p-button-rounded p-button-" + (rowData.status !== "COMPLETADO" ? "warning" : "info")} style={{ fontWeight: "bold", fontSize: 12 }}>
+            <Button className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
                 {rowData.status}
             </Button>
         );
@@ -128,7 +153,7 @@ export const OrderLstComp = observer((props) => {
 
     let orderShowCompV2 =
         lstOrders && lstOrders.length > 0 ? (
-            <DataTable value={lstOrders} header={""} footer={""} responsiveLayout="scroll">
+            <DataTable value={lstOrders} selectionMode="single" selection={selOrder} onSelectionChange={(e) => setSelOrder(e.value)} onRowSelect={onRowSelect} onRowUnselect={onRowUnselect} dataKey="jdeOrderId" ref={dt} header={""} footer={""} responsiveLayout="scroll">
                 <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "150px" }} sortable sortField="jdeOrderType.code"></Column>
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "150px" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
@@ -146,8 +171,9 @@ export const OrderLstComp = observer((props) => {
         <div className="p-fluid grid col-12 lg:col-12 xl:col-12">
             <Card title="Lista de órdenes pendientes">
                 <div>{/*orderShowComp*/}</div>
-                <ToggleButton checked={onlyPendingOrders} onChange={(e) => setOnlyPendingOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Todas las ordenes" onIcon="pi pi-check" offIcon="pi pi-times" style={{ width: "15em" }} />
-                <div>{orderShowCompV2}</div>
+                <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "4em" }} />
+
+                <div style={{ paddingTop: "20px" }}>{orderShowCompV2}</div>
             </Card>
         </div>
     );

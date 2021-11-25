@@ -51,7 +51,7 @@ export const OrderServicesIconResumeComp = observer((props) => {
             selOrder.lstOrderDetail.map((detX) => {
                 let keyX = detX.product.serviceType;
                 //console.log("keyX", keyX);
-                let isPending = detX.status !== "SERVICIO_COMPLETADO";
+                let isPending = detX.status !== "COMPLETADO";
                 //console.log("isPending", isPending);
                 let objectX = mapServicesAux.get(keyX);
                 let countX = objectX ? objectX : 0;

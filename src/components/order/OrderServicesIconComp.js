@@ -64,10 +64,11 @@ export const OrderServicesIconComp = observer((props) => {
   Return
   */
     return (
-        <div className="card" style={{ width: "100px" }} title={props.serviceType}>
+        <div className="card" style={{ width: "100px", textAlign: "center" }} title={props.serviceType}>
             <i className="p-overlay-badge">
                 <img src={"/assets/images/serviceType_" + props.serviceType + ".png"} className="pos-edimca-button-noLabel" style={{ width: "40px", height: "40px" }}></img>
-                <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "info"}></Badge>
+                <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge>
+                <div style={{ fontSize: 10 }}> {props.serviceType}</div>
             </i>
         </div>
     );

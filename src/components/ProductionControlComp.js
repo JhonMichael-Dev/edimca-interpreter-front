@@ -18,17 +18,20 @@ import { OrderLstComp } from "./order/OrderLstComp";
 
 // Services
 import StoreDataService from "../service/StoreDataService";
+import { Dialog } from "primereact/dialog";
 
 export const ProductionControlComp = observer((props) => {
     /*
   Variables
   */
     const [selStore, setSelStore] = useState(null);
+
     const [lstStores, setLstStores] = useState([]);
     const [selDateTo, setSelDateTo] = useState(moment().set({ hour: 23, minute: 59, second: 59, millisecond: 0 }));
-    const growl = useRef(null);
+    const toast = useRef(null);
     const dt = useRef(null);
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     /*
   Init
@@ -81,31 +84,54 @@ export const ProductionControlComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const showMessage = (message, severity) => {
-        growl.current.show({
-            severity: severity,
-            summary: "",
-            detail: message,
-            life: (message.length / 10) * 1000,
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
         });
     };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+
+        setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
 
     /*
   Inner components
   */
-    let orderLstComp = selStore ? <OrderLstComp DataStore={props.DataStore} selStore={selStore} showMessage={(ev) => showMessage(ev)} /> : "";
+    let orderLstComp = selStore ? <OrderLstComp DataStore={props.DataStore} selStore={selStore} showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} /> : "";
 
     /*
   Return
   */
     return (
         <div className="p-fluid p-grid">
-            <Toast ref={growl} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
             {/*             <Dashboard DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} />
             <OrderSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
             <StoreSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
             {/*           <PasswordOperationComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} /> */}
             {orderLstComp}
+            <Dialog
+                header="Procesando.."
+                visible={loading}
+                onHide={(ev) => setLoading(false)}
+                style={{
+                    width: "200px",
+                    textAlign: "center",
+                }}
+                closable
+                resizable={false}
+            >
+                <img src={"/assets/images/loader2.gif"} className="pos-edimca-button-noLabel" style={{ width: "140px", height: "90px" }}></img>
+            </Dialog>
         </div>
     );
 });
