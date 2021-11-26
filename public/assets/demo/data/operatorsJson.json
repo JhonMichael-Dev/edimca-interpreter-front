@@ -1,0 +1,17 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "store": { "mcu": "2CM00101" },
+                "operators": [
+                    { "username": "ACANGA", "abilities": ["CORTE", "ENCHAPE"] },
+                    { "username": "GMERA", "abilities": ["RUTEADO"] },
+                    { "username": "PGUTIERREZ", "abilities": ["ENCHAPE"] },
+                    { "username": "GPACHACAMA", "abilities": ["PERFORADO"] }
+                ]
+            }
+        ]
+    }
+}

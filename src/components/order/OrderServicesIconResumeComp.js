@@ -70,9 +70,10 @@ export const OrderServicesIconResumeComp = observer((props) => {
         mapServices && mapServices.size > 0
             ? [...mapServices.keys()].map((keyX) => {
                   //console.log("keyX", keyX);
+                  let valueX = mapServices.get(keyX);
                   return (
                       <div key={keyX} className="grid">
-                          <OrderServicesIconComp serviceType={keyX} badgeNumber={mapServices.get(keyX)} />
+                          <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} />
                       </div>
                   );
               })

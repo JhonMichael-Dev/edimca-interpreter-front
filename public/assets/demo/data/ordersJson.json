@@ -6,6 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "NORMAL" },
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -26,6 +27,7 @@
                 "status": "EN_PROCESO",
                 "lstOrderDetail": [
                     {
+                        "idOrderDetail": 1,
                         "product": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -34,9 +36,10 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
-                        "userpos": "GMERA"
+                        "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
+                        "idOrderDetail": 2,
                         "product": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
@@ -45,9 +48,10 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
-                        "userpos": "GMERA"
+                        "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
+                        "idOrderDetail": 3,
                         "product": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -56,9 +60,10 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
-                        "userpos": "GMERA"
+                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
                     {
+                        "idOrderDetail": 4,
                         "product": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -74,6 +79,7 @@
             {
                 "jdeOrderId": 12346,
                 "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "EXPRESS" },
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -94,6 +100,7 @@
                 "status": "PENDIENTE",
                 "lstOrderDetail": [
                     {
+                        "idOrderDetail": 5,
                         "product": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -105,6 +112,7 @@
                         "userpos": null
                     },
                     {
+                        "idOrderDetail": 6,
                         "product": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -120,6 +128,7 @@
             {
                 "jdeOrderId": 12347,
                 "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "NORMAL" },
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -140,6 +149,7 @@
                 "status": "COMPLETADO",
                 "lstOrderDetail": [
                     {
+                        "idOrderDetail": 7,
                         "product": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -148,9 +158,10 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
-                        "userpos": "GMERA"
+                        "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
+                        "idOrderDetail": 8,
                         "product": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -159,7 +170,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
-                        "userpos": "GMERA"
+                        "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
             }

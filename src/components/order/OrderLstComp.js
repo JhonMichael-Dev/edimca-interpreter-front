@@ -17,6 +17,7 @@ import { OrderServicesIconResumeComp } from "./OrderServicesIconResumeComp";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { OrderLstDetailComp } from "./OrderLstDetailComp";
 
 export const OrderLstComp = observer((props) => {
     /*
@@ -74,11 +75,11 @@ export const OrderLstComp = observer((props) => {
     const handleProcess = (ev) => {};
 
     const onRowSelect = (event) => {
-        props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
+        //props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
     };
 
     const onRowUnselect = (event) => {
-        props.showMessage({ severity: "warn", summary: "Product Unselected", message: `Name: ${event.data.name}`, life: 3000 });
+        //props.showMessage({ severity: "warn", summary: "Product Unselected", message: `Name: ${event.data.name}`, life: 3000 });
     };
 
     /*
@@ -143,6 +144,11 @@ export const OrderLstComp = observer((props) => {
         );
     };
 
+    let priorityComp = (rowData) => {
+        let _color = rowData.priority && rowData.priority.code === "EXPRESS" ? "darkmagenta" : "";
+        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority.code}</div>;
+    };
+
     let statusComp = (rowData) => {
         return (
             <Button className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
@@ -151,29 +157,58 @@ export const OrderLstComp = observer((props) => {
         );
     };
 
+    let rowClass = (data) => {
+        //console.log("data111");
+        //console.log(data);
+        return {
+            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EXPRESS",
+        };
+    };
+
     let orderShowCompV2 =
         lstOrders && lstOrders.length > 0 ? (
-            <DataTable value={lstOrders} selectionMode="single" selection={selOrder} onSelectionChange={(e) => setSelOrder(e.value)} onRowSelect={onRowSelect} onRowUnselect={onRowUnselect} dataKey="jdeOrderId" ref={dt} header={""} footer={""} responsiveLayout="scroll">
-                <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "150px" }} sortable sortField="jdeOrderType.code"></Column>
-                <Column header="Num. orden" field="jdeOrderId" style={{ width: "150px" }} sortable sortField="jdeOrderId"></Column>
+            <DataTable
+                value={lstOrders}
+                selectionMode="single"
+                selection={selOrder}
+                onSelectionChange={(e) => setSelOrder(e.value)}
+                onRowSelect={onRowSelect}
+                onRowUnselect={onRowUnselect}
+                dataKey="jdeOrderId"
+                ref={dt}
+                header={""}
+                footer={""}
+                responsiveLayout="scroll"
+                rowClassName={rowClass}
+                scrollable
+                scrollHeight="500px"
+                virtualScrollerOptions={{ itemSize: 46 }}
+            >
+                <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
+                <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "10%" }} sortable sortField="jdeOrderType.code"></Column>
+                <Column header="Num. orden" field="jdeOrderId" style={{ width: "10%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cliente" body={clientComp} style={{ width: "30%" }} sortable sortField="client.firstName"></Column>
-                <Column header="Servicios pendientes" body={orderServicesIconResumeComp} style={{ width: "30%" }}></Column>
+                <Column header="Servicios pendientes" body={orderServicesIconResumeComp} style={{ width: "20%" }}></Column>
             </DataTable>
         ) : (
             <></>
         );
+
+    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} /> : ";";
 
     /*
   Return
   */
     return (
         <div className="p-fluid grid col-12 lg:col-12 xl:col-12">
-            <Card title="Lista de órdenes pendientes">
+            <Card title="Lista de órdenes de trabajo">
                 <div>{/*orderShowComp*/}</div>
+
                 <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "4em" }} />
 
-                <div style={{ paddingTop: "20px" }}>{orderShowCompV2}</div>
+                <div style={{ paddingTop: "20px", borderColor: "black" }}>{orderShowCompV2}</div>
+                {orderLstDetailComp}
             </Card>
         </div>
     );

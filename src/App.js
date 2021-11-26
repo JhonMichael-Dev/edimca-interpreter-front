@@ -21,12 +21,19 @@ import "primeflex/primeflex.css";
 import "prismjs/themes/prism-coy.css";
 import "./layout/flags/flags.css";
 import "./layout/layout.scss";
-import "./App.scss";
+//import "./App.scss";
+import "./App.css";
 
 /*
 Theme
 */
-import "primereact/resources/themes/saga-orange/theme.css"; // + secondary button pink
+//import "primereact/resources/themes/saga-orange/theme.css"; // +++
+//import "primereact/resources/themes/bootstrap4-light-blue/theme.css"; // al seleccionar tabla
+//import "primereact/resources/themes/md-light-indigo/theme.css"; // +
+//import "primereact/resources/themes/tailwind-light/theme.css"; // -
+import "primereact/resources/themes/fluent-light/theme.css"; // ++
+//import "primereact/resources/themes/nova/theme.css"; // descentrado columnas de tabla
+//import "primereact/resources/themes/rhea/theme.css"; // colores muy pasteles
 //import "primereact/resources/themes/mdc-light-indigo/theme.css"; // + secondary button pink
 
 const App = () => {

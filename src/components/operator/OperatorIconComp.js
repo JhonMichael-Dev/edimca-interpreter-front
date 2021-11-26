@@ -11,7 +11,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 // Services
 //import OrderDataService from "../service/OrderDataService";
 
-export const OrderServicesIconComp = observer((props) => {
+export const OperatorIconComp = observer((props) => {
     /*
   Variables
   */
@@ -60,15 +60,17 @@ export const OrderServicesIconComp = observer((props) => {
         });
     };
 
+    let imageName = "/assets/images/operator_" + props.operatorUsername + ".png";
+
     /*
   Return
   */
     return (
-        <div className="card" style={{ width: "100px", textAlign: "center" }} title={props.serviceType}>
+        <div className="card" style={{ width: "100px", textAlign: "center" }} title={props.operatorUsername}>
             <i className="p-overlay-badge">
-                <img src={"/assets/images/serviceType_" + props.serviceType + ".png"} className="pos-edimca-button-noLabel" style={{ width: "40px", height: "40px" }}></img>
-                {props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""}
-                <div style={{ fontSize: 10 }}> {props.serviceType}</div>
+                <img src={imageName} alt={props.operatorUsername ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: "60px", height: "60px" }}></img>
+                {/*props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""*/}
+                <div style={{ fontSize: 10 }}> {props.operatorUsername}</div>
             </i>
         </div>
     );

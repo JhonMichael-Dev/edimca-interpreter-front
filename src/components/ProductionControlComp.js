@@ -124,13 +124,17 @@ export const ProductionControlComp = observer((props) => {
                 visible={loading}
                 onHide={(ev) => setLoading(false)}
                 style={{
-                    width: "200px",
+                    width: "240px",
                     textAlign: "center",
                 }}
                 closable
                 resizable={false}
             >
-                <img src={"/assets/images/loader2.gif"} className="pos-edimca-button-noLabel" style={{ width: "140px", height: "90px" }}></img>
+                <img src={"/assets/images/loader6.gif"} className="pos-edimca-button-noLabel" style={{ width: "160px", height: "120px" }}></img>
+                {/*
+                    4 ++
+                    6 +++
+                     */}
             </Dialog>
         </div>
     );
