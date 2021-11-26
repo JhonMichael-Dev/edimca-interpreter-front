@@ -19,15 +19,16 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "../operator/OperatorIconComp";
+import { OrderStatusComp } from "./OrderStatusComp";
+import { OperatorLstComp } from "../operator/OperatorLstComp";
 
 export const OrderLstDetailComp = observer((props) => {
     /*
   Variables
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
-    const [lstOrders, setLstOrders] = useState([]);
-    const dt = useRef(null);
     const [selOrderDetail, setSelOrderDetail] = useState(null);
+    const dt = useRef(null);
 
     /*
   Init
@@ -89,9 +90,12 @@ export const OrderLstDetailComp = observer((props) => {
 
     let statusComp = (rowData) => {
         return (
+            <OrderStatusComp status={rowData.status} />
+            /*
             <Button key={rowData.idOrderDetail} className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
                 {rowData.status}
             </Button>
+            */
         );
     };
 
@@ -110,7 +114,19 @@ export const OrderLstDetailComp = observer((props) => {
     let selectionComp = (rowData) => {
         let lstSelectableStatus = ["PENDIENTE", "EN_PAUSA"];
         let isSelectable = lstSelectableStatus.includes(rowData.status);
-        return <Button key={rowData.idOrderDetail} icon="pi pi-check" className={"p-button-rounded p-button-secondary " + (isSelectable ? "" : "p-button-raised p-button-text")} disabled={!isSelectable} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
+        return (
+            <Button
+                key={rowData.idOrderDetail}
+                onClick={() => {
+                    console.log("selectionComp", rowData);
+                    setSelOrderDetail(rowData);
+                }}
+                icon="pi pi-check"
+                className={"p-button-rounded p-button-secondary " + (isSelectable ? "" : "p-button-raised p-button-text")}
+                disabled={!isSelectable}
+                style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}
+            ></Button>
+        );
     };
 
     let orderDetailTableComp =
@@ -130,7 +146,7 @@ export const OrderLstDetailComp = observer((props) => {
                 footer={""}
                 responsiveLayout="scroll"
                 scrollable
-                scrollHeight="400px"
+                scrollHeight="480px"
                 virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
@@ -144,24 +160,29 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
+    let operatorLstComp = selOrderDetail ? <OperatorLstComp storeMcu={null} ability={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+
     /*
   Return
   */
     return (
-        <Dialog
-            header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
-            visible={props.selOrder}
-            onHide={(ev) => props.setSelOrder(null)}
-            style={{
-                width: "80%",
-                textAlign: "center",
-            }}
-            closable
-            resizable={false}
-        >
-            <Card title="">
-                <div style={{ paddingTop: "20px", borderColor: "black" }}>{orderDetailTableComp}</div>
-            </Card>
-        </Dialog>
+        <>
+            <Dialog
+                header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
+                visible={props.selOrder}
+                onHide={(ev) => props.setSelOrder(null)}
+                style={{
+                    width: "100%",
+                    height: "100%",
+                    textAlign: "center",
+                }}
+                modal
+                closable
+                resizable={false}
+            >
+                {orderDetailTableComp}
+            </Dialog>
+            {operatorLstComp}
+        </>
     );
 });

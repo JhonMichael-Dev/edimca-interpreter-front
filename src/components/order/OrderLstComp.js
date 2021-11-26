@@ -18,6 +18,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { OrderLstDetailComp } from "./OrderLstDetailComp";
+import { OrderStatusComp } from "./OrderStatusComp";
+import { OperatorLstComp } from "../operator/OperatorLstComp";
 
 export const OrderLstComp = observer((props) => {
     /*
@@ -27,6 +29,8 @@ export const OrderLstComp = observer((props) => {
     const [lstOrders, setLstOrders] = useState([]);
     const dt = useRef(null);
     const [selOrder, setSelOrder] = useState(null);
+    const [selOrderDetail, setSelOrderDetail] = useState(null);
+    const [selOperatorObj, setSelOperatorObj] = useState(null);
 
     /*
   Init
@@ -151,9 +155,23 @@ export const OrderLstComp = observer((props) => {
 
     let statusComp = (rowData) => {
         return (
-            <Button className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
+            <OrderStatusComp status={rowData.status} />
+            /*<Button className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
                 {rowData.status}
             </Button>
+            */
+        );
+    };
+
+    // <span
+    let statusCompV2 = (rowData) => {
+        return (
+            <span
+                className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")}
+                style={{ fontWeight: "bold", fontSize: 12, backgroundColor: rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success" }}
+            >
+                {rowData.status}
+            </span>
         );
     };
 
@@ -165,7 +183,7 @@ export const OrderLstComp = observer((props) => {
         };
     };
 
-    let orderShowCompV2 =
+    let orderLstComp =
         lstOrders && lstOrders.length > 0 ? (
             <DataTable
                 value={lstOrders}
@@ -181,8 +199,9 @@ export const OrderLstComp = observer((props) => {
                 responsiveLayout="scroll"
                 rowClassName={rowClass}
                 scrollable
-                scrollHeight="500px"
-                virtualScrollerOptions={{ itemSize: 46 }}
+                scrollHeight="600px"
+                showGridlines
+                //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
                 <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "10%" }} sortable sortField="jdeOrderType.code"></Column>
@@ -201,15 +220,20 @@ export const OrderLstComp = observer((props) => {
   Return
   */
     return (
-        <div className="p-fluid grid col-12 lg:col-12 xl:col-12">
-            <Card title="Lista de órdenes de trabajo">
-                <div>{/*orderShowComp*/}</div>
+        <div className="grid card">
+            <div className="grid col-12 lg:col-12 xl:col-12">
+                <div className="col-12 lg:col-3 xl:col-3" style={{ textAlign: "left" }}>
+                    <b>Lista de órdenes de trabajo</b>
+                </div>
+                <div className="col-12 lg:col-9 xl:col-9" style={{ paddingBottom: "10px", textAlign: "right" }}>
+                    <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "3em" }} />
+                </div>
+            </div>
 
-                <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "4em" }} />
-
-                <div style={{ paddingTop: "20px", borderColor: "black" }}>{orderShowCompV2}</div>
+            <div style={{ textAlign: "center" }}>
+                {orderLstComp}
                 {orderLstDetailComp}
-            </Card>
+            </div>
         </div>
     );
 });
