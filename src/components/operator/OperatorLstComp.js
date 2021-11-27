@@ -55,28 +55,17 @@ export const OperatorLstComp = observer((props) => {
 
     const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
-            console.log("handleQueryOperatorsByStore:", valid);
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
                 let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
                 //setLstOperators(valid.data.obj.operators);
                 setLstOperators(lstAssistantsFiltered);
-                console.log("valid.data.obj.operators", valid.data.obj.operators);
             }
             //props.setLoading(false);
         });
     };
 
     const handleProcess = (ev) => {};
-
-    const onRowSelect = (event) => {
-        console.log("onRowSelect", event);
-        //props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
-    };
-
-    const onRowUnselect = (event) => {
-        //props.showMessage({ severity: "warn", summary: "Product Unselected", message: `Name: ${event.data.name}`, life: 3000 });
-    };
 
     const selectOperator = (username) => {
         let assistantsOld = removeFromAssistants(selOperatorObj.assistants, username);
@@ -120,6 +109,7 @@ export const OperatorLstComp = observer((props) => {
             acceptLabel: "Procesar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
+            //className: "p-button-lg",
         });
     };
 
@@ -144,7 +134,7 @@ export const OperatorLstComp = observer((props) => {
                     onClick={() => selectAssistant(rowData.username)}
                     disabled={!selOperatorObj.username || alreadySelectedAsPrincipal}
                     icon="pi pi-check"
-                    className={"p-button-rounded p-button-help "}
+                    className={"p-button-rounded p-button-raised  p-button-help "}
                     style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}
                 ></Button>
             );
@@ -168,7 +158,7 @@ export const OperatorLstComp = observer((props) => {
             ref={dt}
             responsiveLayout="scroll"
             scrollable
-            scrollHeight="400px"
+            scrollHeight="380px"
             virtualScrollerOptions={{ itemSize: 46 }}
         >
             <Column header="Operador" body={operatorIconComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
@@ -179,9 +169,7 @@ export const OperatorLstComp = observer((props) => {
 
     let dialogFooterComp = (
         <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
-            <Button onClick={() => showProcessConfirmDialog()} disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg p-button-secondary "} style={{ fontWeight: "bold", fontSize: 12, justifyContent: "center" }}>
-                Aceptar
-            </Button>
+            <Button onClick={() => showProcessConfirmDialog()} label="Aceptar" disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
         </div>
     );
 
@@ -190,7 +178,7 @@ export const OperatorLstComp = observer((props) => {
   */
     return (
         <Dialog
-            header="Selección de operario"
+            header="Selección de operarios"
             visible={true}
             onHide={(ev) => props.onHide()}
             footer={dialogFooterComp}

@@ -11,6 +11,11 @@ import { AppConfig } from "./AppConfig";
 import { Dashboard } from "./components/Dashboard";
 import { ProductionControlPage } from "./pages/ProductionControlPage";
 
+// Store
+import { Provider } from "mobx-react";
+import { create } from "mobx-persist";
+import DataStore from "./data/DataStore";
+
 import { Crud } from "./pages/Crud";
 
 import PrimeReact from "primereact/api";
@@ -45,6 +50,22 @@ const App = () => {
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
     const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
+
+    const stores = {
+        DataStore: DataStore,
+    };
+    /*
+    hydrate("DataStore", DataStore).then(() => {
+        //console.log("PosStore has been hydrated");
+    });
+    */
+
+    const hydrate = create({
+        storage: localStorage, // or AsyncStorage in react-native.
+        // default: localStorage
+        jsonify: true, // if you use AsyncStorage, here shoud be true
+        // default: true
+    });
 
     PrimeReact.ripple = true;
 
@@ -279,18 +300,19 @@ const App = () => {
     });
 
     return (
-        <div className={wrapperClass} onClick={onWrapperClick}>
-            <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode} mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
+        <Provider {...stores}>
+            <div className={wrapperClass} onClick={onWrapperClick}>
+                <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode} mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
 
-            <div className="layout-sidebar" onClick={onSidebarClick}>
-                <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
-            </div>
+                <div className="layout-sidebar" onClick={onSidebarClick}>
+                    <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
+                </div>
 
-            <div className="layout-main-container">
-                <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/productionControl" exact component={ProductionControlPage} />
-                    {/*                 
+                <div className="layout-main-container">
+                    <div className="layout-main">
+                        <Route path="/" exact component={Dashboard} />
+                        <Route path="/productionControl" exact component={ProductionControlPage} />
+                        {/*                 
                     <Route path="/formlayout" component={FormLayoutDemo} />
                     <Route path="/input" component={InputDemo} />
                     <Route path="/floatlabel" component={FloatLabelDemo} />
@@ -310,17 +332,18 @@ const App = () => {
                     <Route path="/crud" component={Crud} />
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} /> */}
+                    </div>
+
+                    <AppFooter layoutColorMode={layoutColorMode} />
                 </div>
 
-                <AppFooter layoutColorMode={layoutColorMode} />
+                <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
+
+                <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
+                    <div className="layout-mask p-component-overlay"></div>
+                </CSSTransition>
             </div>
-
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
-
-            <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
-                <div className="layout-mask p-component-overlay"></div>
-            </CSSTransition>
-        </div>
+        </Provider>
     );
 };
 

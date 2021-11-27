@@ -38,6 +38,9 @@ export const ProductionControlComp = observer((props) => {
   */
     useEffect(() => {
         loadAvailables();
+        /*console.log("useEffect");
+        props.DataStore.setSelStore("store X");
+        console.log("selStore: ", props.DataStore.getSelStore());*/
     }, []);
 
     /*
@@ -69,11 +72,8 @@ export const ProductionControlComp = observer((props) => {
 
     const handleQueryStores = () => {
         StoreDataService.queryStores().then((valid) => {
-            console.log("handleQueryStores:", valid);
             if (valid.data && valid.data.success) {
                 setLstStores(valid.data.obj);
-                //setSelStore(valid.data.obj[0]);
-                console.log("valid.data.obj[0]", valid.data.obj[0]);
             }
         });
     };

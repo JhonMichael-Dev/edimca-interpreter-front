@@ -59,7 +59,6 @@ export const StoreSelectionComp = observer((props) => {
 
     const handleQueryStore = () => {
         StoreDataService.queryStores().then((valid) => {
-            console.log("handleQueryStore", valid);
             if (valid.data && valid.data.success) {
                 valid.data.obj.map((storeX) => {
                     setLstStoreData((oldArray) => [storeX, ...oldArray]);

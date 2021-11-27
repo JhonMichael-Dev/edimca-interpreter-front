@@ -56,11 +56,10 @@ export const OrderLstComp = observer((props) => {
 
     const handleQueryOrders = (onlyPendingOrders) => {
         let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
-        console.log("props.selStore", props.selStore);
+
         if (props.selStore) {
             props.setLoading(true);
             OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
-                console.log("handleQueryOrders:", valid);
                 if (valid.data && valid.data.success) {
                     let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
                     //setLstOrders(valid.data.obj);
@@ -105,8 +104,6 @@ export const OrderLstComp = observer((props) => {
     let orderShowComp =
         lstOrders && lstOrders.length > 0
             ? lstOrders.map((orderX) => {
-                  console.log("orderX", orderX);
-                  console.log("orderX.jdeOrderType", orderX.jdeOrderType);
                   return (
                       <div key={orderX.jdeOrderId} className="grid">
                           {/*<OrderShowComp selOrder={orderX} /> */}

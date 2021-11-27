@@ -39,7 +39,7 @@ export const OrderShowComp = observer((props) => {
     const handleProcess = (ev) => {};
 
     const handleSelectOrderHeader = (ev) => {
-        console.log("handleSelectOrderHeader", ev);
+        //console.log("handleSelectOrderHeader", ev);
     };
 
     /*

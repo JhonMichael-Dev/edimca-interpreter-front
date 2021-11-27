@@ -40,10 +40,6 @@ export const OperatorIconComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const handleSelectOrderHeader = (ev) => {
-        console.log("handleSelectOrderHeader", ev);
-    };
-
     /*
   Inner Components
   */

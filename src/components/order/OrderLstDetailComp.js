@@ -52,15 +52,6 @@ export const OrderLstDetailComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const onRowSelect = (event) => {
-        console.log("onRowSelect", event);
-        //props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
-    };
-
-    const onRowUnselect = (event) => {
-        //props.showMessage({ severity: "warn", summary: "Product Unselected", message: `Name: ${event.data.name}`, life: 3000 });
-    };
-
     /*
   Inner Components
   */
@@ -118,7 +109,6 @@ export const OrderLstDetailComp = observer((props) => {
             <Button
                 key={rowData.idOrderDetail}
                 onClick={() => {
-                    console.log("selectionComp", rowData);
                     setSelOrderDetail(rowData);
                 }}
                 icon="pi pi-check"
@@ -169,7 +159,7 @@ export const OrderLstDetailComp = observer((props) => {
         <>
             <Dialog
                 header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
-                visible={props.selOrder}
+                visible={props.selOrder !== null}
                 onHide={(ev) => props.setSelOrder(null)}
                 style={{
                     //width: "100%",
