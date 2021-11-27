@@ -68,7 +68,7 @@ export const OrderLstDetailComp = observer((props) => {
         confirmDialog({
             message: "Seguro desea procesar..",
             header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
+            icon: "pi pi-question",
             accept: () => handleProcess(null),
             reject: () => setOnlyPendingOrders(false),
             acceptLabel: "Procesar",
@@ -160,7 +160,7 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
-    let operatorLstComp = selOrderDetail ? <OperatorLstComp storeMcu={null} ability={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let operatorLstComp = selOrderDetail ? <OperatorLstComp storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
 
     /*
   Return
@@ -172,12 +172,14 @@ export const OrderLstDetailComp = observer((props) => {
                 visible={props.selOrder}
                 onHide={(ev) => props.setSelOrder(null)}
                 style={{
-                    width: "100%",
-                    height: "100%",
+                    //width: "100%",
+                    //height: "100%",
                     textAlign: "center",
                 }}
+                className="col-12 lg:col-10 xl:col-8"
                 modal
                 closable
+                draggable={false}
                 resizable={false}
             >
                 {orderDetailTableComp}

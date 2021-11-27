@@ -126,7 +126,18 @@ export const OrderLstComp = observer((props) => {
 
     let orderServicesIconResumeComp = (rowData) => {
         return (
-            <div key={rowData.jdeOrderId}>
+            <div
+                key={rowData.jdeOrderId}
+                //className="grid"
+                style={{
+                    display: "flex",
+                    //alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    alignContent: "center",
+                    //paddingTop: "10",
+                }}
+            >
                 <OrderServicesIconResumeComp selOrder={rowData} />
             </div>
         );
@@ -142,7 +153,7 @@ export const OrderLstComp = observer((props) => {
                     <b>Identificación:</b> &nbsp; {rowData.client.identification}
                 </div>
                 <div className="col-12 lg:col-12 xl:col-12">
-                    <b>Nombre:</b> &nbsp; {rowData.client.firstName} &nbsp; {rowData.client.lastName}
+                    <b>Nombre:</b> &nbsp; {rowData.client.firstName} {rowData.client.lastName}
                 </div>
             </div>
         );
@@ -208,7 +219,13 @@ export const OrderLstComp = observer((props) => {
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "10%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cliente" body={clientComp} style={{ width: "30%" }} sortable sortField="client.firstName"></Column>
-                <Column header="Servicios pendientes" body={orderServicesIconResumeComp} style={{ width: "20%" }}></Column>
+                <Column
+                    header="Servicios pendientes"
+                    body={orderServicesIconResumeComp}
+                    style={{
+                        width: "50%",
+                    }}
+                ></Column>
             </DataTable>
         ) : (
             <></>

@@ -6,10 +6,17 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "operators": [
-                    { "username": "ACANGA", "abilities": ["CORTE", "ENCHAPE"] },
-                    { "username": "GMERA", "abilities": ["RUTEADO"] },
-                    { "username": "PGUTIERREZ", "abilities": ["ENCHAPE"] },
-                    { "username": "GPACHACAMA", "abilities": ["PERFORADO"] }
+                    { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"] },
+                    { "username": "PGUTIERREZ", "skills": ["ENCHAPE"] },
+                    { "username": "GMERA", "skills": ["RUTEADO"] },
+                    { "username": "GPACHACAMA", "skills": ["PERFORADO"] },
+
+                    { "username": "AWILCATOMA", "skills": ["CORTE", "ENCHAPE"] },
+                    { "username": "EPEREZ", "skills": ["CORTE", "ENCHAPE"] },
+                    { "username": "DLOPEZ", "skills": ["CORTE", "RUTEADO"] },
+                    { "username": "YWANG", "skills": ["CORTE", "RUTEADO"] },
+                    { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"] },
+                    { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"] }
                 ]
             }
         ]

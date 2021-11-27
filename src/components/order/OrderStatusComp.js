@@ -41,7 +41,7 @@ export const OrderStatusComp = observer((props) => {
   Return
   */
     return (
-        <Button className={"p-button-rounded p-button-" + (props.status === "PENDIENTE" ? "secondary" : props.status === "EN_PROCESO" ? "warning" : props.status === "EN_PAUSA" ? "info" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
+        <Button className={"p-button-rounded p-button-" + (props.status === "PENDIENTE" ? "secondary" : props.status === "EN_PROCESO" ? "warning" : props.status === "EN_PAUSA" ? "info" : "success")} style={{ fontWeight: "bold", fontSize: 12, justifyContent: "center" }}>
             {props.status}
         </Button>
     );

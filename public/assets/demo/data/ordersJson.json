@@ -65,10 +65,10 @@
                     {
                         "idOrderDetail": 4,
                         "product": {
-                            "code": "SERECTS0004",
-                            "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": "PERFORADO"
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
@@ -122,6 +122,18 @@
                         "quantity": 16,
                         "status": "PENDIENTE",
                         "userpos": null
+                    },
+                    {
+                        "idOrderDetail": 5,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 8,
+                        "status": "PENDIENTE",
+                        "userpos": null
                     }
                 ]
             },
@@ -171,6 +183,43 @@
                         "quantity": 16,
                         "status": "COMPLETADO",
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
+                    }
+                ]
+            },
+            {
+                "jdeOrderId": 12348,
+                "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "EXPRESS" },
+                "client": {
+                    "jdeAn8": 2038,
+                    "identification": "1717463158",
+                    "firstName": "Martha Ana",
+                    "lastName": "Donoso Peralta"
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 83.77,
+                "status": "PENDIENTE",
+                "lstOrderDetail": [
+                    {
+                        "idOrderDetail": 5,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 8,
+                        "status": "PENDIENTE",
+                        "userpos": null
                     }
                 ]
             }

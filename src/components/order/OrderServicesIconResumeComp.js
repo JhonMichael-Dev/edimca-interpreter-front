@@ -48,7 +48,11 @@ export const OrderServicesIconResumeComp = observer((props) => {
         if (selOrder && selOrder.lstOrderDetail && selOrder.lstOrderDetail.length > 0) {
             //console.log("mapServices.size0: ", mapServices.size);
             let mapServicesAux = new Map();
-            selOrder.lstOrderDetail.map((detX) => {
+
+            let lstDetailSortedByServiceType = selOrder.lstOrderDetail.sort((a, b) => a.product.serviceType > b.product.serviceType);
+
+            //selOrder.lstOrderDetail.map((detX) => {
+            lstDetailSortedByServiceType.map((detX) => {
                 let keyX = detX.product.serviceType;
                 //console.log("keyX", keyX);
                 let isPending = detX.status !== "COMPLETADO";
@@ -72,7 +76,7 @@ export const OrderServicesIconResumeComp = observer((props) => {
                   //console.log("keyX", keyX);
                   let valueX = mapServices.get(keyX);
                   return (
-                      <div key={keyX} className="grid">
+                      <div key={keyX}>
                           <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} />
                       </div>
                   );

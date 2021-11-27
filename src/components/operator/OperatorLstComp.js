@@ -50,16 +50,17 @@ export const OperatorLstComp = observer((props) => {
   Methods
   */
     const loadAvailables = () => {
-        handleQueryOperatorsByStore();
+        handleQueryOperatorsByStoreAndFilterBySkill();
     };
 
-    const handleQueryOperatorsByStore = () => {
+    const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
             console.log("handleQueryOperatorsByStore:", valid);
             if (valid.data && valid.data.success) {
-                let lstFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
+                let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
+                let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
                 //setLstOperators(valid.data.obj.operators);
-                setLstOperators(lstFiltered.operators);
+                setLstOperators(lstAssistantsFiltered);
                 console.log("valid.data.obj.operators", valid.data.obj.operators);
             }
             //props.setLoading(false);
@@ -111,9 +112,9 @@ export const OperatorLstComp = observer((props) => {
   */
     const showProcessConfirmDialog = () => {
         confirmDialog({
-            message: "Seguro desea procesar..",
+            message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", asistentes: " + selOperatorObj.assistants : "") + "?",
             header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
+            icon: "pi pi-question",
             accept: () => handleProcess(null),
             reject: () => setOnlyPendingOrders(false),
             acceptLabel: "Procesar",
@@ -176,6 +177,14 @@ export const OperatorLstComp = observer((props) => {
         </DataTable>
     );
 
+    let dialogFooterComp = (
+        <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
+            <Button onClick={() => showProcessConfirmDialog()} disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg  p-button-secondary "} style={{ fontWeight: "bold" }}>
+                Aceptar
+            </Button>
+        </div>
+    );
+
     /*
   Return
   */
@@ -184,6 +193,7 @@ export const OperatorLstComp = observer((props) => {
             header="Selección de operario"
             visible={true}
             onHide={(ev) => props.onHide()}
+            footer={dialogFooterComp}
             style={{
                 //width: "80%",
                 textAlign: "center",
@@ -191,6 +201,7 @@ export const OperatorLstComp = observer((props) => {
             className="col-12 lg:col-8 xl:col-6"
             closable
             resizable={false}
+            draggable={false}
         >
             {operatorTableComp}
         </Dialog>
