@@ -179,7 +179,7 @@ export const OperatorLstComp = observer((props) => {
 
     let dialogFooterComp = (
         <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
-            <Button onClick={() => showProcessConfirmDialog()} disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg  p-button-secondary "} style={{ fontWeight: "bold" }}>
+            <Button onClick={() => showProcessConfirmDialog()} disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg p-button-secondary "} style={{ fontWeight: "bold", fontSize: 12, justifyContent: "center" }}>
                 Aceptar
             </Button>
         </div>

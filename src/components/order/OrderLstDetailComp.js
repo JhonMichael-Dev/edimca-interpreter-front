@@ -151,9 +151,9 @@ export const OrderLstDetailComp = observer((props) => {
             >
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
-                <Column header="Cantidad" field="quantity" style={{ width: "10%", textAlign: "center" }} sortable sortField="quantity"></Column>
+                <Column header="Cantidad" field="quantity" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantity"></Column>
                 <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="product.description1"></Column>
-                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "30%" }} sortable sortField="product.serviceType"></Column>
+                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType"></Column>
                 <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
             </DataTable>
         ) : (
@@ -176,7 +176,7 @@ export const OrderLstDetailComp = observer((props) => {
                     //height: "100%",
                     textAlign: "center",
                 }}
-                className="col-12 lg:col-10 xl:col-8"
+                className="col-12 lg:col-10 xl:col-9"
                 modal
                 closable
                 draggable={false}

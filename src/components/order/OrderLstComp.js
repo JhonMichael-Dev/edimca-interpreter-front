@@ -215,15 +215,15 @@ export const OrderLstComp = observer((props) => {
                 //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
-                <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "10%" }} sortable sortField="jdeOrderType.code"></Column>
-                <Column header="Num. orden" field="jdeOrderId" style={{ width: "10%" }} sortable sortField="jdeOrderId"></Column>
-                <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
-                <Column header="Cliente" body={clientComp} style={{ width: "30%" }} sortable sortField="client.firstName"></Column>
+                <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "8%" }} sortable sortField="jdeOrderType.code"></Column>
+                <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
+                <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>
+                <Column header="Cliente" body={clientComp} style={{ width: "25%" }} sortable sortField="client.firstName"></Column>
                 <Column
                     header="Servicios pendientes"
                     body={orderServicesIconResumeComp}
                     style={{
-                        width: "50%",
+                        width: "60%",
                     }}
                 ></Column>
             </DataTable>
@@ -247,7 +247,7 @@ export const OrderLstComp = observer((props) => {
                 </div>
             </div>
 
-            <div style={{ textAlign: "center" }}>
+            <div>
                 {orderLstComp}
                 {orderLstDetailComp}
             </div>
