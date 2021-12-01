@@ -70,7 +70,7 @@ export const ProductionControlComp = observer((props) => {
             if (valid.data && valid.data.success) {
                 setLstStores(valid.data.obj);
                 //setSelStore(valid.data.obj[0]);
-                console.log("valid.data.obj[0]", valid.data.obj[0]);
+                //console.log("valid.data.obj[0]", valid.data.obj[0]);
             }
         });
     };
@@ -81,12 +81,12 @@ export const ProductionControlComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const showMessage = (message, severity) => {
+    const showMessage = (ev) => {
         growl.current.show({
-            severity: severity,
+            severity: ev.severity,
             summary: "",
-            detail: message,
-            life: (message.length / 10) * 1000,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
         });
     };
 

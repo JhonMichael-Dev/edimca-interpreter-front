@@ -75,47 +75,7 @@ export const StoreSelectionComp = observer((props) => {
         });
     };
 
-    const handleProcess = (ev) => {};
-
-    /*
-  Inner Components
-  */
-    const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar..",
-            header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
-            accept: () => handleProcess(null),
-            reject: () => setVisible(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
-        });
-    };
-
-    const onSelecStore = (e) => {
-        setSelectLstStore(e.value);
-        selDlgPassword(true);
-    };
-
-    const onSelecStoreTbl = (e) => {
-        selDlgPassword(true);
-        props.handleSelectStore(e);
-    };
-    const onHide = () => {
-        selDlgPassword(false);
-    };
-
-    const renderFooter = () => {
-        return (
-            <div>
-                <Button label="No" icon="pi pi-times" onClick={() => onHide()} className="p-button-text" />
-                <Button label="Yes" icon="pi pi-check" onClick={() => onHide()} autoFocus />
-            </div>
-        );
-    };
-
-    const login = (e) => {
+    const onClickBtn = (e) => {
         switch (e.target.value) {
             case "1":
                 password = password + e.target.value;
@@ -162,12 +122,69 @@ export const StoreSelectionComp = observer((props) => {
         }
     };
 
-    /*    const onclickBtn1 = (e) => {
-        console.log(e.target.value);
-        case
-        password = password + document.getElementById("btn1").value;
-        console.log(password)
-    }; */
+    const login = () => {
+        if (password.length > 0) {
+            if (password.length === 4 && localStorage.getItem("passwordLocal") === null) {
+                localStorage.setItem("passwordLocal", password);
+                if (password.length === 4 && password === localStorage.getItem("passwordLocal")) {
+                    props.showMessage({ message: "Clave ingresada correctamente", severity: "success" });
+                    selDlgPassword(false);
+                } else {
+                    props.showMessage({ message: "Clave incorreta..!", severity: "error" });
+                    password = "";
+                }
+            } else {
+                props.showMessage({ message: "La clave debe de contener 4 digitos", severity: "error" });
+                password = "";
+            }
+        } else {
+            props.showMessage({ message: "Por favor ingresa tu clave de operador", severity: "warn" });
+        }
+    };
+
+    const handleProcess = (ev) => {};
+
+    /*
+  Inner Components
+  */
+    const showProcessConfirmDialog = () => {
+        confirmDialog({
+            message: "Seguro desea procesar..",
+            header: "Confirmación",
+            icon: "pi pi-exclamation-triangle",
+            accept: () => handleProcess(null),
+            reject: () => setVisible(false),
+            acceptLabel: "Procesar",
+            acceptIcon: "pi pi-check",
+            rejectIcon: "pi pi-times",
+        });
+    };
+
+    const onSelecStore = (e) => {
+        if (localStorage.getItem("passwordLocal") === null) {
+            console.log(localStorage.getItem("passwordLocal"));
+            props.showMessage({ message: "Por favor ingresa una clave de 4 digitos", severity: "warn" });
+        }
+        setSelectLstStore(e.value);
+        selDlgPassword(true);
+    };
+
+    const onSelecStoreTbl = (e) => {
+        selDlgPassword(true);
+        props.handleSelectStore(e);
+    };
+    const onHide = () => {
+        selDlgPassword(false);
+    };
+
+    const renderFooter = () => {
+        return (
+            <div>
+                <Button label="No" icon="pi pi-times" onClick={() => onHide()} className="p-button-text" />
+                <Button label="Yes" icon="pi pi-check" onClick={() => onHide()} autoFocus />
+            </div>
+        );
+    };
 
     /*
   Return
@@ -203,37 +220,37 @@ export const StoreSelectionComp = observer((props) => {
                     <div className="grid">
                         {" "}
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="1" id="btn1" value="1" onClick={(e) => login(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="1" id="btn1" value="1" onClick={(e) => onClickBtn(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="2" id="btn2" value="2" onClick={(e) => login(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="2" id="btn2" value="2" onClick={(e) => onClickBtn(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="3" id="btn3" value="3" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="3" id="btn3" value="3" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="4" id="btn4" value="4" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="4" id="btn4" value="4" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="5" id="btn5" value="5" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="5" id="btn5" value="5" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="6" id="btn6" value="6" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="6" id="btn6" value="6" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="7" id="btn7" value="7" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="7" id="btn7" value="7" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="8" id="btn8" value="8" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="8" id="btn8" value="8" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="9" id="btn9" value="9" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="9" id="btn9" value="9" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="0" id="btn0" value="0" className="p-button-info" onClick={(e) => login(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                            <Button label="0" id="btn0" value="0" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="Aceptar" className="p-button-success" style={{ width: "100%", height: "100%", fontSize: "18px" }} />
+                            <Button label="Aceptar" className="p-button-success" onClick={() => login()} style={{ width: "100%", height: "100%", fontSize: "18px" }} />
                         </div>
                         <div className="col-12 lg:col-6 xl:col-3">
                             <Button label="Cambiar Clave" className="p-button-primary" style={{ width: "100%", height: "100%", fontSize: "15px" }} />
