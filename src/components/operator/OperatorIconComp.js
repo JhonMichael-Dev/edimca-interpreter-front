@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
-//import { computed } from "mobx";
 
 // Prime components
-import { Card } from "primereact/card";
+import { Badge } from "primereact/badge";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+
+// Images
+//import iconLostSale from "../../images/ruteadoIcon.png";
 
 // Services
 //import OrderDataService from "../service/OrderDataService";
 
-export const OrderShowComp = observer((props) => {
+export const OperatorIconComp = observer((props) => {
     /*
   Variables
   */
@@ -38,10 +40,6 @@ export const OrderShowComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const handleSelectOrderHeader = (ev) => {
-        //console.log("handleSelectOrderHeader", ev);
-    };
-
     /*
   Inner Components
   */
@@ -58,15 +56,18 @@ export const OrderShowComp = observer((props) => {
         });
     };
 
+    let imageName = "/assets/images/operator_" + props.operatorUsername + ".png";
+
     /*
   Return
   */
     return (
-        <div onClick={(ev) => handleSelectOrderHeader(props.selOrder)} className="grid" style={{ width: "90vw" }}>
-            <div className="grid" style={{ marginBottom: "1em" }}>
-                <div className="col-12 lg:col-6 xl:col-4">Hola</div>
-                <div className="col-12 lg:col-6 xl:col-3">Cómo estás</div>
-            </div>
+        <div className="card" style={{ width: "120px", textAlign: "center", alignContent: "center", justifyContent: "center" }} title={props.operatorUsername}>
+            <i className="p-overlay-badge">
+                <img src={imageName} alt={props.operatorUsername ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: "70px", height: "70px" }}></img>
+                {/*props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""*/}
+                <div style={{ fontSize: 10 }}> {props.operatorUsername}</div>
+            </i>
         </div>
     );
 });
