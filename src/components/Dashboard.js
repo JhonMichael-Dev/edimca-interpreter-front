@@ -43,9 +43,7 @@ export const Dashboard = () => {
         return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
     };
 
-    const onEnvClick = (e) => {
-        console.log(e);
-    };
+    const onEnvClick = (e) => {};
 
     return (
         <div className="grid">

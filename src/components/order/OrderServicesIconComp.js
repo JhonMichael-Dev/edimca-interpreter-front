@@ -11,7 +11,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 // Services
 //import OrderDataService from "../service/OrderDataService";
 
-export const OrderServicesResumeComp = observer((props) => {
+export const OrderServicesIconComp = observer((props) => {
     /*
   Variables
   */
@@ -40,10 +40,6 @@ export const OrderServicesResumeComp = observer((props) => {
 
     const handleProcess = (ev) => {};
 
-    const handleSelectOrderHeader = (ev) => {
-        console.log("handleSelectOrderHeader", ev);
-    };
-
     /*
   Inner Components
   */
@@ -64,10 +60,11 @@ export const OrderServicesResumeComp = observer((props) => {
   Return
   */
     return (
-        <div className="p-grid">
+        <div className="card" style={{ width: "100px", textAlign: "center", justifyContent: "center" }} title={props.serviceType}>
             <i className="p-overlay-badge">
                 <img src={"/assets/images/serviceType_" + props.serviceType + ".png"} className="pos-edimca-button-noLabel" style={{ width: "40px", height: "40px" }}></img>
-                <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "info"}></Badge>
+                {props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""}
+                <div style={{ fontSize: 10 }}> {props.serviceType}</div>
             </i>
         </div>
     );

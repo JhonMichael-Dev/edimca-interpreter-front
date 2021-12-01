@@ -58,7 +58,6 @@ export const StoreSelectionComp = observer((props) => {
 
     const handleQueryStore = () => {
         StoreDataService.queryStores().then((valid) => {
-            console.log("handleQueryStore", valid);
             if (valid.data && valid.data.success) {
                 valid.data.obj.map((storeX) => {
                     setLstStoreData((oldArray) => [storeX, ...oldArray]);
@@ -166,11 +165,11 @@ export const StoreSelectionComp = observer((props) => {
             props.showMessage({ message: "Por favor ingresa una clave de 4 digitos", severity: "warn" });
         }
         setSelectLstStore(e.value);
-        selDlgPassword(true);
+        //selDlgPassword(true);
     };
 
     const onSelecStoreTbl = (e) => {
-        selDlgPassword(true);
+        //selDlgPassword(true);
         props.handleSelectStore(e);
     };
     const onHide = () => {
@@ -195,15 +194,19 @@ export const StoreSelectionComp = observer((props) => {
                 ""
             ) : (
                 <div className="grid">
-                    <div className="col-12 xl:col-6">
-                        <div className="card">
-                            <span className="p-float-label">
-                                <Dropdown id="dropdown" options={lstStores} value={selectLstStore} onChange={onSelecStore} style={{ width: "100%", height: "70px" }}></Dropdown>
-                                <label htmlFor="dropdown">Seleccione una tienda </label>
-                            </span>
+                    {true ? (
+                        ""
+                    ) : (
+                        <div className="col-12 xl:col-6">
+                            <div className="card">
+                                <span className="p-float-label">
+                                    <Dropdown id="dropdown" options={lstStores} value={selectLstStore} onChange={onSelecStore} style={{ width: "100%", height: "70px" }}></Dropdown>
+                                    <label htmlFor="dropdown">Seleccione una tienda </label>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-12 xl:col-6">
+                    )}
+                    <div className="col-12 xl:col-12">
                         <div className="card">
                             <h6>Selección de tienda</h6>
                             <DataTable className="p-datatable-customers" value={lstStoreData} rows={5} selectionMode="single" paginator onSelectionChange={onSelecStoreTbl}>
@@ -219,40 +222,42 @@ export const StoreSelectionComp = observer((props) => {
                 <Dialog header="Clave" visible={dlgPassword} modal={true} style={{ width: "40vw" }} draggable={false} onHide={() => onHide()}>
                     <div className="grid">
                         {" "}
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="1" id="btn1" value="1" onClick={(e) => onClickBtn(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="1" id="btn1" value="1" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="2" id="btn2" value="2" onClick={(e) => onClickBtn(e)} className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="2" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="3" id="btn3" value="3" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="3" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="4" id="btn4" value="4" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="4" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="5" id="btn5" value="5" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="5" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="6" id="btn6" value="6" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="6" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="7" id="btn7" value="7" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="7" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="8" id="btn8" value="8" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="8" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="9" id="btn9" value="9" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="9" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="0" id="btn0" value="0" className="p-button-info" onClick={(e) => onClickBtn(e)} style={{ width: "100%", height: "100%", fontSize: "40px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4"></div>
+                        <div className="col-12 lg:col-6 xl:col-4">
+                            <Button label="0" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
-                            <Button label="Aceptar" className="p-button-success" onClick={() => login()} style={{ width: "100%", height: "100%", fontSize: "18px" }} />
+                        <div className="col-12 lg:col-6 xl:col-4"></div>
+                        <div className="col-12 lg:col-6 xl:col-6">
+                            <Button label="Aceptar" className="p-button-success" style={{ width: "100%", height: "100%", fontSize: "18px" }} />
                         </div>
-                        <div className="col-12 lg:col-6 xl:col-3">
+                        <div className="col-12 lg:col-6 xl:col-6">
                             <Button label="Cambiar Clave" className="p-button-primary" style={{ width: "100%", height: "100%", fontSize: "15px" }} />
                         </div>
                     </div>
