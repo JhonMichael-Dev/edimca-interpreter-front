@@ -19,9 +19,9 @@ export class ProductionControlPage extends Component {
 
     /*
     componentDidMount() {
-        console.log("componentDidMount");
+        //console.log("componentDidMount");
         this.props.DataStore.setSelStore("store X");
-        console.log("selStore: ", this.props.DataStore.getSelStore());
+        //console.log("selStore: ", this.props.DataStore.getSelStore());
     }
     */
 

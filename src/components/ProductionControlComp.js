@@ -40,7 +40,8 @@ export const ProductionControlComp = observer((props) => {
         loadAvailables();
         /*console.log("useEffect");
         props.DataStore.setSelStore("store X");
-        console.log("selStore: ", props.DataStore.getSelStore());*/
+        //console.log("selStore: ", props.DataStore.getSelStore());
+        */
     }, []);
 
     /*
