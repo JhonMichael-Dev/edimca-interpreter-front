@@ -1,0 +1,43 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "idMaster": 5001,
+                "code": "ALM",
+                "description1": "Almuerzo"
+            },
+            {
+                "idMaster": 5004,
+                "code": "CAM",
+                "description1": "Cambio de herramientas"
+            },
+            {
+                "idMaster": 5003,
+                "code": "DAN",
+                "description1": "Daño maquinaria"
+            },
+            {
+                "idMaster": 5002,
+                "code": "FIN",
+                "description1": "Fin de horario normal"
+            },
+            {
+                "idMaster": 5007,
+                "code": "PLA",
+                "description1": "No coinciden planos"
+            },
+            {
+                "idMaster": 5005,
+                "code": "MAN",
+                "description1": "Paro mantenimiento"
+            },
+            {
+                "idMaster": 5006,
+                "code": "REA",
+                "description1": "Reabastecimiento"
+            }
+        ]
+    }
+}

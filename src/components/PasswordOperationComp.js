@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
+import { observer } from "mobx-react";
 
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-export const PasswordOperationComp = (data) => {
+export const PasswordOperationComp = observer((props) => {
     /*
   Variables
   */
-    console.log("............ ");
+
     const toast = useRef(null);
     const [lstStoreData, setLstStoreData] = useState([]);
     const [dlgPassword, selDlgPassword] = useState(true);
@@ -25,11 +26,7 @@ export const PasswordOperationComp = (data) => {
     /*
   Init
   */
-    useEffect(() => {
-        //selDlgPassword(data.data);
-        //console.log(dlgPassword);
-        //loadAvailables();
-    }, []);
+    useEffect(() => {}, []);
     /*
   Context  
   */
@@ -54,43 +51,33 @@ export const PasswordOperationComp = (data) => {
         switch (e.target.value) {
             case "1":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "2":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "3":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "4":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "5":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "6":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "7":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "8":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "9":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             case "0":
                 password = password + e.target.value;
-                console.log(password);
                 break;
             default:
                 return password;
@@ -101,8 +88,9 @@ export const PasswordOperationComp = (data) => {
         if (password.length > 0) {
             if (password.length === 4) {
                 localStorage.setItem("passwordLocal", password);
-                showMessage({ message: "Clave ingresada correctamente", severity: "success" });
+                //showMessage({ message: "Clave ingresada correctamente", severity: "success" });
                 selDlgPassword(false);
+                props.handleLogin();
             } else {
                 showMessage({ message: "La clave debe de contener 4 digitos", severity: "error" });
                 password = "";
@@ -171,4 +159,4 @@ export const PasswordOperationComp = (data) => {
             </Dialog>
         </div>
     );
-};
+});

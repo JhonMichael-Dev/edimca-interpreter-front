@@ -109,7 +109,7 @@ export const ProductionControlComp = observer((props) => {
   Inner components
   */
     let orderLstComp = selStore ? <OrderLstComp DataStore={props.DataStore} selStore={selStore} showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} /> : "";
-    let passwordComp = selStore ? <PasswordOperationComp selStore={selStore}></PasswordOperationComp> : "";
+    let passwordComp = false && selStore ? <PasswordOperationComp selStore={selStore}></PasswordOperationComp> : "";
     /*
   Return
   */
