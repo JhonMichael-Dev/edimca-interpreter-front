@@ -8,6 +8,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
 import { Checkbox } from "primereact/checkbox";
 import { SelectButton } from "primereact/selectbutton";
+import { Toast } from "primereact/toast";
 
 // Services
 import OrderDataService from "../../service/OrderDataService";
@@ -21,6 +22,7 @@ import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "../operator/OperatorIconComp";
 import { OrderStatusComp } from "./OrderStatusComp";
 import { OperatorLstComp } from "../operator/OperatorLstComp";
+import { OperatorAndAssistantsLstComp } from "../operator/OperatorAndAssistantsLstComp";
 
 export const OrderLstDetailComp = observer((props) => {
     /*
@@ -29,6 +31,7 @@ export const OrderLstDetailComp = observer((props) => {
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const [selOrderDetail, setSelOrderDetail] = useState(null);
     const dt = useRef(null);
+    const toast = useRef(null);
 
     /*
   Init
@@ -50,7 +53,20 @@ export const OrderLstDetailComp = observer((props) => {
   */
     const loadAvailables = () => {};
 
-    const handleProcess = (ev) => {};
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1500,
+        });
+    };
+
+    const handleProcess = (ev) => {
+        setSelOrderDetail(null);
+        showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
+        props.handleProcess();
+    };
 
     /*
   Inner Components
@@ -150,13 +166,14 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
-    let operatorLstComp = selOrderDetail ? <OperatorLstComp storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let operatorLstComp = selOrderDetail ? <OperatorAndAssistantsLstComp handleProcess={() => handleProcess()} storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
 
     /*
   Return
   */
     return (
         <>
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
             <Dialog
                 header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
                 visible={props.selOrder !== null}

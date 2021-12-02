@@ -2,45 +2,35 @@ import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import { Route } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-
 import { AppTopbar } from "./AppTopbar";
 import { AppFooter } from "./AppFooter";
 import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
 
+//Componet
 import { Dashboard } from "./components/Dashboard";
 import { ProductionControlPage } from "./pages/ProductionControlPage";
-
+import { ServiceInProcessPage } from "./pages/ServiceInProcessPage";
 // Store
 import { Provider } from "mobx-react";
 import { create } from "mobx-persist";
 import DataStore from "./data/DataStore";
-
-import { Crud } from "./pages/Crud";
-
 import PrimeReact from "primereact/api";
 
+//CSS
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import "prismjs/themes/prism-coy.css";
 import "./layout/flags/flags.css";
 import "./layout/layout.scss";
-//import "./App.scss";
+import "./App.scss";
 import "./App.css";
 
 /*
 Theme
 */
-//import "primereact/resources/themes/saga-orange/theme.css"; // +++
-//import "primereact/resources/themes/bootstrap4-light-blue/theme.css"; // al seleccionar tabla
-//import "primereact/resources/themes/md-light-indigo/theme.css"; // +
-//import "primereact/resources/themes/tailwind-light/theme.css"; // -
-import "primereact/resources/themes/fluent-light/theme.css"; // ++
-//import "primereact/resources/themes/nova/theme.css"; // descentrado columnas de tabla
-//import "primereact/resources/themes/rhea/theme.css"; // colores muy pasteles
-//import "primereact/resources/themes/mdc-light-indigo/theme.css"; // + secondary button pink
-
+import "primereact/resources/themes/fluent-light/theme.css";
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
     const [layoutColorMode, setLayoutColorMode] = useState("light");
@@ -169,9 +159,14 @@ const App = () => {
                     to: "/",
                 },
                 {
-                    label: "Control de producción",
-                    icon: "pi pi-fw pi-th-large",
+                    label: "Ordenes pendientes",
+                    icon: "pi pi-fw pi-shopping-cart",
                     to: "/productionControl",
+                },
+                {
+                    label: "Ordenes en proceso",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    to: "/serviceInProcess",
                 },
             ],
         },
@@ -312,6 +307,7 @@ const App = () => {
                     <div className="layout-main">
                         <Route path="/" exact component={Dashboard} />
                         <Route path="/productionControl" exact component={ProductionControlPage} />
+                        <Route path="/serviceInProcess" exact component={ServiceInProcessPage} />
                         {/*                 
                     <Route path="/formlayout" component={FormLayoutDemo} />
                     <Route path="/input" component={InputDemo} />

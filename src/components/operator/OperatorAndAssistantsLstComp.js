@@ -20,12 +20,14 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "./OperatorIconComp";
 import OperatorDataService from "../../service/OperatorDataService";
+import { PasswordOperationComp } from "../PasswordOperationComp";
 
-export const OperatorLstComp = observer((props) => {
+export const OperatorAndAssistantsLstComp = observer((props) => {
     /*
   Variables
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+    const [showPasswordDialog, setShowPasswordDialog] = useState(false);
     const [lstOperators, setLstOperators] = useState(null);
     const dt = useRef(null);
     //const [selOrderDetail, setSelOrderDetail] = useState(null);
@@ -50,10 +52,10 @@ export const OperatorLstComp = observer((props) => {
   Methods
   */
     const loadAvailables = () => {
-        handleQueryPendingServices();
+        handleQueryOperatorsByStoreAndFilterBySkill();
     };
 
-    const handleQueryPendingServices = () => {
+    const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
@@ -65,7 +67,9 @@ export const OperatorLstComp = observer((props) => {
         });
     };
 
-    const handleProcess = (ev) => {};
+    const handleProcess = (ev) => {
+        // TODO: show password component
+    };
 
     const selectOperator = (username) => {
         let assistantsOld = removeFromAssistants(selOperatorObj.assistants, username);
@@ -96,6 +100,11 @@ export const OperatorLstComp = observer((props) => {
         return lstAssistants;
     }
 
+    const handleLogin = () => {
+        setShowPasswordDialog(false);
+        props.handleProcess(selOperatorObj.username);
+    };
+
     /*
   Inner Components
   */
@@ -104,12 +113,12 @@ export const OperatorLstComp = observer((props) => {
             message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", ayudantes: " + selOperatorObj.assistants : "") + "?",
             header: "Confirmación",
             icon: "pi pi-question",
-            accept: () => handleProcess(null),
+            //accept: () => handleProcess(null),
+            accept: () => setShowPasswordDialog(true),
             reject: () => setOnlyPendingOrders(false),
             acceptLabel: "Procesar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
-            //className: "p-button-lg",
         });
     };
 
@@ -126,6 +135,7 @@ export const OperatorLstComp = observer((props) => {
         let alreadySelectedAsPrincipal = selOperatorObj.username === rowData.username;
         let alreadySelected = selOperatorObj.assistants.filter((assistantX) => assistantX === rowData.username)[0];
 
+        if (!selOperatorObj.username) return "";
         if (!alreadySelected) {
             // Enable select
             return (
@@ -133,6 +143,7 @@ export const OperatorLstComp = observer((props) => {
                     key={rowData.username}
                     onClick={() => selectAssistant(rowData.username)}
                     disabled={!selOperatorObj.username || alreadySelectedAsPrincipal}
+                    hidden={!selOperatorObj.username}
                     icon="pi pi-check"
                     className={"p-button-rounded p-button-raised  p-button-help "}
                     style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}
@@ -173,6 +184,8 @@ export const OperatorLstComp = observer((props) => {
         </div>
     );
 
+    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} /> : "";
+
     /*
   Return
   */
@@ -192,6 +205,7 @@ export const OperatorLstComp = observer((props) => {
             draggable={false}
         >
             {operatorTableComp}
+            {passwordComp}
         </Dialog>
     );
 });
