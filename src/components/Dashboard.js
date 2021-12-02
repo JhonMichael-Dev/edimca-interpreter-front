@@ -5,7 +5,8 @@ import { Chart } from "primereact/chart";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProductService } from "../service/ProductService";
-
+import OrderDataService from "../service/OrderDataService";
+import { useHistory } from "react-router";
 const lineData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -27,54 +28,81 @@ const lineData = {
         },
     ],
 };
-
 export const Dashboard = () => {
     const [products, setProducts] = useState(null);
-
     const menu1 = useRef(null);
     const menu2 = useRef(null);
-
+    const [numberOrde, selNumberOrde] = useState(0);
+    const [numberOrdeProcess, selNumberOrdeProcess] = useState(0);
+    const history = useHistory();
     useEffect(() => {
         const productService = new ProductService();
         productService.getProductsSmall().then((data) => setProducts(data));
+        numbrePendingOrde();
     }, []);
 
     const formatCurrency = (value) => {
         return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
     };
 
-    const onEnvClick = (e) => {};
+    async function numbrePendingOrde() {
+        let lstPendingStatus = ["PENDIENTE"];
+        let numbreOrdenPending = [];
+        await OrderDataService.queryOrdersByStore().then((valid) => {
+            if (valid.data && valid.data.success) {
+                numbreOrdenPending = valid.data.obj.filter((orderX) => lstPendingStatus.includes(orderX.status));
+                selNumberOrde(numbreOrdenPending.length);
+            }
+        });
+
+        let lstProcessStatus = ["EN_PROCESO"];
+        let numbreOrdenProcess = [];
+        await OrderDataService.queryOrdersByStore().then((valid) => {
+            if (valid.data && valid.data.success) {
+                numbreOrdenProcess = valid.data.obj.filter((orderX) => lstProcessStatus.includes(orderX.status));
+                selNumberOrdeProcess(numbreOrdenProcess.length);
+            }
+        });
+    }
+
+    const onEnvClickOrder = (e) => {
+        history.push({
+            pathname: "/productionControl",
+        });
+    };
+
+    const onEnvClickService = (e) => {
+        history.push({
+            pathname: "/serviceInProcess",
+        });
+    };
 
     return (
         <div className="grid">
-            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClick(e)}>
+            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClickOrder(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
-                            <span className="block text-500 font-medium mb-3">Orders</span>
-                            <div className="text-900 font-medium text-xl">152</div>
+                            <span className="block text-500 font-medium mb-3">Ordenes Pendientes</span>
+                            <div className="text-900 font-medium text-xl">{numberOrde}</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
                             <i className="pi pi-shopping-cart text-blue-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">24 new </span>
-                    <span className="text-500">since last visit</span>
                 </div>
             </div>
-            <div className="col-12 lg:col-6 xl:col-3">
+            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClickService(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
-                            <span className="block text-500 font-medium mb-3">Revenue</span>
-                            <div className="text-900 font-medium text-xl">$2.100</div>
+                            <span className="block text-500 font-medium mb-3">Ordenes en proceso</span>
+                            <div className="text-900 font-medium text-xl">{numberOrdeProcess}</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <i className="pi pi-map-marker text-orange-500 text-xl" />
+                            <i className="pi pi-angle-double-right text-orange-500 text-xl" />
                         </div>
                     </div>
-                    <span className="text-green-500 font-medium">%52+ </span>
-                    <span className="text-500">since last week</span>
                 </div>
             </div>
             <div className="col-12 lg:col-6 xl:col-3">

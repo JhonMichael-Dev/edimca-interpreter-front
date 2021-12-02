@@ -75,7 +75,10 @@ export const OrderLstComp = observer((props) => {
         setOnlyPendingOrders(ev);
     };
 
-    const handleProcess = (ev) => {};
+    const handleProcess = (ev) => {
+        setSelOrder(null);
+        props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
+    };
 
     const onRowSelect = (event) => {
         //props.showMessage({ severity: "info", summary: "Product Selected", message: `Name: ${event.data.name}`, life: 3000 });
@@ -228,7 +231,7 @@ export const OrderLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} /> : ";";
+    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : ";";
 
     /*
   Return

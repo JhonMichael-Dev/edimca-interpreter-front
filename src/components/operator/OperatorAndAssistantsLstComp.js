@@ -20,12 +20,14 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "./OperatorIconComp";
 import OperatorDataService from "../../service/OperatorDataService";
+import { PasswordOperationComp } from "../PasswordOperationComp";
 
 export const OperatorAndAssistantsLstComp = observer((props) => {
     /*
   Variables
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+    const [showPasswordDialog, setShowPasswordDialog] = useState(false);
     const [lstOperators, setLstOperators] = useState(null);
     const dt = useRef(null);
     //const [selOrderDetail, setSelOrderDetail] = useState(null);
@@ -98,6 +100,11 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         return lstAssistants;
     }
 
+    const handleLogin = () => {
+        setShowPasswordDialog(false);
+        props.handleProcess(selOperatorObj.username);
+    };
+
     /*
   Inner Components
   */
@@ -106,12 +113,12 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
             message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", ayudantes: " + selOperatorObj.assistants : "") + "?",
             header: "Confirmación",
             icon: "pi pi-question",
-            accept: () => handleProcess(null),
+            //accept: () => handleProcess(null),
+            accept: () => setShowPasswordDialog(true),
             reject: () => setOnlyPendingOrders(false),
             acceptLabel: "Procesar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
-            //className: "p-button-lg",
         });
     };
 
@@ -177,6 +184,8 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         </div>
     );
 
+    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} /> : "";
+
     /*
   Return
   */
@@ -196,6 +205,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
             draggable={false}
         >
             {operatorTableComp}
+            {passwordComp}
         </Dialog>
     );
 });
