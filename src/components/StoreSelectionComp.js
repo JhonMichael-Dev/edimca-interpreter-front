@@ -21,18 +21,6 @@ export const StoreSelectionComp = observer((props) => {
     const [lstStores, setLstStores] = useState([]);
     const [selectLstStore, setSelectLstStore] = useState(null);
     const [lstStoreData, setLstStoreData] = useState([]);
-    const [dlgPassword, selDlgPassword] = useState(false);
-    let password = "";
-    const [btn1, selBtn1] = useState("");
-    const [btn2, selBtn2] = useState("");
-    const [btn3, selBtn3] = useState("");
-    const [btn4, selBtn4] = useState("");
-    const [btn5, selBtn5] = useState("");
-    const [btn6, selBtn6] = useState("");
-    const [btn7, selBtn7] = useState("");
-    const [btn8, selBtn8] = useState("");
-    const [btn9, selBtn9] = useState("");
-    const [btn0, selBtn0] = useState("");
 
     /*
   Init
@@ -74,115 +62,15 @@ export const StoreSelectionComp = observer((props) => {
         });
     };
 
-    const onClickBtn = (e) => {
-        switch (e.target.value) {
-            case "1":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "2":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "3":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "4":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "5":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "6":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "7":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "8":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "9":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            case "0":
-                password = password + e.target.value;
-                console.log(password);
-                break;
-            default:
-                return password;
-        }
-    };
-
-    const login = () => {
-        if (password.length > 0) {
-            if (password.length === 4 && localStorage.getItem("passwordLocal") === null) {
-                localStorage.setItem("passwordLocal", password);
-                if (password.length === 4 && password === localStorage.getItem("passwordLocal")) {
-                    props.showMessage({ message: "Clave ingresada correctamente", severity: "success" });
-                    selDlgPassword(false);
-                } else {
-                    props.showMessage({ message: "Clave incorreta..!", severity: "error" });
-                    password = "";
-                }
-            } else {
-                props.showMessage({ message: "La clave debe de contener 4 digitos", severity: "error" });
-                password = "";
-            }
-        } else {
-            props.showMessage({ message: "Por favor ingresa tu clave de operador", severity: "warn" });
-        }
-    };
-
-    const handleProcess = (ev) => {};
-
     /*
   Inner Components
   */
-    const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar..",
-            header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
-            accept: () => handleProcess(null),
-            reject: () => setVisible(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
-        });
-    };
-
     const onSelecStore = (e) => {
-        if (localStorage.getItem("passwordLocal") === null) {
-            console.log(localStorage.getItem("passwordLocal"));
-            props.showMessage({ message: "Por favor ingresa una clave de 4 digitos", severity: "warn" });
-        }
         setSelectLstStore(e.value);
-        //selDlgPassword(true);
     };
 
     const onSelecStoreTbl = (e) => {
-        //selDlgPassword(true);
         props.handleSelectStore(e);
-    };
-    const onHide = () => {
-        selDlgPassword(false);
-    };
-
-    const renderFooter = () => {
-        return (
-            <div>
-                <Button label="No" icon="pi pi-times" onClick={() => onHide()} className="p-button-text" />
-                <Button label="Yes" icon="pi pi-check" onClick={() => onHide()} autoFocus />
-            </div>
-        );
     };
 
     /*
@@ -218,51 +106,6 @@ export const StoreSelectionComp = observer((props) => {
                     </div>
                 </div>
             )}
-            <div>
-                <Dialog header="Clave" visible={dlgPassword} modal={true} style={{ width: "40vw" }} draggable={false} onHide={() => onHide()}>
-                    <div className="grid">
-                        {" "}
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="1" id="btn1" value="1" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="2" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="3" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="4" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="5" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="6" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="7" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="8" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="9" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4"></div>
-                        <div className="col-12 lg:col-6 xl:col-4">
-                            <Button label="0" className="p-button-info" style={{ width: "100%", height: "100%", fontSize: "40px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-4"></div>
-                        <div className="col-12 lg:col-6 xl:col-6">
-                            <Button label="Aceptar" className="p-button-success" style={{ width: "100%", height: "100%", fontSize: "18px" }} />
-                        </div>
-                        <div className="col-12 lg:col-6 xl:col-6">
-                            <Button label="Cambiar Clave" className="p-button-primary" style={{ width: "100%", height: "100%", fontSize: "15px" }} />
-                        </div>
-                    </div>
-                </Dialog>
-            </div>
         </>
     );
 });
