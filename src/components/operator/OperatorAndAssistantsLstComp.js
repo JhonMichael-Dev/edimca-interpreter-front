@@ -21,7 +21,7 @@ import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "./OperatorIconComp";
 import OperatorDataService from "../../service/OperatorDataService";
 
-export const OperatorLstComp = observer((props) => {
+export const OperatorAndAssistantsLstComp = observer((props) => {
     /*
   Variables
   */
@@ -50,10 +50,10 @@ export const OperatorLstComp = observer((props) => {
   Methods
   */
     const loadAvailables = () => {
-        handleQueryPendingServices();
+        handleQueryOperatorsByStoreAndFilterBySkill();
     };
 
-    const handleQueryPendingServices = () => {
+    const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
@@ -65,7 +65,9 @@ export const OperatorLstComp = observer((props) => {
         });
     };
 
-    const handleProcess = (ev) => {};
+    const handleProcess = (ev) => {
+        // TODO: show password component
+    };
 
     const selectOperator = (username) => {
         let assistantsOld = removeFromAssistants(selOperatorObj.assistants, username);
@@ -126,6 +128,7 @@ export const OperatorLstComp = observer((props) => {
         let alreadySelectedAsPrincipal = selOperatorObj.username === rowData.username;
         let alreadySelected = selOperatorObj.assistants.filter((assistantX) => assistantX === rowData.username)[0];
 
+        if (!selOperatorObj.username) return "";
         if (!alreadySelected) {
             // Enable select
             return (
@@ -133,6 +136,7 @@ export const OperatorLstComp = observer((props) => {
                     key={rowData.username}
                     onClick={() => selectAssistant(rowData.username)}
                     disabled={!selOperatorObj.username || alreadySelectedAsPrincipal}
+                    hidden={!selOperatorObj.username}
                     icon="pi pi-check"
                     className={"p-button-rounded p-button-raised  p-button-help "}
                     style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}

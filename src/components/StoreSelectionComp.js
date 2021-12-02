@@ -119,7 +119,7 @@ export const StoreSelectionComp = observer((props) => {
 
     const onclickBtn1 = (e) => {
         selPassword(password + document.getElementById("btn1").value);
-        console.log(password);
+        //console.log(password);
     };
 
     /*

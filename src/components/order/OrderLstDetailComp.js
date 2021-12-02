@@ -21,6 +21,7 @@ import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "../operator/OperatorIconComp";
 import { OrderStatusComp } from "./OrderStatusComp";
 import { OperatorLstComp } from "../operator/OperatorLstComp";
+import { OperatorAndAssistantsLstComp } from "../operator/OperatorAndAssistantsLstComp";
 
 export const OrderLstDetailComp = observer((props) => {
     /*
@@ -150,7 +151,7 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
-    let operatorLstComp = selOrderDetail ? <OperatorLstComp storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let operatorLstComp = selOrderDetail ? <OperatorAndAssistantsLstComp storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
 
     /*
   Return

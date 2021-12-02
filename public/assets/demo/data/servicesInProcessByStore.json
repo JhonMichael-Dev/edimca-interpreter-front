@@ -1,0 +1,86 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": {
+            "store": { "mcu": "2CM00101" },
+            "lstOrderDetail": [
+                {
+                    "idOrderDetail": 2,
+                    "product": {
+                        "code": "SERRUTS0023",
+                        "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                        "jdeId": 17767,
+                        "serviceType": "RUTEADO"
+                    },
+                    "quantity": 12.3,
+                    "status": "EN_PROCESO",
+                    "operator": { "username": "ACANGA", "assistants": ["PGUTIERREZ", "AWILCATOMA"] }
+                },
+                {
+                    "idOrderDetail": 7,
+                    "product": {
+                        "code": "SERECTS0008",
+                        "description1": "SERV ENCHAPADO PUR ML",
+                        "jdeId": 17069,
+                        "serviceType": "ENCHAPE"
+                    },
+                    "quantity": 4,
+                    "status": "EN_PAUSA",
+                    "stopReason": {
+                        "idMaster": 5001,
+                        "code": "ALM",
+                        "description1": "Almuerzo"
+                    },
+                    "operator": { "username": "ACANGA", "assistants": [] }
+                },
+                {
+                    "idOrderDetail": 222,
+                    "product": {
+                        "code": "SERRUTS0023",
+                        "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                        "jdeId": 17767,
+                        "serviceType": "RUTEADO"
+                    },
+                    "quantity": 12.3,
+                    "status": "EN_PROCESO",
+                    "operator": { "username": "GMERA", "assistants": [] }
+                },
+                {
+                    "idOrderDetail": 22,
+                    "product": {
+                        "code": "SERRUTS0023",
+                        "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                        "jdeId": 17767,
+                        "serviceType": "RUTEADO"
+                    },
+                    "quantity": 12.3,
+                    "status": "EN_PAUSA",
+                    "stopReason": {
+                        "idMaster": 5003,
+                        "code": "DAN",
+                        "description1": "Daño maquinaria"
+                    },
+                    "operator": { "username": "YWANG", "assistants": [] }
+                },
+                {
+                    "idOrderDetail": 5,
+                    "product": {
+                        "code": "SERRUTS0020",
+                        "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                        "jdeId": 17069,
+                        "serviceType": "CORTE"
+                    },
+                    "quantity": 8,
+                    "status": "EN_PAUSA",
+                    "stopReason": {
+                        "idMaster": 5001,
+                        "code": "ALM",
+                        "description1": "Almuerzo"
+                    },
+                    "operator": { "username": "YWANG", "assistants": ["EPEREZ"] }
+                }
+            ]
+        }
+    }
+}

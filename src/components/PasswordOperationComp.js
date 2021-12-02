@@ -12,7 +12,7 @@ export const PasswordOperationComp = (data) => {
   */
     useEffect(() => {
         setShowDlg(data.data);
-        console.log(showDlg);
+        //console.log(showDlg);
         //loadAvailables();
     }, []);
     /*
