@@ -7,6 +7,8 @@ import { Column } from "primereact/column";
 import { ProductService } from "../service/ProductService";
 import OrderDataService from "../service/OrderDataService";
 import { useHistory } from "react-router";
+import { LoginPrincipalComp } from "./LoginPrincipalComp";
+import { useDataStore } from "../data/DataStoreContext";
 const lineData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -29,12 +31,19 @@ const lineData = {
     ],
 };
 export const Dashboard = () => {
+    //const [selStore, setSelStore] = useState(null);
     const [products, setProducts] = useState(null);
     const menu1 = useRef(null);
     const menu2 = useRef(null);
     const [numberOrde, selNumberOrde] = useState(0);
     const [numberOrdeProcess, selNumberOrdeProcess] = useState(0);
     const history = useHistory();
+
+    /*
+    Store
+    */
+    const dataStore = useDataStore();
+
     useEffect(() => {
         const productService = new ProductService();
         productService.getProductsSmall().then((data) => setProducts(data));
@@ -77,8 +86,14 @@ export const Dashboard = () => {
         });
     };
 
+    /*
+    Inner components
+    */
+    let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => dataStore.setAuthPrincipalUser(ev)} /> : "";
+
     return (
         <div className="grid">
+            {loginPrincipalComp}
             <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClickOrder(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
