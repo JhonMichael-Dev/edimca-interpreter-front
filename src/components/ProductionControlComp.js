@@ -19,12 +19,14 @@ import { OrderLstComp } from "./order/OrderLstComp";
 // Services
 import StoreDataService from "../service/StoreDataService";
 import { Dialog } from "primereact/dialog";
+import { LoginPrincipalComp } from "./LoginPrincipalComp";
+import { useDataStore } from "../data/DataStoreContext";
 
 export const ProductionControlComp = observer((props) => {
     /*
-  Variables
-  */
-    const [selStore, setSelStore] = useState(null);
+    Variables
+    */
+    //const [selStore, setSelStore] = useState(null);
 
     const [lstStores, setLstStores] = useState([]);
     const [selDateTo, setSelDateTo] = useState(moment().set({ hour: 23, minute: 59, second: 59, millisecond: 0 }));
@@ -34,8 +36,13 @@ export const ProductionControlComp = observer((props) => {
     const [loading, setLoading] = useState(false);
 
     /*
-  Init
-  */
+    Store
+    */
+    const dataStore = useDataStore();
+
+    /*
+    Init
+    */
     useEffect(() => {
         loadAvailables();
         /*console.log("useEffect");
@@ -43,10 +50,6 @@ export const ProductionControlComp = observer((props) => {
         //console.log("selStore: ", props.DataStore.getSelStore());
         */
     }, []);
-
-    /*
-  Context  
-  */
 
     /*
   Formats
@@ -81,7 +84,8 @@ export const ProductionControlComp = observer((props) => {
 
     const handleSelectStore = (ev) => {
         //console.log("..........handle..... ", ev);
-        setSelStore(ev);
+        //setSelStore(ev);
+        dataStore.setAuthPrincipalUser(ev);
     };
 
     const handleProcess = (ev) => {};
@@ -108,16 +112,16 @@ export const ProductionControlComp = observer((props) => {
     /*
   Inner components
   */
-    let orderLstComp = selStore ? <OrderLstComp DataStore={props.DataStore} selStore={selStore} showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} /> : "";
-    let passwordComp = false && selStore ? <PasswordOperationComp selStore={selStore}></PasswordOperationComp> : "";
+    let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectStore(ev)} /> : "";
+    let orderLstComp = dataStore.authPrincipalUser ? <OrderLstComp DataStore={props.DataStore} selStore={dataStore.authPrincipalUser.store} showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} /> : "";
     /*
   Return
   */
     return (
         <div className="p-fluid p-grid">
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <StoreSelectionComp DataStore={props.DataStore} rendered={!selStore} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
-            {passwordComp}
+            {loginPrincipalComp}
+            <StoreSelectionComp DataStore={props.DataStore} rendered={false} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
             {orderLstComp}
             <Dialog
                 header="Procesando.."
