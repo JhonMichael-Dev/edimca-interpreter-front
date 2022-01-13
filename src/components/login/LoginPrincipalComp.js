@@ -8,19 +8,8 @@ import { Toast } from "primereact/toast";
 /*
 Own Components
 */
-//import { LoginService } from "../service/LoginService";
-//import LoginService from "../service/LoginService";
-//import logoEnterprise from "/assets/layout/images/logo-white.png";
-import { InputFloatLabel } from "../components/base/InputFloatLabel";
-import { PasswordFloatLabel } from "../components/base/PasswordFloatLabel";
-
-// Import Utils
-//import { label } from "../util/Internationalization";
-
-/*
-Store
-*/
-//import { AuthContext } from "../data/AuthContext";
+import { InputFloatLabel } from "../base/InputFloatLabel";
+import { PasswordFloatLabel } from "../base/PasswordFloatLabel";
 
 export const LoginPrincipalComp = observer((props) => {
     /*
@@ -38,7 +27,6 @@ export const LoginPrincipalComp = observer((props) => {
     /*
     Context  
     */
-    //const context = useContext(AuthContext);
     const history = useHistory();
 
     const handleLogin = () => {
@@ -86,7 +74,7 @@ export const LoginPrincipalComp = observer((props) => {
 
                 <div className="p-col-12 p-lg-12">
                     <div className="p-grid" style={{ padding: 40 }}>
-                        <InputFloatLabel value={user} width="4" icon="pi pi-user" label="Usuario" log={""} onChange={(e) => setUser(e)} />
+                        <InputFloatLabel value={user} width="4" autoFocus icon="pi pi-user" label="Usuario" log={""} onChange={(e) => setUser(e)} />
                         &nbsp;
                         <PasswordFloatLabel value={password ? password : ""} log={""} width="4" feedback={false} icon="pi pi-key" label="Contraseña" onChange={(e) => setPassword(e)} />
                     </div>

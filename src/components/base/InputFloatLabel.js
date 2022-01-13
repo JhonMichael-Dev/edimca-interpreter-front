@@ -18,6 +18,7 @@ export const InputFloatLabel = (props) => {
         <div className="p-float-label p-field" style={theme.styles.spam}>
             <InputNumber
                 id="idInputFloatLabelNumber"
+                autoFocus={props.autoFocus}
                 mode="decimal"
                 minFractionDigits={props.minFractionDigits ? props.minFractionDigits : 2}
                 maxFractionDigits={props.maxFractionDigits ? props.maxFractionDigits : 2}
@@ -44,6 +45,7 @@ export const InputFloatLabel = (props) => {
         <div className="p-float-label p-field" style={theme.styles.spam}>
             <InputTextarea
                 id="idInputFloatLabel"
+                autoFocus={props.autoFocus}
                 value={props.value ? props.value : ""}
                 rows={4}
                 autoResize={props.autoResize ? props.autoResize : true}
@@ -61,7 +63,7 @@ export const InputFloatLabel = (props) => {
         </div>
     ) : (
         <div className="p-float-label p-field" style={theme.styles.spam}>
-            <InputText id="idInputFloatLabel" value={props.value ? props.value : ""} onChange={(ev) => props.onChange(ev.target.value)} readOnly={props.readOnly} disabled={props.disabled} title={props.title} />
+            <InputText id="idInputFloatLabel" value={props.value ? props.value : ""} onChange={(ev) => props.onChange(ev.target.value)} readOnly={props.readOnly} disabled={props.disabled} title={props.title} autoFocus={props.autoFocus} />
             <label htmlFor="idInputFloatLabel">{props.label}</label>
             <small className="p-error p-d-block">{props.log}</small>
         </div>
