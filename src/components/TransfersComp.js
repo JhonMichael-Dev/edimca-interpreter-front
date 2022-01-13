@@ -22,7 +22,7 @@ import { Dialog } from "primereact/dialog";
 import { LoginPrincipalComp } from "./login/LoginPrincipalComp";
 import { useDataStore } from "../data/DataStoreContext";
 
-export const ProductionControlComp = observer((props) => {
+export const TransfersComp = observer((props) => {
     /*
     Variables
     */
@@ -45,10 +45,6 @@ export const ProductionControlComp = observer((props) => {
     */
     useEffect(() => {
         loadAvailables();
-        /*console.log("useEffect");
-        props.DataStore.setSelStore("store X");
-        //console.log("selStore: ", props.DataStore.getSelStore());
-        */
     }, []);
 
     /*
@@ -135,10 +131,6 @@ export const ProductionControlComp = observer((props) => {
                 resizable={false}
             >
                 <img src={"/assets/images/loader6.gif"} className="pos-edimca-button-noLabel" style={{ width: "160px", height: "120px" }}></img>
-                {/*
-                    4 ++
-                    6 +++
-                     */}
             </Dialog>
         </div>
     );

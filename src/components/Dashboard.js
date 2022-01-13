@@ -7,7 +7,7 @@ import { Column } from "primereact/column";
 import { ProductService } from "../service/ProductService";
 import OrderDataService from "../service/OrderDataService";
 import { useHistory } from "react-router";
-import { LoginPrincipalComp } from "./LoginPrincipalComp";
+import { LoginPrincipalComp } from "./login/LoginPrincipalComp";
 import { useDataStore } from "../data/DataStoreContext";
 const lineData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],

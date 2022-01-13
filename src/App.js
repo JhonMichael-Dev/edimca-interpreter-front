@@ -9,8 +9,9 @@ import { AppConfig } from "./AppConfig";
 
 //Componet
 import { Dashboard } from "./components/Dashboard";
-import { LoginPrincipalComp } from "./components/LoginPrincipalComp";
+import { LoginPrincipalComp } from "./components/login/LoginPrincipalComp";
 import { ProductionControlPage } from "./pages/ProductionControlPage";
+import { TransfersPage } from "./pages/TransfersPage";
 import { ServiceInProcessPage } from "./pages/ServiceInProcessPage";
 // Store
 import { Provider } from "mobx-react";
@@ -174,6 +175,11 @@ const App = () => {
                     to: "/productionControl",
                 },
                 {
+                    label: "Transferencias",
+                    icon: "pi pi-fw pi-sort-alt",
+                    to: "/transfers",
+                },
+                {
                     label: "Ordenes en proceso",
                     icon: "pi pi-fw pi-angle-double-right",
                     to: "/serviceInProcess",
@@ -217,27 +223,8 @@ const App = () => {
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/productionControl" exact component={ProductionControlPage} />
+                    <Route path="/transfers" exact component={TransfersPage} />
                     <Route path="/serviceInProcess" exact component={ServiceInProcessPage} />
-                    {/*                 
-                        <Route path="/formlayout" component={FormLayoutDemo} />
-                        <Route path="/input" component={InputDemo} />
-                        <Route path="/floatlabel" component={FloatLabelDemo} />
-                        <Route path="/invalidstate" component={InvalidStateDemo} />
-                        <Route path="/button" component={ButtonDemo} />
-                        <Route path="/table" component={TableDemo} />
-                        <Route path="/list" component={ListDemo} />
-                        <Route path="/tree" component={TreeDemo} />
-                        <Route path="/panel" component={PanelDemo} />
-                        <Route path="/overlay" component={OverlayDemo} />
-                        <Route path="/menu" component={MenuDemo} />
-                        <Route path="/messages" component={MessagesDemo} />
-                        <Route path="/file" component={FileDemo} />
-                        <Route path="/chart" component={ChartDemo} />
-                        <Route path="/misc" component={MiscDemo} />
-                        <Route path="/timeline" component={TimelineDemo} />
-                        <Route path="/crud" component={Crud} />
-                        <Route path="/empty" component={EmptyPage} />
-                        <Route path="/documentation" component={Documentation} /> */}
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
