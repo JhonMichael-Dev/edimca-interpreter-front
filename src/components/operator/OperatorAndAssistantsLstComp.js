@@ -60,7 +60,9 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
                 let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
-                //setLstOperators(valid.data.obj.operators);
+                let lstAssitantsSkillsDiferentsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => !assistantX.skills.includes(props.skill));
+                lstAssistantsFiltered.push.apply(lstAssistantsFiltered, lstAssitantsSkillsDiferentsFiltered);
+                //console.log(lstAssistantsFiltered);
                 setLstOperators(lstAssistantsFiltered);
             }
             //props.setLoading(false);
@@ -128,7 +130,11 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
 
     let selectionComp = (rowData) => {
         let alreadySelected = selOperatorObj.username === rowData.username;
-        return <Button key={rowData.username} onClick={() => selectOperator(rowData.username)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
+        if (rowData.skills.includes(props.skill)) {
+            return <Button key={rowData.username} onClick={() => selectOperator(rowData.username)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
+        } else {
+            return <Button key={rowData.username} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={true} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
+        }
     };
 
     let assistantSelectionComp = (rowData) => {
@@ -159,12 +165,12 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         <DataTable
             value={lstOperators}
             /*
-                selectionMode="single"
-                selection={selOrderDetail}
-                onSelectionChange={(e) => setSelOrderDetail(e.value)}
-                onRowSelect={onRowSelect}
-                onRowUnselect={onRowUnselect}
-                */
+            selectionMode="single"
+            selection={selOrderDetail}
+            onSelectionChange={(e) => setSelOrderDetail(e.value)}
+            onRowSelect={onRowSelect}
+            onRowUnselect={onRowUnselect}
+            */
             dataKey="username"
             ref={dt}
             responsiveLayout="scroll"
