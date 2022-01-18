@@ -18,14 +18,16 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { OperatorIconComp } from "./OperatorIconComp";
 import OperatorDataService from "../../service/OperatorDataService";
+import { PasswordOperationComp } from "../PasswordOperationComp";
+import { StoreSelectionComp } from "../StoreSelectionComp";
 
-export const OperatorLstComp = observer((props) => {
+export const TransferSelectDestinationComp = observer((props) => {
     /*
   Variables
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+    const [showPasswordDialog, setShowPasswordDialog] = useState(false);
     const [lstOperators, setLstOperators] = useState(null);
     const dt = useRef(null);
     //const [selOrderDetail, setSelOrderDetail] = useState(null);
@@ -50,16 +52,11 @@ export const OperatorLstComp = observer((props) => {
   Methods
   */
     const loadAvailables = () => {
-        if (props.lstOperators) {
-            setLstOperators(props.lstOperators);
-        } else {
-            handleQueryOperatorsByStore();
-        }
+        handleQueryOperatorsByStoreAndFilterBySkill();
     };
 
-    const handleQueryOperatorsByStore = () => {
+    const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
-            console.log("handleQueryOperatorsByStore", valid);
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
                 let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
@@ -70,7 +67,10 @@ export const OperatorLstComp = observer((props) => {
         });
     };
 
-    const handleProcess = (ev) => {};
+    const handleProcess = (ev) => {
+        props.handleProcess(ev);
+        // TODO: show password component
+    };
 
     const selectOperator = (username) => {
         let assistantsOld = removeFromAssistants(selOperatorObj.assistants, username);
@@ -78,7 +78,6 @@ export const OperatorLstComp = observer((props) => {
         //let newObj = { ...selOperatorObj, username: username };
         let newObj = { assistants: assistantsOld, username: username };
         setSelOperatorObj(newObj);
-        props.handleSelectOperator(newObj);
     };
 
     const selectAssistant = (username) => {
@@ -102,6 +101,13 @@ export const OperatorLstComp = observer((props) => {
         return lstAssistants;
     }
 
+    const handleLogin = () => {
+        setShowPasswordDialog(false);
+        props.handleProcess(selOperatorObj.username);
+    };
+
+    const showMessage = (ev) => {};
+
     /*
   Inner Components
   */
@@ -110,17 +116,13 @@ export const OperatorLstComp = observer((props) => {
             message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", ayudantes: " + selOperatorObj.assistants : "") + "?",
             header: "Confirmación",
             icon: "pi pi-question",
-            accept: () => handleProcess(null),
+            //accept: () => handleProcess(null),
+            accept: () => setShowPasswordDialog(true),
             reject: () => setOnlyPendingOrders(false),
             acceptLabel: "Procesar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
-            //className: "p-button-lg",
         });
-    };
-
-    let operatorIconComp = (rowData) => {
-        return <OperatorIconComp operatorUsername={rowData.username} />;
     };
 
     let selectionComp = (rowData) => {
@@ -132,6 +134,7 @@ export const OperatorLstComp = observer((props) => {
         let alreadySelectedAsPrincipal = selOperatorObj.username === rowData.username;
         let alreadySelected = selOperatorObj.assistants.filter((assistantX) => assistantX === rowData.username)[0];
 
+        if (!selOperatorObj.username) return "";
         if (!alreadySelected) {
             // Enable select
             return (
@@ -139,6 +142,7 @@ export const OperatorLstComp = observer((props) => {
                     key={rowData.username}
                     onClick={() => selectAssistant(rowData.username)}
                     disabled={!selOperatorObj.username || alreadySelectedAsPrincipal}
+                    hidden={!selOperatorObj.username}
                     icon="pi pi-check"
                     className={"p-button-rounded p-button-raised  p-button-help "}
                     style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}
@@ -150,28 +154,6 @@ export const OperatorLstComp = observer((props) => {
         }
     };
 
-    let operatorTableComp = (
-        <DataTable
-            value={lstOperators}
-            /*
-                selectionMode="single"
-                selection={selOrderDetail}
-                onSelectionChange={(e) => setSelOrderDetail(e.value)}
-                onRowSelect={onRowSelect}
-                onRowUnselect={onRowUnselect}
-                */
-            dataKey="username"
-            ref={dt}
-            responsiveLayout="scroll"
-            scrollable
-            scrollHeight="380px"
-            virtualScrollerOptions={{ itemSize: 46 }}
-        >
-            <Column header="Operador" body={operatorIconComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
-            <Column header={"Principal: \n" + (selOperatorObj.username ? selOperatorObj.username : " ")} body={selectionComp} style={{ width: "30%" }}></Column>
-        </DataTable>
-    );
-
     let dialogFooterComp = (
         <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
             <Button onClick={() => showProcessConfirmDialog()} label="Aceptar" disabled={!selOperatorObj.username} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
@@ -182,27 +164,22 @@ export const OperatorLstComp = observer((props) => {
   Return
   */
     return (
-        <>
-            {props.showAsDialog ? (
-                <Dialog
-                    header="Selección de operarios"
-                    visible={true}
-                    onHide={(ev) => props.onHide()}
-                    //footer={dialogFooterComp}
-                    style={{
-                        //width: "80%",
-                        textAlign: "center",
-                    }}
-                    className="col-12 lg:col-8 xl:col-6"
-                    closable
-                    resizable={false}
-                    draggable={false}
-                >
-                    {operatorTableComp}
-                </Dialog>
-            ) : (
-                operatorTableComp
-            )}
-        </>
+        <Dialog
+            header="Selección de bodega de destino"
+            visible={true}
+            onHide={(ev) => props.onHide()}
+            //footer={dialogFooterComp}
+            style={{
+                //width: "80%",
+                textAlign: "center",
+            }}
+            className="col-12 lg:col-8 xl:col-6"
+            closable
+            resizable={false}
+            draggable={false}
+        >
+            {/*operatorTableComp*/}
+            <StoreSelectionComp rendered={true} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleProcess(ev)} />
+        </Dialog>
     );
 });

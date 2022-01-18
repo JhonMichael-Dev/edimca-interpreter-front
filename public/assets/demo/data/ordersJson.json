@@ -60,6 +60,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
                     {
@@ -280,6 +281,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     }
                 ]
@@ -488,6 +490,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
                     {
