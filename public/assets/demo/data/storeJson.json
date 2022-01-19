@@ -32,6 +32,26 @@
                     "code": "BD",
                     "description1": "Bodega"
                 }
+            },
+            {
+                "mcu": "2CM00301",
+                "name": "BODEGA FISICA SAN RAFAEL      ",
+                "jdeCode": "204",
+                "address1": "FARINA S/N Y TERCERA TRANSVERSAL   ",
+                "businessUnit": {
+                    "code": "BD",
+                    "description1": "Bodega"
+                }
+            },
+            {
+                "mcu": "2CM00301",
+                "name": "BODEGA FISICA CALDERON",
+                "jdeCode": "205",
+                "address1": "AV.CAPITAN GEOVANNY CALLES S/N INT.CACHA",
+                "businessUnit": {
+                    "code": "BD",
+                    "description1": "Bodega"
+                }
             }
         ]
     }

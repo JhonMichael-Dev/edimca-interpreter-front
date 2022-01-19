@@ -12,18 +12,21 @@ import { Toast } from "primereact/toast";
 
 // Services
 import OrderDataService from "../../service/OrderDataService";
-import { OrderShowComp } from "./OrderShowComp";
-import { OrderServicesIconComp } from "./OrderServicesIconComp";
-import { OrderServicesIconResumeComp } from "./OrderServicesIconResumeComp";
+import { OrderShowComp } from "../order/OrderShowComp";
+import { OrderServicesIconComp } from "../order/OrderServicesIconComp";
+import { OrderServicesIconResumeComp } from "../order/OrderServicesIconResumeComp";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "../operator/OperatorIconComp";
-import { OrderStatusComp } from "./OrderStatusComp";
+import { OrderStatusComp } from "../order/OrderStatusComp";
+import { OperatorLstComp } from "../operator/OperatorLstComp";
 import { OperatorAndAssistantsLstComp } from "../operator/OperatorAndAssistantsLstComp";
+import { TransferSelectDestinationComp } from "./TransferSelectDestinationComp";
+import { TransferIncomeSetData } from "./TransferIncomeSetData";
 
-export const OrderLstDetailComp = observer((props) => {
+export const TransfersLstIncomingDetailComp = observer((props) => {
     /*
   Variables
   */
@@ -63,8 +66,8 @@ export const OrderLstDetailComp = observer((props) => {
 
     const handleProcess = (ev) => {
         setSelOrderDetail(null);
-        showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
-        props.handleProcess();
+        //showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
+        props.handleProcess(ev);
     };
 
     /*
@@ -118,15 +121,15 @@ export const OrderLstDetailComp = observer((props) => {
     };
 
     let selectionComp = (rowData) => {
-        let lstSelectableStatus = ["PENDIENTE", "EN_PAUSA"];
-        let isSelectable = lstSelectableStatus.includes(rowData.status);
+        let lstSelectableStatus = ["EN_PAUSA"];
+        let isSelectable = lstSelectableStatus.includes(rowData.status) && rowData.pauseReason.hardCoded === "S";
         return (
             <Button
                 key={rowData.idOrderDetail}
                 onClick={() => {
                     setSelOrderDetail(rowData);
                 }}
-                icon="pi pi-check"
+                icon="pi pi-pencil"
                 className={"p-button-rounded p-button-secondary " + (isSelectable ? "" : "p-button-raised p-button-text")}
                 disabled={!isSelectable}
                 style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}
@@ -136,27 +139,13 @@ export const OrderLstDetailComp = observer((props) => {
 
     let orderDetailTableComp =
         props.selOrder && props.selOrder.lstOrderDetail && props.selOrder.lstOrderDetail.length > 0 ? (
-            <DataTable
-                value={props.selOrder.lstOrderDetail}
-                /*
-                selectionMode="single"
-                selection={selOrderDetail}
-                onSelectionChange={(e) => setSelOrderDetail(e.value)}
-                onRowSelect={onRowSelect}
-                onRowUnselect={onRowUnselect}
-                */
-                dataKey="idOrderDetail"
-                ref={dt}
-                header={""}
-                footer={""}
-                responsiveLayout="scroll"
-                scrollable
-                scrollHeight="480px"
-                virtualScrollerOptions={{ itemSize: 46 }}
-            >
+            <DataTable value={props.selOrder.lstOrderDetail} dataKey="idOrderDetail" ref={dt} header={""} footer={""} responsiveLayout="scroll" scrollable scrollHeight="480px" virtualScrollerOptions={{ itemSize: 46 }}>
+                <Column header="Tienda Origen" field="storeTransferedFrom.mcu" style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="storeTransferedFrom.mcu"></Column>
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
+                <Column header="Motivo" field="pauseReason.description1" style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="pauseReason.description1"></Column>
                 <Column header="Cantidad" field="quantity" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantity"></Column>
+                <Column header="Cantidad completada" field="quantityCompleted" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityCompleted"></Column>
                 <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="product.description1"></Column>
                 <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType"></Column>
                 <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
@@ -165,7 +154,7 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
-    let operatorAndAssistantsLstComp = selOrderDetail ? <OperatorAndAssistantsLstComp handleProcess={() => handleProcess()} storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let incomeSetDataComp = selOrderDetail ? <TransferIncomeSetData handleProcess={(ev) => handleProcess(ev)} storeMcu={selOrderDetail.storeTransferedTo} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
 
     /*
   Return
@@ -182,7 +171,7 @@ export const OrderLstDetailComp = observer((props) => {
                     //height: "100%",
                     textAlign: "center",
                 }}
-                className="col-12 lg:col-10 xl:col-9"
+                className="col-12 lg:col-10 xl:col-10"
                 modal
                 closable
                 draggable={false}
@@ -190,7 +179,7 @@ export const OrderLstDetailComp = observer((props) => {
             >
                 {orderDetailTableComp}
             </Dialog>
-            {operatorAndAssistantsLstComp}
+            {incomeSetDataComp}
         </>
     );
 });

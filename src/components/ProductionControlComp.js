@@ -33,7 +33,7 @@ export const ProductionControlComp = observer((props) => {
     const toast = useRef(null);
     const dt = useRef(null);
     const [visible, setVisible] = useState(false);
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     /*
     Store
@@ -102,7 +102,7 @@ export const ProductionControlComp = observer((props) => {
     const setLoader = async (ev) => {
         if (!ev) await timeout(400);
 
-        setLoading(ev);
+        dataStore.setLoading(ev);
     };
 
     function timeout(delay) {
@@ -123,23 +123,6 @@ export const ProductionControlComp = observer((props) => {
             {loginPrincipalComp}
             <StoreSelectionComp DataStore={props.DataStore} rendered={false} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
             {orderLstComp}
-            <Dialog
-                header="Procesando.."
-                visible={loading}
-                onHide={(ev) => setLoading(false)}
-                style={{
-                    width: "240px",
-                    textAlign: "center",
-                }}
-                closable
-                resizable={false}
-            >
-                <img src={"/assets/images/loader6.gif"} className="pos-edimca-button-noLabel" style={{ width: "160px", height: "120px" }}></img>
-                {/*
-                    4 ++
-                    6 +++
-                     */}
-            </Dialog>
         </div>
     );
 });

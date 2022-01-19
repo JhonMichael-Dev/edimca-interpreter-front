@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { TransfersComp } from "../components/TransfersComp";
+import { TransfersComp } from "../components/transfer/TransfersComp";
 
 export class TransfersPage extends Component {
     constructor(props) {

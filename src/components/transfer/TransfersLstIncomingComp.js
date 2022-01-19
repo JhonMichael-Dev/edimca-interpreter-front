@@ -3,33 +3,26 @@ import { observer } from "mobx-react";
 //import { computed } from "mobx";
 
 // Prime components
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
-import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
+import { confirmDialog } from "primereact/confirmdialog";
 
 // Services
 import OrderDataService from "../../service/OrderDataService";
-import { OrderShowComp } from "./OrderShowComp";
-import { OrderServicesIconComp } from "./OrderServicesIconComp";
-import { OrderServicesIconResumeComp } from "./OrderServicesIconResumeComp";
+import { OrderServicesIconResumeComp } from "../order/OrderServicesIconResumeComp";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import { OrderLstDetailComp } from "./OrderLstDetailComp";
-import { OrderStatusComp } from "./OrderStatusComp";
+import { OrderStatusComp } from "../order/OrderStatusComp";
+import { TransfersLstDetailComp } from "./TransfersLstDetailComp";
+import { TransfersLstIncomingDetailComp } from "./TransfersLstIncomingDetailComp";
 
-export const OrderLstComp = observer((props) => {
+export const TransfersLstIncomingComp = observer((props) => {
     /*
   Variables
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const [lstOrders, setLstOrders] = useState([]);
     const dt = useRef(null);
-    const [selOrder, setSelOrder] = useState(null);
-    const [selOrderDetail, setSelOrderDetail] = useState(null);
-    const [selOperatorObj, setSelOperatorObj] = useState(null);
+    const [selOrderIncoming, setSelOrderIncoming] = useState(null);
 
     /*
   Init
@@ -53,7 +46,7 @@ export const OrderLstComp = observer((props) => {
         if (props.lstOrders) {
             setLstOrders(props.lstOrders);
         } else {
-            handleQueryOrders(onlyPendingOrders);
+            //handleQueryOrders(onlyPendingOrders);
         }
     };
 
@@ -73,14 +66,17 @@ export const OrderLstComp = observer((props) => {
         }
     };
 
+    /*
     const handleFilterOrders = (ev) => {
         handleQueryOrders(ev);
         setOnlyPendingOrders(ev);
     };
+    */
 
     const handleProcess = (ev) => {
-        setSelOrder(null);
-        props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
+        //console.log("ev: ", ev);
+        setSelOrderIncoming(null);
+        props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio ha sido asignado a: " + ev.operator.username + ", prioridad: " + ev.priority.name });
     };
 
     const onRowSelect = (event) => {
@@ -112,16 +108,9 @@ export const OrderLstComp = observer((props) => {
             ? lstOrders.map((orderX) => {
                   return (
                       <div key={orderX.jdeOrderId} className="grid">
-                          {/*<OrderShowComp selOrder={orderX} /> */}
                           <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderType.code}</div>
                           <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderId}</div>
                           <OrderServicesIconResumeComp selOrder={orderX} />
-                          {/*
-                          <OrderServicesIconComp serviceType={"CORTE"} badgeNumber={0} />
-                          <OrderServicesIconComp serviceType={"PERFORADO"} badgeNumber={1} />
-                          <OrderServicesIconComp serviceType={"RUTEADO"} badgeNumber={3} />
-                          <OrderServicesIconComp serviceType={"LAMINADO"} badgeNumber={2} />
-                          */}
                       </div>
                   );
               })
@@ -185,13 +174,13 @@ export const OrderLstComp = observer((props) => {
         };
     };
 
-    let orderLstComp =
+    let orderLstIncomingComp =
         lstOrders && lstOrders.length > 0 ? (
             <DataTable
                 value={lstOrders}
                 selectionMode="single"
-                selection={selOrder}
-                onSelectionChange={(e) => setSelOrder(e.value)}
+                selection={selOrderIncoming}
+                onSelectionChange={(e) => setSelOrderIncoming(e.value)}
                 onRowSelect={onRowSelect}
                 onRowUnselect={onRowUnselect}
                 dataKey="jdeOrderId"
@@ -206,6 +195,7 @@ export const OrderLstComp = observer((props) => {
                 //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
+                <Column header="Origen" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
                 <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "8%" }} sortable sortField="jdeOrderType.code"></Column>
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>
@@ -222,12 +212,7 @@ export const OrderLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : ";";
-    let pendingOrdersFilterComp = (
-        <div className="col-12 lg:col-8 xl:col-8" style={{ paddingBottom: "10px", textAlign: "right" }}>
-            <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "3em" }} />
-        </div>
-    );
+    let orderLstIncomingDetailComp = selOrderIncoming ? <TransfersLstIncomingDetailComp selOrder={selOrderIncoming} setSelOrder={(ev) => setSelOrderIncoming(ev)} handleProcess={(ev) => handleProcess(ev)} /> : ";";
 
     /*
   Return
@@ -235,15 +220,13 @@ export const OrderLstComp = observer((props) => {
     return (
         <div className="grid card">
             <div className="grid col-12 lg:col-12 xl:col-12">
-                <div className="col-12 lg:col-4 xl:col-4" style={{ textAlign: "left" }}>
+                <div className="col-12 lg:col-5 xl:col-5asdf" style={{ textAlign: "left" }}>
                     <b>{props.header ? props.header : "Lista de órdenes de trabajo"}</b>
                 </div>
-                {pendingOrdersFilterComp}
             </div>
-
             <div>
-                {orderLstComp}
-                {orderLstDetailComp}
+                {orderLstIncomingComp}
+                {orderLstIncomingDetailComp}
             </div>
         </div>
     );

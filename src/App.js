@@ -33,6 +33,7 @@ Theme
 */
 import "primereact/resources/themes/fluent-light/theme.css";
 import { DataProvider, useDataStore } from "./data/DataStoreContext";
+import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
 const App = () => {
     // Variables
     const [selPrincipalUser, setSelPrincipalUser] = useState(null);
@@ -228,6 +229,7 @@ const App = () => {
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
+                <LoadingDialogComp />
             </div>
 
             <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
