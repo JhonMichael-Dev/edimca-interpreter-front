@@ -60,12 +60,12 @@ export const TransferIncomeSetData = observer((props) => {
 
     const handleQueryOperatorsByStoreAndFilterBySkill = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
-            console.log("handleQueryOperatorsByStoreAndFilterBySkill", valid);
+            //console.log("handleQueryOperatorsByStoreAndFilterBySkill", valid);
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
                 let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
                 //setLstOperators(valid.data.obj.operators);
-                console.log("lstAssistantsFiltered", lstAssistantsFiltered);
+                //console.log("lstAssistantsFiltered", lstAssistantsFiltered);
                 setLstOperators(lstAssistantsFiltered);
             }
             //props.setLoading(false);
@@ -81,7 +81,7 @@ export const TransferIncomeSetData = observer((props) => {
             operator,
             priority,
         };
-        console.log("payload", payload);
+        //console.log("payload", payload);
         props.handleProcess(payload);
         // TODO: show password component
     };

@@ -71,7 +71,7 @@ export const TransfersLstComp = observer((props) => {
     };
 
     const handleProcess = (ev) => {
-        console.log("ev: ", ev);
+        //console.log("ev: ", ev);
         setSelOrder(null);
         props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio ha sido transferido a: " + ev.value.name });
     };

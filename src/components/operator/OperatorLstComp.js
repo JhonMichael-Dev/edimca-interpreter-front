@@ -59,7 +59,7 @@ export const OperatorLstComp = observer((props) => {
 
     const handleQueryOperatorsByStore = () => {
         OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
-            console.log("handleQueryOperatorsByStore", valid);
+            //console.log("handleQueryOperatorsByStore", valid);
             if (valid.data && valid.data.success) {
                 let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
                 let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
