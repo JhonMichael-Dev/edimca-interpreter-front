@@ -17,7 +17,7 @@ export const PasswordFloatLabel = (props) => {
                     <i className={props.icon}></i>
                 </span>
                 <div className="p-float-label p-field" style={theme.styles.spam}>
-                    <Password id="idInputFloatLabel" value={props.value ? props.value : ""} onChange={(ev) => props.onChange(ev.target.value)} feedback={props.feedback} weakLabel={"Débil"} mediumLabel={"Fuerte"} strongLabel={"Indescifrable"} required={true} />
+                    <Password id="idInputFloatLabel" value={props.value ? props.value : ""} onChange={(ev) => props.onChange(ev.target.value)} feedback={props.feedback} weakLabel={"Débil"} mediumLabel={"Fuerte"} strongLabel={"Indescifrable"} required={true} autoFocus={props.autoFocus} />
                     <label htmlFor="idInputFloatLabel">{props.label}</label>
                     <small className="p-error p-d-block">{props.log}</small>
                 </div>

@@ -8,26 +8,15 @@ import { Toast } from "primereact/toast";
 /*
 Own Components
 */
-//import { LoginService } from "../service/LoginService";
-//import LoginService from "../service/LoginService";
-//import logoEnterprise from "/assets/layout/images/logo-white.png";
-import { InputFloatLabel } from "../components/base/InputFloatLabel";
-import { PasswordFloatLabel } from "../components/base/PasswordFloatLabel";
-
-// Import Utils
-//import { label } from "../util/Internationalization";
-
-/*
-Store
-*/
-//import { AuthContext } from "../data/AuthContext";
+import { InputFloatLabel } from "../base/InputFloatLabel";
+import { PasswordFloatLabel } from "../base/PasswordFloatLabel";
 
 export const LoginPrincipalComp = observer((props) => {
     /*
     Variables
     */
     const [dialogVisible, setDialogVisible] = useState(true);
-    const [user, setUser] = useState(null);
+    const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
 
     /*
@@ -38,13 +27,23 @@ export const LoginPrincipalComp = observer((props) => {
     /*
     Context  
     */
-    //const context = useContext(AuthContext);
     const history = useHistory();
+
+    /*
+    Init
+    */
+    useEffect(() => {
+        loadUserFromProps();
+    }, []);
+
+    const loadUserFromProps = () => {
+        setUsername(props.username ? props.username : null);
+    };
 
     const handleLogin = () => {
         if (validateLoginData()) {
             let payload = {
-                userpos: { user, password },
+                userpos: { username: username, password },
                 store: {
                     mcu: "2CM00101",
                     name: "BODEGA FISICA MATRIZ QUITO",
@@ -65,7 +64,7 @@ export const LoginPrincipalComp = observer((props) => {
     const validateLoginData = () => {
         //console.log("user", user);
         //console.log("password", password);
-        if (!user || !password) {
+        if (!username || !password) {
             toast.current.show({ severity: "warn", summary: "", detail: "Debe ingresar un usuario y contraseña", life: 3000 });
             return false;
         } else {
@@ -86,9 +85,9 @@ export const LoginPrincipalComp = observer((props) => {
 
                 <div className="p-col-12 p-lg-12">
                     <div className="p-grid" style={{ padding: 40 }}>
-                        <InputFloatLabel value={user} width="4" icon="pi pi-user" label="Usuario" log={""} onChange={(e) => setUser(e)} />
+                        <InputFloatLabel value={username} width="4" autoFocus icon="pi pi-user" label="Usuario" log={""} onChange={(e) => setUsername(e)} />
                         &nbsp;
-                        <PasswordFloatLabel value={password ? password : ""} log={""} width="4" feedback={false} icon="pi pi-key" label="Contraseña" onChange={(e) => setPassword(e)} />
+                        <PasswordFloatLabel value={password ? password : ""} log={""} width="4" feedback={false} icon="pi pi-key" label="Contraseña" onChange={(e) => setPassword(e)} autoFocus={username} />
                     </div>
                 </div>
             </div>

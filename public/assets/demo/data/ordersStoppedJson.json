@@ -1,0 +1,225 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "jdeOrderId": 12345,
+                "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "NORMAL" },
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 123.12,
+                "status": "EN_PROCESO",
+                "lstOrderDetail": [
+                    {
+                        "idOrderDetail": 1,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 15.2,
+                        "quantityCompleted": 15.2,
+                        "status": "COMPLETADO",
+                        "operator": { "username": "ACANGA", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 2,
+                        "product": {
+                            "code": "SERRUTS0023",
+                            "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                            "jdeId": 17767,
+                            "serviceType": "RUTEADO"
+                        },
+                        "quantity": 12.3,
+                        "status": "EN_PAUSA",
+                        "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
+                        "operator": { "username": "GMERA", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 3,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 4,
+                        "quantityCompleted": 3,
+                        "status": "EN_PAUSA",
+                        "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
+                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 4,
+                        "product": {
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
+                            "jdeId": 6285,
+                            "serviceType": "PERFORADO"
+                        },
+                        "quantity": 8,
+                        "status": "PENDIENTE",
+                        "userpos": null
+                    }
+                ]
+            },
+            {
+                "jdeOrderId": 12349,
+                "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "NORMAL" },
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 123.12,
+                "status": "EN_PROCESO",
+                "lstOrderDetail": [
+                    {
+                        "idOrderDetail": 1,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 25.8,
+                        "quantityCompleted": 25.8,
+                        "status": "COMPLETADO",
+                        "operator": { "username": "ACANGA", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 22,
+                        "product": {
+                            "code": "SERRUTS0023",
+                            "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                            "jdeId": 17767,
+                            "serviceType": "RUTEADO"
+                        },
+                        "quantity": 12.3,
+                        "status": "EN_PROCESO",
+                        "operator": { "username": "YWANG", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 3,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 4,
+                        "quantityCompleted": 1,
+                        "status": "EN_PAUSA",
+                        "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
+                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                    }
+                ]
+            },
+            {
+                "jdeOrderId": 12353,
+                "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "NORMAL" },
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 123.12,
+                "status": "EN_PROCESO",
+                "lstOrderDetail": [
+                    {
+                        "idOrderDetail": 1,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 5.4,
+                        "quantityCompleted": 5.4,
+                        "status": "COMPLETADO",
+                        "operator": { "username": "ACANGA", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 222,
+                        "product": {
+                            "code": "SERRUTS0023",
+                            "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
+                            "jdeId": 17767,
+                            "serviceType": "RUTEADO"
+                        },
+                        "quantity": 12.3,
+                        "status": "EN_PROCESO",
+                        "operator": { "username": "GMERA", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 3,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 4,
+                        "quantityCompleted": 2,
+                        "status": "EN_PAUSA",
+                        "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
+                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                    },
+                    {
+                        "idOrderDetail": 4,
+                        "product": {
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
+                            "jdeId": 6285,
+                            "serviceType": "PERFORADO"
+                        },
+                        "quantity": 8,
+                        "status": "PENDIENTE",
+                        "userpos": null
+                    }
+                ]
+            }
+        ]
+    }
+}
