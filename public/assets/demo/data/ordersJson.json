@@ -25,6 +25,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"21/01/2022 12:00:00 PM",
+                "asesor":"CMORA",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -99,6 +101,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"20/01/2022 10:00:00 AM",
+                "asesor":"GJORGE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -160,6 +164,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"19/01/2022 09:00:00 AM",
+                "asesor":"CJUAN",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -209,6 +215,8 @@
                 },
                 "total": 83.77,
                 "status": "PENDIENTE",
+                "fecha_pedido":"23/01/2022 11:45:00 AM",
+                "asesor":"MLUIS",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -246,6 +254,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"24/01/2022 08:45:00 AM",
+                "asesor":"MLUIS",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -308,6 +318,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"24/01/2022 13:45:00 PM",
+                "asesor":"RMARY",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -369,6 +381,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"20/01/2022 16:09:00 PM",
+                "asesor":"TJAVIER",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -418,6 +432,8 @@
                 },
                 "total": 83.77,
                 "status": "PENDIENTE",
+                "fecha_pedido":"15/01/2022 11:09:00 AM",
+                "asesor":"PPAUL",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -455,6 +471,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"16/01/2022 11:11:00 AM",
+                "asesor":"CMMORALES",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -529,6 +547,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"14/01/2022 17:00:00 pm",
+                "asesor":"MPANCHI",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -590,6 +610,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"01/01/2022 14:18    :00 pm",
+                "asesor":"JLAVERDE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -676,6 +698,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"01/01/2022 14:18:00 pm",
+                "asesor":"JLAVERDE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -737,6 +761,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"01/01/2022 16:38:00 pm",
+                "asesor":"DTIUMA",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
