@@ -1,0 +1,19 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "store": { "mcu": "2CM00101" },
+                "machineryList": [
+                    { "code": "COR01", "description": "Contadora recta 01", "machinetyType": { "code": "CORTE", "description1: ": "Corte" } },
+                    { "code": "COR02", "description": "Contadora recta 02", "machinetyType": { "code": "CORTE", "description1: ": "Corte" } },
+                    { "code": "ENC01", "description": "Enchapadora 01", "machinetyType": { "code": "ENCHAPE", "description1: ": "Enchape" } },
+                    { "code": "RUT01", "description": "Ruteadora 01", "machinetyType": { "code": "RUTEADO", "description1: ": "Ruteado" } },
+                    { "code": "PER01", "description": "Perforadora 01", "machinetyType": { "code": "PERFORADO", "description1: ": "Perforado" } },
+                    { "code": "PER02", "description": "Perforadora 02", "machinetyType": { "code": "PERFORADO", "description1: ": "Perforado" } }
+                ]
+            }
+        ]
+    }
+}
