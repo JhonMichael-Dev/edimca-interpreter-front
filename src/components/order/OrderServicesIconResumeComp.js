@@ -45,6 +45,7 @@ export const OrderServicesIconResumeComp = observer((props) => {
     const handleProcess = (ev) => {};
 
     const handleResumeServices = (selOrder) => {
+        setLstOrders(props.selOrder);
         if (selOrder && selOrder.lstOrderDetail && selOrder.lstOrderDetail.length > 0) {
             //console.log("mapServices.size0: ", mapServices.size);
             let mapServicesAux = new Map();
@@ -54,12 +55,9 @@ export const OrderServicesIconResumeComp = observer((props) => {
             //selOrder.lstOrderDetail.map((detX) => {
             lstDetailSortedByServiceType.map((detX) => {
                 let keyX = detX.product.serviceType;
-                //console.log("keyX", keyX);
                 let isPending = detX.status !== "COMPLETADO";
-                //console.log("isPending", isPending);
                 let objectX = mapServicesAux.get(keyX);
                 let countX = objectX ? objectX : 0;
-
                 mapServicesAux.set(keyX, isPending ? countX + 1 : countX);
             });
 
@@ -74,10 +72,11 @@ export const OrderServicesIconResumeComp = observer((props) => {
         mapServices && mapServices.size > 0
             ? [...mapServices.keys()].map((keyX) => {
                   //console.log("keyX", keyX);
+                  //console.log(lstOrders.lstOrderDetail.map((key) => key.product.serviceType === keyX));
                   let valueX = mapServices.get(keyX);
                   return (
                       <div key={keyX}>
-                          <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} />
+                          <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} statusService={lstOrders.lstOrderDetail.map((key) => (key.product.serviceType === keyX && key.statusService !== undefined ? key.statusService + " - " : ""))} />
                       </div>
                   );
               })
