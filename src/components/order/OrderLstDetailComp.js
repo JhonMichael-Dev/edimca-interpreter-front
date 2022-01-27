@@ -186,7 +186,19 @@ export const OrderLstDetailComp = observer((props) => {
         ""
     );
 
-    let operatorAndAssistantsLstComp = selMachinery ? <OperatorAndAssistantsLstComp handleProcess={() => handleProcess()} storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let operatorAndAssistantsLstComp = selMachinery ? (
+        <OperatorAndAssistantsLstComp
+            handleProcess={() => handleProcess()}
+            storeMcu={null}
+            skill={selOrderDetail ? selOrderDetail.product.serviceType : null}
+            onHide={(ev) => {
+                setSelMachinery(null);
+                setSelOrderDetail(null);
+            }}
+        />
+    ) : (
+        ""
+    );
 
     /*
   Return

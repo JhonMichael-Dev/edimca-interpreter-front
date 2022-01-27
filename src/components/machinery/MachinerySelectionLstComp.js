@@ -117,8 +117,9 @@ export const MachinerySelectionLstComp = observer((props) => {
             scrollHeight="380px"
             virtualScrollerOptions={{ itemSize: 46 }}
         >
-            <Column header="Maquinaria" body={machineryIconComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="code"></Column>
+            <Column header="Maquinaria" body={machineryIconComp} style={{ width: "110px", textAlign: "center", alignContent: "center" }} sortable sortField="code"></Column>
             <Column header="Descripción" field="description" style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="description"></Column>
+            <Column header="Ruta" field="route.code" style={{ width: "120px", textAlign: "center", alignContent: "center" }} sortable sortField="route.code"></Column>
             <Column header="Seleccionar" body={selectionComp} style={{ width: "30%" }}></Column>
         </DataTable>
     );
