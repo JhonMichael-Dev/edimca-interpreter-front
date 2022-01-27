@@ -119,7 +119,7 @@ export const TransfersLstDetailComp = observer((props) => {
     };
 
     let selectionComp = (rowData) => {
-        let lstSelectableStatus = ["EN_PAUSA"];
+        let lstSelectableStatus = ["PARADO"];
         let isSelectable = lstSelectableStatus.includes(rowData.status) && rowData.pauseReason.hardCoded === "S";
         return (
             <Button

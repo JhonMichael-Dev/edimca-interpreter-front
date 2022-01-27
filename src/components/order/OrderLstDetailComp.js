@@ -22,6 +22,7 @@ import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "../operator/OperatorIconComp";
 import { OrderStatusComp } from "./OrderStatusComp";
 import { OperatorAndAssistantsLstComp } from "../operator/OperatorAndAssistantsLstComp";
+import { MachinerySelectionLstComp } from "../machinery/MachinerySelectionLstComp";
 
 export const OrderLstDetailComp = observer((props) => {
     /*
@@ -29,6 +30,7 @@ export const OrderLstDetailComp = observer((props) => {
   */
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const [selOrderDetail, setSelOrderDetail] = useState(null);
+    const [selMachinery, setSelMachinery] = useState(null);
     const dt = useRef(null);
     const toast = useRef(null);
 
@@ -59,6 +61,10 @@ export const OrderLstDetailComp = observer((props) => {
             detail: ev.message,
             life: (ev.message.length / 10) * 1500,
         });
+    };
+
+    const handleProcessSelectMachinery = (ev) => {
+        setSelMachinery(ev);
     };
 
     const handleProcess = (ev) => {
@@ -165,7 +171,34 @@ export const OrderLstDetailComp = observer((props) => {
             <></>
         );
 
-    let operatorAndAssistantsLstComp = selOrderDetail ? <OperatorAndAssistantsLstComp handleProcess={() => handleProcess()} storeMcu={null} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let machinerySelectionLstComp = selOrderDetail ? (
+        <MachinerySelectionLstComp
+            showAsDialog
+            handleProcess={(ev) => handleProcessSelectMachinery(ev)}
+            storeMcu={null}
+            serviceType={selOrderDetail.product.serviceType}
+            onHide={(ev) => {
+                setSelMachinery(null);
+                setSelOrderDetail(null);
+            }}
+        />
+    ) : (
+        ""
+    );
+
+    let operatorAndAssistantsLstComp = selMachinery ? (
+        <OperatorAndAssistantsLstComp
+            handleProcess={() => handleProcess()}
+            storeMcu={null}
+            skill={selOrderDetail ? selOrderDetail.product.serviceType : null}
+            onHide={(ev) => {
+                setSelMachinery(null);
+                setSelOrderDetail(null);
+            }}
+        />
+    ) : (
+        ""
+    );
 
     /*
   Return
@@ -190,6 +223,7 @@ export const OrderLstDetailComp = observer((props) => {
             >
                 {orderDetailTableComp}
             </Dialog>
+            {machinerySelectionLstComp}
             {operatorAndAssistantsLstComp}
         </>
     );

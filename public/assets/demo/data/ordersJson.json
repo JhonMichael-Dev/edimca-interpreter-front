@@ -34,11 +34,13 @@
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": "CORTE"                            
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "statusService": 30,
+                        "operator": { "username": "ACANGA", "assistants": [] 
+                        }
                     },
                     {
                         "idOrderDetail": 2,
@@ -46,10 +48,12 @@
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                             "jdeId": 17767,
-                            "serviceType": "RUTEADO"
+                            "serviceType": "RUTEADO",
+                            "status_service": 90
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 30,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -62,6 +66,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 90,
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
@@ -75,6 +80,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -114,6 +120,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -126,6 +133,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -138,6 +146,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -177,6 +186,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -189,6 +199,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -228,6 +239,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -267,6 +279,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -279,6 +292,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 30,
                         "operator": { "username": "YWANG", "assistants": [] }
                     },
                     {
@@ -291,6 +305,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 90,
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     }
@@ -343,6 +358,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -355,6 +371,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -394,6 +411,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -406,6 +424,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -445,6 +464,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -484,6 +504,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -496,6 +517,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 90,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -508,6 +530,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 30,
                         "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
@@ -521,6 +544,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -560,6 +584,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -572,6 +597,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -584,6 +610,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -623,6 +650,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -635,6 +663,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -672,6 +701,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "EPEREZ", "assistants": [] }
                     }
                 ]
@@ -711,6 +741,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -723,6 +754,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 90,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -735,6 +767,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -774,6 +807,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -786,6 +820,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -798,6 +833,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -835,6 +871,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -847,6 +884,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -884,6 +922,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
