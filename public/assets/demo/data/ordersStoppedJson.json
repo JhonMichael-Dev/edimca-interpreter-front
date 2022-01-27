@@ -62,7 +62,7 @@
                         },
                         "quantity": 4,
                         "quantityCompleted": 3,
-                        "status": "EN_PAUSA",
+                        "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
@@ -138,7 +138,7 @@
                         },
                         "quantity": 4,
                         "quantityCompleted": 1,
-                        "status": "EN_PAUSA",
+                        "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     }
