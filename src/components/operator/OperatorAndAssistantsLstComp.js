@@ -116,7 +116,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
             //accept: () => handleProcess(null),
             accept: () => setShowPasswordDialog(true),
             reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
+            acceptLabel: "Play!",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
         });

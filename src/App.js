@@ -34,6 +34,7 @@ Theme
 import "primereact/resources/themes/fluent-light/theme.css";
 import { DataProvider, useDataStore } from "./data/DataStoreContext";
 import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
+import { Badge } from "primereact/badge";
 const App = () => {
     // Variables
     const [selPrincipalUser, setSelPrincipalUser] = useState(null);
@@ -72,7 +73,7 @@ const App = () => {
         } else {
             removeClass(document.body, "body-overflow-hidden");
         }
-    }, [mobileMenuActive]);
+    }, [mobileMenuActive, dataStore.authPrincipalUser]);
 
     const validatePrincipalUserLogedIn = () => {
         if (!dataStore.authPrincipalUser) {
@@ -179,6 +180,7 @@ const App = () => {
                     label: "Transferencias",
                     icon: "pi pi-fw pi-sort-alt",
                     to: "/transfers",
+                    badge: dataStore.countIncomingTransfers === 0 ? "" : <Badge value={dataStore.countIncomingTransfers} />,
                 },
                 {
                     label: "Ordenes en proceso",

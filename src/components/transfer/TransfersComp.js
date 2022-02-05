@@ -38,9 +38,11 @@ export const TransfersComp = observer((props) => {
     Init
     */
     useEffect(() => {
-        loadAvailables();
-        loadSelectedOption();
-    }, []);
+        if (selTransferUser) {
+            loadAvailables();
+            loadSelectedOption();
+        }
+    }, [selTransferUser]);
 
     /*
     Formats
@@ -70,6 +72,8 @@ export const TransfersComp = observer((props) => {
         OrderDataService.queryIncomingOrdersByStore().then((valid) => {
             if (valid.data && valid.data.success) {
                 setLstIncomingOrders(valid.data.obj);
+                dataStore.setCountIncomingTransfers(valid.data.obj.length);
+                //console.log("setCountIncomingTransfers", valid.data.obj.length);
             }
         });
     };
