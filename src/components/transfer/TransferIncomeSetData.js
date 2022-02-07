@@ -128,7 +128,7 @@ export const TransferIncomeSetData = observer((props) => {
 
     const lstPriority = [
         { name: "Normal", code: "NORMAL" },
-        { name: "Express", code: "EXPRESS" },
+        { name: "Emergente", code: "EMERGENTE" },
     ];
 
     const showProcessConfirmDialog = () => {
