@@ -102,6 +102,16 @@ export const TransfersComp = observer((props) => {
         return selOption === options[0];
     };
 
+    const verificationOrderEmer = (e) => {
+        console.log(e.target.value);
+        setSelOption(e.value);
+
+        let ev = { severity: "warn", summary: "Mensaje Informativo", message: "Tiene una transferencia emergente" };
+        if (e.target.value === "Órdenes de trabajo recibidas" || e.target.value === null) {
+            showMessage(ev);
+        }
+    };
+
     /*
   Inner components
   */
@@ -126,7 +136,7 @@ export const TransfersComp = observer((props) => {
     return (
         <div className="p-fluid p-grid">
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <SelectButton value={selOption} options={options} onChange={(e) => setSelOption(e.value)} />
+            <SelectButton value={selOption} options={options} onChange={(e) => verificationOrderEmer(e)} />
             {loginPrincipalComp}
             <StoreSelectionComp DataStore={props.DataStore} rendered={false} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectUser(ev)} />
             {isOption1() ? lstOrderComp : lstIncommingOrderComp}

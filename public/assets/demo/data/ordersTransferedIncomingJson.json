@@ -74,7 +74,71 @@
                         }
                     }
                 ]
+            },
+            {
+                "jdeOrderId": 1234005,
+                "jdeOrderType": { "code": "VM" },
+                "priority": { "code": "EMERGENTE" },
+                "promise":"Fecha y hora de entrega 10/09/2022 10:00am",
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },
+                "store": {
+                    "mcu": "2CM00101",
+                    "name": "BODEGA FISICA MATRIZ QUITO",
+                    "jdeCode": "124",
+                    "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                    "businessUnit": {
+                        "code": "BD",
+                        "description1": "Bodega"
+                    }
+                },
+                "total": 123.12,
+                "status": "PENDIENTE",
+                "lstOrderDetail": [
+                    {
+                        "idOrderDetail": 3,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 4,
+                        "quantityCompleted": 3,
+                        "status": "PARADO",
+                        "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
+                        "operator": { "username": "PGUTIERREZ", "assistants": [] },
+                        "storeTransferedFrom": {
+                            "mcu": "2CM00101",
+                            "name": "BODEGA FISICA MATRIZ QUITO",
+                            "jdeCode": "124",
+                            "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                            "businessUnit": {
+                                "code": "BD",
+                                "description1": "Bodega"
+                            }
+                        },
+                        "storeTransferedTo": {
+                            "mcu": "2CM00101",
+                            "name": "BODEGA FISICA MATRIZ QUITO",
+                            "jdeCode": "124",
+                            "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                            "businessUnit": {
+                                "code": "BD",
+                                "description1": "Bodega"
+                            }
+                        }
+                    }
+                ]
             }
+
+
+
+            
         ]
     }
 }
