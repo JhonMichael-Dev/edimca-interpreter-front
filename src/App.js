@@ -34,6 +34,11 @@ Theme
 import "primereact/resources/themes/fluent-light/theme.css";
 import { DataProvider, useDataStore } from "./data/DataStoreContext";
 import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
+import MachineListPage from "./pages/MachineListPage";
+import VlPage from "./pages/VlPage";
+import OtherOrdersPage from "./pages/OtherOrdersPage";
+import HumanTalentPage from "./pages/HumanTalentPage";
+import OccupationalDoctorPage from "./pages/OccupationalDoctorPage";
 const App = () => {
     // Variables
     const [selPrincipalUser, setSelPrincipalUser] = useState(null);
@@ -185,8 +190,39 @@ const App = () => {
                     icon: "pi pi-fw pi-angle-double-right",
                     to: "/serviceInProcess",
                 },
-            ],
-        },
+                {
+                    label: "Lista de maquinas",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    to: "/machineList",
+                },
+                {
+                    label: "Registro manual",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    items: [
+                        {
+                            label: "VL",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/vl" 
+                        },
+                        {
+                            label: "Otras Ordenes",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/otherOrders" 
+                        }
+                    ]
+                },
+                {
+                    label: "Talento humano",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    to: "/talentoHumano",
+                },
+                {
+                    label: "Médico ocupacional",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    to: "/medicoOcupacional",
+                }
+            ]
+        }
     ];
 
     const addClass = (element, className) => {
@@ -225,7 +261,12 @@ const App = () => {
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/productionControl" exact component={ProductionControlPage} />
                     <Route path="/transfers" exact component={TransfersPage} />
+                    <Route path="/machineList" exact component={MachineListPage} />
                     <Route path="/serviceInProcess" exact component={ServiceInProcessPage} />
+                    <Route path="/vl" exact component={VlPage} />
+                    <Route path="/otherOrders" exact component={OtherOrdersPage} />
+                    <Route path="/talentoHumano" exact component={HumanTalentPage} />
+                    <Route path="/medicoOcupacional" exact component={OccupationalDoctorPage} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
