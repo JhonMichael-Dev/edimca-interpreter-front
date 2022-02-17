@@ -62,7 +62,7 @@ export const OperatorIconComp = observer((props) => {
   Return
   */
     return (
-        <div className="card" style={{ width: "120px", textAlign: "center", alignContent: "center", justifyContent: "center" }} title={props.operatorUsername}>
+        <div className="card" style={{textAlign: "center", alignContent: "center", justifyContent: "center" }} title={props.operatorUsername}>
             <i className="p-overlay-badge">
                 <img src={imageName} alt={props.operatorUsername ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: "70px", height: "70px" }}></img>
                 {/*props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""*/}

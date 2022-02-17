@@ -1,0 +1,94 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [
+            {
+                "store": { "mcu": "2CM00101" },
+                "jdeOrderId": 12345,
+                "operator": { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
+                "lstServices" : [
+                    {
+                        "idOrderDetail": 5,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 8,
+                        "status": "PENDIENTE",
+                        "statusService": 90,
+                        "userpos": null
+                    },
+                    {
+                        "idOrderDetail": 2,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 3,
+                        "status": "EN_PROCESO",
+                        "statusService": 30,
+                        "userpos": null
+                    }
+                ]
+            },
+            {
+                "store": { "mcu": "2CM00101" },
+                "jdeOrderId": 12345,
+                "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" },
+                "lstServices" : [
+                    {
+                        "idOrderDetail": 1,
+                        "product": {
+                            "code": "SERECTS0008",
+                            "description1": "SERV ENCHAPADO PUR ML",
+                            "jdeId": 17069,
+                            "serviceType": "ENCHAPE"
+                        },
+                        "quantity": 3,
+                        "status": "PENDIENTE",
+                        "statusService": 90,
+                        "userpos": null
+                    }
+                ]
+            },
+            {
+                "store": { "mcu": "2CM00101" },
+                "jdeOrderId": 12345,
+                "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" },
+                "lstServices" : [
+                    {
+                        "idOrderDetail": 2,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 3,
+                        "status": "EN_PROCESO",
+                        "statusService": 30,
+                        "userpos": null
+                    },
+                    {
+                        "idOrderDetail": 7,
+                        "product": {
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
+                            "jdeId": 6285,
+                            "serviceType": "PERFORADO"
+                        },
+                        "quantity": 6,
+                        "status": "COMPLETADO",
+                        "statusService": 30,
+                        "userpos": null
+                    }
+                ]
+            }     
+        ]
+    }
+}
