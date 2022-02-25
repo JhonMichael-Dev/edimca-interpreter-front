@@ -2,14 +2,17 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 import { OperatorIconComp } from "./OperatorIconComp";
 import { OperatorTurnComp } from "./OperatorTurnComp";
 import { OperatorServicesIconResumeComp } from "./OperatorServicesIconResumeComp";
+import { OperatorCountComp } from "./OperatorCountComp";
+import { OperatorServiceIconComp } from "./OperatorServiceIconComp"
+import { OperatorActionsComp } from "./OperatorActionsComp"
 
 import OperatorDataService from "../../service/OperatorDataService";
-import OrderDataService from "../../service/OrderDataService";
-import { OperatorCountComp } from "./OperatorCountComp";
+
 
 export const OperatorAndServiceLstComp = observer((props) => {
 
@@ -18,6 +21,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     */
 
     const [lstOperators, setLstOperators] = useState(null);
+    const [selOperator, setSelOperator] = useState(null);
     const dt = useRef(null);
 
         /*
@@ -46,7 +50,6 @@ export const OperatorAndServiceLstComp = observer((props) => {
         OperatorDataService.queryServicesByOperator(props.storeMcu).then((valid) =>{
             if (valid.data && valid.data.success) {
                 setLstOperators(valid.data.obj);
-                //console.log(valid.data.obj);
             }
         });
     };
@@ -59,9 +62,40 @@ export const OperatorAndServiceLstComp = observer((props) => {
         return <OperatorIconComp operatorUsername={rowData.operator.username} />;
     };
 
+    let operatorIconComp2 = () => {
+        return <OperatorIconComp operatorUsername={selOperator.operator.username} />;
+    };
+
     let operatorTurnComp = (rowData) => {
         return (
             <OperatorTurnComp status={rowData.operator.turno}/>
+        );
+    };
+
+    let operatorTurnComp2 = (rowData) => {
+        //console.log(rowData.status);
+        return (
+            <OperatorTurnComp status={rowData.status}/>
+        );
+    };
+
+    let operatorActionsComp = () => {
+        return (
+
+            <Splitter style={{ height: '34px', border: 'none'}}>
+                <SplitterPanel>
+                    <OperatorActionsComp action={"Play"} />
+                </SplitterPanel>
+                <SplitterPanel>
+                    <OperatorActionsComp action={"Stop"} />
+                </SplitterPanel>
+                <SplitterPanel>
+                    <OperatorActionsComp action={"Daño"} />
+                </SplitterPanel>
+                <SplitterPanel>
+                    <OperatorActionsComp action={"Fin"} />
+                </SplitterPanel>
+            </Splitter>
         );
     };
 
@@ -87,9 +121,32 @@ export const OperatorAndServiceLstComp = observer((props) => {
         );
     };
 
+    let serviceComp = (rowData) => {
+        return (
+            <div>
+                <div className="col-12 lg:col-12 xl:col-12">
+                    <b>{rowData.product.code}</b>
+                </div>
+                <div className="col-12 lg:col-12 xl:col-12">
+                    {rowData.product.description1}
+                </div>
+            </div>
+        );
+    };
+
+    let serviceTypeIconComp = (rowData) => {
+        return (
+            <div key={rowData.idOrderDetail}>
+                <OperatorServiceIconComp serviceType={rowData.product.serviceType} badgeNumber={null} />
+            </div>
+        );
+    };
+
     let operatorTableComp = (
         <DataTable
             value={lstOperators}
+            selectionMode="single"
+            onRowSelect={e => setSelOperator(e.data)}
             dataKey="username"
             ref={dt}
             responsiveLayout="scroll"
@@ -101,20 +158,41 @@ export const OperatorAndServiceLstComp = observer((props) => {
             <Column header="Turno" body={operatorTurnComp} style={{ width: "20px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="turno"></Column>
             <Column header="Servicios asignados" body={operatorCountComp} style={{ width: "30px", textAlign: "center", alignContent: "center", justifyContent: "center" }}></Column>
             <Column
-                    header="Servicios pendientes"
-                    body={orderServicesIconResumeComp}
-                    style={{
-                        width: "40%",
-                        textAlign: "center", alignContent: "center", justifyContent: "center"
-                    }}
-                ></Column>
+                header="Servicios pendientes"
+                body={orderServicesIconResumeComp}
+                style={{
+                    width: "40%",
+                    textAlign: "center", alignContent: "center", justifyContent: "center"
+                }}
+            ></Column>
         </DataTable>
     );
 
+    let operatorServiceComp = (selOperator) => {
+        //console.log(selOperator);
+        return (
+            <DataTable
+                value={selOperator.lstServices}
+                selectionMode="single"
+                responsiveLayout="scroll"
+                scrollable
+                scrollHeight="700px"
+                virtualScrollerOptions={{ itemSize: 46 }}
+            >
+                <Column header="Operador" body={operatorIconComp2} style={{ width: "15%", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
+                <Column header="Estado" body={operatorTurnComp2} style={{ width: "10%", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="Estado"></Column>
+                <Column header="Producto" body={serviceComp} style={{ width: "15%" }} ></Column>
+                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "10%" }} ></Column>
+                <Column header="Seleccionar" body={operatorActionsComp} style={{ width: "30%", textAlign: "center", alignContent: "center", justifyContent: "center" }}></Column>
+            </DataTable>
+        );
+    };
 
     return (
         <div>
-            {operatorTableComp}
+            {
+                selOperator === null ? operatorTableComp : operatorServiceComp(selOperator)
+            }
         </div>
     );
 });

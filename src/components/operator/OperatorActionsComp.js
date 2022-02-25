@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 // Prime components
 import { Button } from "primereact/button";
 
-export const OperatorTurnComp = observer((props) => {
+export const OperatorActionsComp = observer((props) => {
     /*
   Variables
   */
@@ -38,14 +38,10 @@ export const OperatorTurnComp = observer((props) => {
     */
     return (
         <Button
-            className={"p-button-rounded p-button-" + (props.status === "DIURNO" ?
-                                                        "success" :
-                                                        props.status === "COMPLETADO" ?
-                                                        "success" :
-                                                        "warning")}
+            className={"p-button-rounded"}
             style={{ fontWeight: "bold", fontSize: 12, justifyContent: "center" }}
         >
-            {props.status}
+            {props.action}
         </Button>
     );
 });

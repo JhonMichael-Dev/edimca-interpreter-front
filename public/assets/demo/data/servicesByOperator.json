@@ -58,7 +58,7 @@
             },
             {
                 "store": { "mcu": "2CM00101" },
-                "jdeOrderId": 12345,
+                "jdeOrderId": 12346,
                 "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" },
                 "lstServices" : [
                     {
@@ -88,7 +88,40 @@
                         "userpos": null
                     }
                 ]
-            }     
+            },
+            {
+                "store": { "mcu": "2CM00101" },
+                "jdeOrderId": 12347,
+                "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" },
+                "lstServices" : [
+                    {
+                        "idOrderDetail": 1,
+                        "product": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": "CORTE"
+                        },
+                        "quantity": 3,
+                        "status": "EN_PROCESO",
+                        "statusService": 30,
+                        "userpos": null
+                    },
+                    {
+                        "idOrderDetail": 2,
+                        "product": {
+                            "code": "SERPRFS0002",
+                            "description1": "SERV.PERFORADO SIST.32 UN",
+                            "jdeId": 6285,
+                            "serviceType": "PERFORADO"
+                        },
+                        "quantity": 6,
+                        "status": "COMPLETADO",
+                        "statusService": 30,
+                        "userpos": null
+                    }
+                ]
+            }
         ]
     }
 }
