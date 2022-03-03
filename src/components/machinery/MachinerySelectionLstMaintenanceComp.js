@@ -74,7 +74,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         return (
             <React.Fragment>
                 <Button label="Habilitar" className="p-button-rounded p-button-success mr-2" onClick={() => ({})} />
-                <Button label="Mantenimiento" className="p-button-rounded p-button-warning" onClick={() => showDlgMan(rowData)} />
+                <Button label="Mantenimiento" className="p-button-rounded p-button-Info" onClick={() => showDlgMan(rowData)} />
             </React.Fragment>
         );
     };
