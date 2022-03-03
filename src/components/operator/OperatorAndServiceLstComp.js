@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 import { OperatorIconComp } from "./OperatorIconComp";
 import { OperatorTurnComp } from "./OperatorTurnComp";
@@ -79,23 +78,23 @@ export const OperatorAndServiceLstComp = observer((props) => {
         );
     };
 
-    let operatorActionsComp = () => {
+    let operatorActionsComp = (rowData) => {
+        //console.log(rowData);
         return (
-
-            <Splitter style={{ height: '34px', border: 'none'}}>
-                <SplitterPanel>
-                    <OperatorActionsComp action={"Play"} />
-                </SplitterPanel>
-                <SplitterPanel>
-                    <OperatorActionsComp action={"Stop"} />
-                </SplitterPanel>
-                <SplitterPanel>
-                    <OperatorActionsComp action={"Daño"} />
-                </SplitterPanel>
-                <SplitterPanel>
-                    <OperatorActionsComp action={"Fin"} />
-                </SplitterPanel>
-            </Splitter>
+            <div className="grid">
+                <div className="col-3">
+                    <OperatorActionsComp action={"Play"} icon={"play"} color={"warning"} rowData={rowData} selOrder={selOperator}/>
+                </div>
+                <div className="col-3">
+                    <OperatorActionsComp action={"Stop"} icon={"pause"} color={"info"} rowData={rowData} selOrder={selOperator}/>
+                </div>
+                <div className="col-3">
+                    <OperatorActionsComp action={"Daño"} icon={"exclamation-triangle"} color={"danger"} rowData={rowData} selOrder={selOperator}/>
+                </div>
+                <div className="col-3">
+                    <OperatorActionsComp action={"Fin"} icon={"shopping-cart"} color={"success"} rowData={rowData} selOrder={selOperator}/>
+                </div>
+            </div>
         );
     };
 

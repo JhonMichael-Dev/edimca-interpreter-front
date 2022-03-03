@@ -19,6 +19,7 @@
                         "quantity": 8,
                         "status": "PENDIENTE",
                         "statusService": 90,
+                        "machine": "Felder G330",
                         "userpos": null
                     },
                     {
@@ -32,6 +33,7 @@
                         "quantity": 3,
                         "status": "EN_PROCESO",
                         "statusService": 30,
+                        "machine": "Apache P1000",
                         "userpos": null
                     }
                 ]
@@ -52,6 +54,7 @@
                         "quantity": 3,
                         "status": "PENDIENTE",
                         "statusService": 90,
+                        "machine": "Felder G330",
                         "userpos": null
                     }
                 ]
@@ -72,6 +75,7 @@
                         "quantity": 3,
                         "status": "EN_PROCESO",
                         "statusService": 30,
+                        "machine": "Apache P1000",
                         "userpos": null
                     },
                     {
@@ -85,6 +89,7 @@
                         "quantity": 6,
                         "status": "COMPLETADO",
                         "statusService": 30,
+                        "machine": "Z5150",
                         "userpos": null
                     }
                 ]
@@ -105,6 +110,7 @@
                         "quantity": 3,
                         "status": "EN_PROCESO",
                         "statusService": 30,
+                        "machine": "Apache P1000",
                         "userpos": null
                     },
                     {
@@ -118,6 +124,7 @@
                         "quantity": 6,
                         "status": "COMPLETADO",
                         "statusService": 30,
+                        "machine": "Z5150",
                         "userpos": null
                     }
                 ]
