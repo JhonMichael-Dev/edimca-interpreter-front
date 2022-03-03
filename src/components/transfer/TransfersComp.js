@@ -57,7 +57,7 @@ export const TransfersComp = observer((props) => {
     };
 
     const loadSelectedOption = () => {
-        setSelOption(selOption ? selOption : null);
+        setSelOption(selOption ? selOption : options[0]);
     };
 
     const queryStoppedOrders = () => {

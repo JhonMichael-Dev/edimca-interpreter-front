@@ -145,7 +145,7 @@ export const MachinerySelectionLstComp = observer((props) => {
                         //width: "80%",
                         textAlign: "center",
                     }}
-                    className="col-12 lg:col-8 xl:col-6"
+                    className="col-12 lg:col-8 xl:col-8"
                     closable
                     resizable={false}
                     draggable={false}

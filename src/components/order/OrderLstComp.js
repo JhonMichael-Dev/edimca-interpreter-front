@@ -222,7 +222,7 @@ export const OrderLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : ";";
+    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : "";
 
     let filterMessage = "Solo órdenes pendientes";
 

@@ -212,7 +212,7 @@ export const TransfersLstIncomingComp = observer((props) => {
             <></>
         );
 
-    let orderLstIncomingDetailComp = selOrderIncoming ? <TransfersLstIncomingDetailComp selOrder={selOrderIncoming} setSelOrder={(ev) => setSelOrderIncoming(ev)} handleProcess={(ev) => handleProcess(ev)} /> : ";";
+    let orderLstIncomingDetailComp = selOrderIncoming ? <TransfersLstIncomingDetailComp selOrder={selOrderIncoming} setSelOrder={(ev) => setSelOrderIncoming(ev)} handleProcess={(ev) => handleProcess(ev)} /> : "";
 
     /*
   Return

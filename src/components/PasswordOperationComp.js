@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+
 export const PasswordOperationComp = observer((props) => {
     /*
   Variables
@@ -11,7 +12,7 @@ export const PasswordOperationComp = observer((props) => {
 
     const toast = useRef(null);
     const [lstStoreData, setLstStoreData] = useState([]);
-    const [dlgPassword, selDlgPassword] = useState(true);
+    //const [dlgPassword, selDlgPassword] = useState(true);
     let password = "";
     const [btn1, selBtn1] = useState("");
     const [btn2, selBtn2] = useState("");
@@ -89,7 +90,7 @@ export const PasswordOperationComp = observer((props) => {
             if (password.length === 4) {
                 localStorage.setItem("passwordLocal", password);
                 //showMessage({ message: "Clave ingresada correctamente", severity: "success" });
-                selDlgPassword(false);
+                //selDlgPassword(false);
                 props.handleLogin();
             } else {
                 showMessage({ message: "La clave debe de contener 4 digitos", severity: "error" });
@@ -105,7 +106,8 @@ export const PasswordOperationComp = observer((props) => {
   */
 
     const onHide = () => {
-        selDlgPassword(false);
+        //selDlgPassword(false);
+        props.onHide();
     };
 
     /*
@@ -114,7 +116,7 @@ export const PasswordOperationComp = observer((props) => {
     return (
         <div>
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <Dialog header="Clave" visible={dlgPassword} modal={true} style={{ width: "40vw" }} draggable={false}>
+            <Dialog header="Clave" visible={true} modal={true} style={{ width: "40vw" }} draggable={false} onHide={() => onHide()}>
                 <div className="grid">
                     {" "}
                     <div className="col-12 lg:col-6 xl:col-4">

@@ -20,7 +20,7 @@ export function createDataStore() {
         setCountStopedOrder(count) {
             this.countStopedOrder = count;
         },
-        countIncomingTransfers: 1,
+        countIncomingTransfers: 0,
         setCountIncomingTransfers(count) {
             this.countInputTransfers = count;
         },

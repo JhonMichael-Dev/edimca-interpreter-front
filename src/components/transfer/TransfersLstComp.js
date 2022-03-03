@@ -223,7 +223,7 @@ export const TransfersLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <TransfersLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={(ev) => handleProcess(ev)} /> : ";";
+    let orderLstDetailComp = selOrder ? <TransfersLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={(ev) => handleProcess(ev)} /> : "";
 
     let filterMessage = "Solo órdenes paradas";
 
