@@ -25,6 +25,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"21/01/2022 12:00:00 PM",
+                "asesor":"CMORA",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -32,11 +34,13 @@
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": "CORTE"                            
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "statusService": 30,
+                        "operator": { "username": "ACANGA", "assistants": [] 
+                        }
                     },
                     {
                         "idOrderDetail": 2,
@@ -44,10 +48,12 @@
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                             "jdeId": 17767,
-                            "serviceType": "RUTEADO"
+                            "serviceType": "RUTEADO",
+                            "status_service": 90
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 30,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -60,6 +66,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 90,
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
@@ -73,6 +80,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -99,6 +107,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"20/01/2022 10:00:00 AM",
+                "asesor":"GJORGE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -110,6 +120,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -122,6 +133,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -134,6 +146,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -160,6 +173,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"19/01/2022 09:00:00 AM",
+                "asesor":"CJUAN",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -171,6 +186,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -183,6 +199,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -209,6 +226,8 @@
                 },
                 "total": 83.77,
                 "status": "PENDIENTE",
+                "fecha_pedido":"23/01/2022 11:45:00 AM",
+                "asesor":"MLUIS",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -220,6 +239,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -246,6 +266,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"24/01/2022 08:45:00 AM",
+                "asesor":"MLUIS",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -257,6 +279,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -269,6 +292,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 30,
                         "operator": { "username": "YWANG", "assistants": [] }
                     },
                     {
@@ -281,6 +305,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 90,
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     }
@@ -308,6 +333,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"24/01/2022 13:45:00 PM",
+                "asesor":"RMARY",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -331,6 +358,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -343,6 +371,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -369,6 +398,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"20/01/2022 16:09:00 PM",
+                "asesor":"TJAVIER",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -380,6 +411,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -392,6 +424,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -418,6 +451,8 @@
                 },
                 "total": 83.77,
                 "status": "PENDIENTE",
+                "fecha_pedido":"15/01/2022 11:09:00 AM",
+                "asesor":"PPAUL",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -429,6 +464,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -455,6 +491,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"16/01/2022 11:11:00 AM",
+                "asesor":"CMMORALES",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -466,6 +504,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -478,6 +517,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 90,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -490,6 +530,7 @@
                         },
                         "quantity": 4,
                         "status": "EN_PAUSA",
+                        "statusService": 30,
                         "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
                         "operator": { "username": "PGUTIERREZ", "assistants": [] }
                     },
@@ -503,6 +544,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -529,6 +571,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"14/01/2022 17:00:00 pm",
+                "asesor":"MPANCHI",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -540,6 +584,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -552,6 +597,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -564,6 +610,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -590,6 +637,8 @@
                 },
                 "total": 183.88,
                 "status": "COMPLETADO",
+                "fecha_pedido":"01/01/2022 14:18    :00 pm",
+                "asesor":"JLAVERDE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 7,
@@ -601,6 +650,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -613,6 +663,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -650,6 +701,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "EPEREZ", "assistants": [] }
                     }
                 ]
@@ -676,6 +728,8 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
+                "fecha_pedido":"01/01/2022 14:18:00 pm",
+                "asesor":"JLAVERDE",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -687,6 +741,7 @@
                         },
                         "quantity": 25.8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -699,6 +754,7 @@
                         },
                         "quantity": 12.3,
                         "status": "EN_PROCESO",
+                        "statusService": 90,
                         "operator": { "username": "GMERA", "assistants": [] }
                     },
                     {
@@ -711,6 +767,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     }
                 ]
@@ -737,6 +794,8 @@
                 },
                 "total": 183.88,
                 "status": "PENDIENTE",
+                "fecha_pedido":"01/01/2022 16:38:00 pm",
+                "asesor":"DTIUMA",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 5,
@@ -748,6 +807,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     },
                     {
@@ -760,6 +820,7 @@
                         },
                         "quantity": 16,
                         "status": "PENDIENTE",
+                        "statusService": 90,
                         "userpos": null
                     },
                     {
@@ -772,6 +833,7 @@
                         },
                         "quantity": 8,
                         "status": "PENDIENTE",
+                        "statusService": 30,
                         "userpos": null
                     }
                 ]
@@ -809,6 +871,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 30,
                         "operator": { "username": "ACANGA", "assistants": [] }
                     },
                     {
@@ -821,6 +884,7 @@
                         },
                         "quantity": 16,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]
@@ -858,6 +922,7 @@
                         },
                         "quantity": 8,
                         "status": "COMPLETADO",
+                        "statusService": 90,
                         "operator": { "username": "GPACHACAMA", "assistants": [] }
                     }
                 ]

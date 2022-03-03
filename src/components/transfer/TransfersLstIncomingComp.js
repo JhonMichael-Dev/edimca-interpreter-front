@@ -150,6 +150,15 @@ export const TransfersLstIncomingComp = observer((props) => {
             </div>
         );
     };
+    let clientCompPromes = (rowData) => {
+        return (
+            <div>
+                <div className="col-12 lg:col-12 xl:col-12">
+                    <b>{rowData.promise}</b>
+                </div>
+            </div>
+        );
+    };
 
     let priorityComp = (rowData) => {
         let _color = rowData.priority && rowData.priority.code === "EXPRESS" ? "darkmagenta" : "";
@@ -170,7 +179,7 @@ export const TransfersLstIncomingComp = observer((props) => {
         //console.log("data111");
         //console.log(data);
         return {
-            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EXPRESS",
+            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EMERGENTE",
         };
     };
 
@@ -200,11 +209,12 @@ export const TransfersLstIncomingComp = observer((props) => {
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cliente" body={clientComp} style={{ width: "25%" }} sortable sortField="client.firstName"></Column>
+                <Column header="Promesa Cliente" body={clientCompPromes} style={{ width: "25%" }} sortable sortField="client.firstName"></Column>
                 <Column
                     header="Servicios pendientes"
                     body={orderServicesIconResumeComp}
                     style={{
-                        width: "60%",
+                        width: "50%",
                     }}
                 ></Column>
             </DataTable>
