@@ -24,7 +24,7 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
+                "status": "PARADO",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -101,7 +101,7 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
+                "status": "PARADO",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,
@@ -165,7 +165,7 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
+                "status": "PARADO",
                 "lstOrderDetail": [
                     {
                         "idOrderDetail": 1,

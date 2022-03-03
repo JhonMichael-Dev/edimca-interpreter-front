@@ -117,8 +117,8 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
             icon: "pi pi-question",
             //accept: () => handleProcess(null),
             accept: () => setShowPasswordDialog(true),
-            reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
+            reject: () => null,
+            acceptLabel: "Play!",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
         });
@@ -190,7 +190,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         </div>
     );
 
-    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} /> : "";
+    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} onHide={() => setShowPasswordDialog(false)} /> : "";
 
     /*
   Return
