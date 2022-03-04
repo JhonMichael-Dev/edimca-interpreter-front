@@ -10,13 +10,14 @@ import { SelectButton } from "primereact/selectbutton";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import { addLocale } from "primereact/api";
+import { Badge } from "primereact/badge";
 import MachineryDataService from "../../service/MachineryDataService";
 // Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-
+import "./ButtonDemo.css";
 export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     /*
   Variables
@@ -61,11 +62,73 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         MachineryDataService.queryMachineryByWhMan(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstMachineryFilteredByMcuMan = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
-                // console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
+                console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
                 setLstMachinery(lstMachineryFilteredByMcuMan.machineryMaintenaceList);
             }
         });
     };
+    const statusMantenimiento = (rowData) => {
+        if (rowData.statusMaintenace === "Man.Preventivo") {
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-warning mr-2 ">
+                        <Badge value={rowData.statusMaintenace} severity="warning" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+        if (rowData.statusMaintenace === "Man.Correctivo") {
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-danger mr-2 ">
+                        <Badge value={rowData.statusMaintenace} severity="danger" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+        if (rowData.statusMaintenace === "Man.Proximo") {
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-info mr-2 ">
+                        <Badge value={rowData.statusMaintenace} severity="info" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+    };
+
+    const statusMaquina = (rowData) => {
+        if (rowData.status === "Des-Habilitada") {
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-warning mr-2 ">
+                        <Badge value={rowData.status} severity="warning" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+        if (rowData.status === "Habilitada") {
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-info mr-2 ">
+                        <Badge value={rowData.status} severity="info" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+
+        if (rowData === "Habilitada") {
+            console.log(rowData);
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-info mr-2 ">
+                        <Badge value={rowData.status} severity="info" className="p-mr-2"></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+    };
+
     /*
   Inner Components
   */
@@ -73,8 +136,14 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button label="Habilitar" className="p-button-rounded p-button-success mr-2" onClick={() => ({})} />
-                <Button label="Mantenimiento" className="p-button-rounded p-button-Info" onClick={() => showDlgMan(rowData)} />
+                <div className="grid">
+                    <div className="col-12 lg:col-6 xl:col-6">
+                        <Button label="Habilitar" style={{ width: "100%" }} disabled={rowData.status === "Habilitada" && rowData.statusMaintenace !== "Man.Proximo"} className="p-button-sm p-button-info " onClick={() => statusMaquina("Habilitada")} />
+                    </div>
+                    <div className="col-12 lg:col-6 xl:col-6">
+                        <Button label="Mantenimiento" style={{ width: "100%" }} className="p-button-sm p-button-primary " onClick={() => showDlgMan(rowData)} />
+                    </div>
+                </div>
             </React.Fragment>
         );
     };
@@ -83,7 +152,6 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         setcodigoMan(rowData.code);
         setdescManquina(rowData.description);
         setcategoMaquina(rowData.machinetyType);
-
         setDialogMantemimiento(true);
     };
 
@@ -119,18 +187,11 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     let tblLisMachineryMauntenance = (
         <DataTable
             value={lstMachinery}
-            /*
-            selectionMode="single"
-            selection={selOrderDetail}
-            onSelectionChange={(e) => setSelOrderDetail(e.value)}
-            onRowSelect={onRowSelect}
-            onRowUnselect={onRowUnselect}
-            */
             dataKey="code"
             ref={dt}
             responsiveLayout="stack"
             scrollable
-            scrollHeight="380px"
+            scrollHeight="400px"
             style={{ width: "auto" }}
             virtualScrollerOptions={{ itemSize: 46 }}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -140,9 +201,9 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 header="Codigo"
                 field="code"
                 style={{
-                    textAlign: "center",
-                    width: "9%",
-                    fontSize: "12px",
+                    textAlign: "left",
+                    width: "4%",
+                    fontSize: "11px",
                 }}
                 // sortable={true}
             ></Column>
@@ -151,8 +212,8 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 field="description"
                 style={{
                     textAlign: "center",
-                    width: "30%",
-                    fontSize: "12px",
+                    width: "20%",
+                    fontSize: "11px",
                 }}
             ></Column>
             <Column
@@ -161,37 +222,45 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 style={{
                     textAlign: "center",
                     width: "10%",
-                    fontSize: "12px",
+                    fontSize: "11px",
                 }}
             ></Column>
             <Column
                 header="Tipo"
                 field="machinetyType"
                 style={{
-                    textAlign: "center",
+                    textAlign: "left",
                     width: "7%",
-                    fontSize: "12px",
+                    fontSize: "11px",
                 }}
             ></Column>
             <Column
                 header="Estado"
-                field="status"
+                body={statusMaquina}
                 style={{
                     textAlign: "center",
-                    width: "10%",
-                    fontSize: "12px",
+                    width: "16%",
+                    fontSize: "10px",
                 }}
             ></Column>
             <Column
                 header="Est. Mantemiento"
-                field="statusMaintenace"
+                body={statusMantenimiento}
                 style={{
                     textAlign: "center",
-                    width: "17%",
-                    fontSize: "12px",
+                    width: "18%",
+                    fontSize: "11px",
                 }}
             ></Column>
-            <Column header="Acciones" body={actionBodyTemplate}></Column>
+            <Column
+                header="Acciones"
+                style={{
+                    textAlign: "center",
+                    width: "34%",
+                    fontSize: "11px",
+                }}
+                body={actionBodyTemplate}
+            ></Column>
         </DataTable>
     );
     /*

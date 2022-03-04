@@ -11,6 +11,7 @@ import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
+import { Badge } from "primereact/badge";
 import OrderDataService from "../../service/OrderDataService";
 // Services
 import { DataTable } from "primereact/datatable";
@@ -29,7 +30,7 @@ export const OrderLstVLComp = observer((props) => {
     const [value1, setValue1] = useState("");
     const [value2, setValue2] = useState("");
     const [value3, setValue3] = useState("");
-    const [checked, setChecked] = useState(false);
+    const [service, setService] = useState([]);
 
     /*
 Init
@@ -81,6 +82,22 @@ Init
         setDialogVL(false);
     };
 
+    const onServiceChange = (e) => {
+        let selectedService = [...service];
+        if (e.checked) selectedService.push(e.value);
+        else selectedService.splice(selectedService.indexOf(e.value), 1);
+        setService(selectedService);
+    };
+    const statusProducciom = (rowData) => {
+        return (
+            <React.Fragment>
+                <div className="p-button-rounded p-button-info mr-2 ">
+                    <Badge value={rowData.status} severity="info" className="p-mr-2"></Badge>
+                </div>
+            </React.Fragment>
+        );
+    };
+
     /*
 Inner Components
 */
@@ -125,7 +142,7 @@ Inner Components
             ></Column>
             <Column
                 header="Estado"
-                field="status"
+                body={statusProducciom}
                 style={{
                     textAlign: "center",
                     width: "10%",
@@ -189,29 +206,24 @@ Inner Components
                     Fecha: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
                 </div>
                 <hr></hr>
-                <div className="col-12">
-                    <Checkbox inputId="cb1" value="Corte" onChange={true} checked={true}></Checkbox>
-                    <label htmlFor="cb1" className="p-checkbox-label">
-                        Corte
-                    </label>
-                </div>
-                <div className="col-12">
-                    <Checkbox inputId="cb2" value="Ruteado" checked={checked} onChange={(e) => setChecked(e.checked)}></Checkbox>
-                    <label htmlFor="cb2" className="p-checkbox-label">
-                        Ruteado
-                    </label>
-                </div>
-                <div className="col-12">
-                    <Checkbox inputId="cb3" value="Enchapado" checked={checked} onChange={(e) => setChecked(e.checked)}></Checkbox>
-                    <label htmlFor="cb3" className="p-checkbox-label">
-                        Enchapado
-                    </label>
-                </div>
-                <div className="col-12">
-                    <Checkbox inputId="cb3" value="Perforado" checked={checked} onChange={(e) => setChecked(e.checked)}></Checkbox>
-                    <label htmlFor="cb3" className="p-checkbox-label">
-                        Perforado
-                    </label>
+                <div className="grid">
+                    <div className="col-6 lg:col-6 xl:col-6">
+                        <Checkbox inputId="service1" name="service" value="Corte" onChange={onServiceChange} checked={service.indexOf("Corte") !== -1} />
+                        &nbsp; <label htmlFor="service1">Corte</label>
+                    </div>
+                    <div className="col-6 lg:col-6 xl:col-6">
+                        <Checkbox inputId="service2" name="service" value="Ruteado" onChange={onServiceChange} checked={service.indexOf("Ruteado") !== -1} />
+                        &nbsp; <label htmlFor="service2">Ruteado</label>
+                    </div>
+
+                    <div className="col-6 lg:col-6 xl:col-6">
+                        <Checkbox inputId="service3" name="service" value="Enchapado" onChange={onServiceChange} checked={service.indexOf("Enchapado") !== -1} />
+                        &nbsp; <label htmlFor="service3">Enchapado</label>
+                    </div>
+                    <div className="col-6 lg:col-6 xl:col-6">
+                        <Checkbox inputId="service3" name="service" value="Perforado" onChange={onServiceChange} checked={service.indexOf("Perforado") !== -1} />
+                        &nbsp; <label htmlFor="service3">Perforado</label>
+                    </div>
                 </div>
 
                 <div className="field">
