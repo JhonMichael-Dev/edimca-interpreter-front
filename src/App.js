@@ -187,7 +187,7 @@ const App = () => {
                     to: "/productionControl",
                 },
                 {
-                    label: "Transferencias",
+                    label: "Redireccionamiento",
                     icon: "pi pi-fw pi-sort-alt",
                     to: "/transfers",
                     badge: dataStore.countIncomingTransfers ? <Badge value={dataStore.countIncomingTransfers} /> : "",
@@ -209,14 +209,14 @@ const App = () => {
                         {
                             label: "VL",
                             icon: "pi pi-fw pi-angle-double-right",
-                            to: "/vl" 
+                            to: "/vl",
                         },
                         {
                             label: "Otras Ordenes",
                             icon: "pi pi-fw pi-angle-double-right",
-                            to: "/otherOrders" 
-                        }
-                    ]
+                            to: "/otherOrders",
+                        },
+                    ],
                 },
                 {
                     label: "Talento humano",
@@ -227,9 +227,9 @@ const App = () => {
                     label: "Médico ocupacional",
                     icon: "pi pi-fw pi-angle-double-right",
                     to: "/medicoOcupacional",
-                }
-            ]
-        }
+                },
+            ],
+        },
     ];
 
     const addClass = (element, className) => {
