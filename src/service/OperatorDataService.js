@@ -10,6 +10,10 @@ class OperatorDataService {
         return axios.get("assets/demo/data/servicesByOperator.json").then((res) => res.data);
     }
 
+    queryCurrentServiceByOperator(mcu) {
+        return axios.get("assets/demo/data/currentServiceByOperator.json").then((res) => res.data);
+    }
+    
     queryServicesByListOperatorTH() {
         return axios.get("assets/demo/data/operatorHumanTalent.json").then((res) => res.data);
     }
