@@ -9,6 +9,10 @@ class OperatorDataService {
     queryServicesByOperator(mcu) {
         return axios.get("assets/demo/data/servicesByOperator.json").then((res) => res.data);
     }
+
+    queryCurrentServiceByOperator(mcu) {
+        return axios.get("assets/demo/data/currentServiceByOperator.json").then((res) => res.data);
+    }
 }
 
 export default new OperatorDataService();

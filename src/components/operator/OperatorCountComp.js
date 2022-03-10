@@ -31,11 +31,14 @@ export const OperatorCountComp = observer((props) => {
         handleCountServices(props.services);
     };
     const handleCountServices = (services) => {
-        let count = 0;
+        //console.log(services);
+
+        /*let count = 0;
         services.map( key =>{
             count = count + key.quantity;
-        });
-        setServiceCount(count);
+        });*/
+
+        setServiceCount(services.length);
     }
     /*
     Inner Components
@@ -45,8 +48,10 @@ export const OperatorCountComp = observer((props) => {
     Return
     */
     return (
-        <>
-            {serviceCount}
-        </>
+        <h5 style={{margin: "0%"}}>
+            <b>
+                {serviceCount}
+            </b>
+        </h5>
     );
 });
