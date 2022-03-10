@@ -86,10 +86,8 @@ const lightOptions = {
 };
 
 export const Dashboard = () => {
-    //const [selStore, setSelStore] = useState(null);
-    const [products, setProducts] = useState(null);
+    //const [products, setProducsetProductsts] = useState(null);
     const menu1 = useRef(null);
-    const menu2 = useRef(null);
     const [numberOrde, selNumberOrde] = useState(0);
     const [numberOrdeProcess, selNumberOrdeProcess] = useState(0);
     const history = useHistory();
@@ -102,7 +100,7 @@ export const Dashboard = () => {
 
     useEffect(() => {
         const productService = new ProductService();
-        productService.getProductsSmall().then((data) => setProducts(data));
+        //productService.getProductsSmall().then((data) => setProducts(data));
         numbrePendingOrde();
         handleQueryMachineryByWh();
     }, []);

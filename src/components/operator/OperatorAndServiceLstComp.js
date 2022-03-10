@@ -26,8 +26,8 @@ export const OperatorAndServiceLstComp = observer((props) => {
     const dt = useRef(null);
 
     /*
-Init
-*/
+    Init
+    */
     useEffect(() => {
         loadAvailables();
     }, []);
