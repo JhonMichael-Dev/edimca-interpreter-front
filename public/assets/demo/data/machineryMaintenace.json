@@ -7,11 +7,11 @@
                 "store": { "mcu": "2CM00101" },
                 "machineryMaintenaceList": [
                     { "code": "COR01", "description": "Contadora recta 01", "useHour": "354", "machinetyType":  "Corte"  ,"status":"","statusMaintenace":"" },
-                    { "code": "COR01", "description": "Contadora recta 02", "useHour": "0", "machinetyType": "Corte"  ,"status":"Des-Habilitada","statusMaintenace":"Man.Preventivo" },
+                    { "code": "COR01", "description": "Contadora recta 02", "useHour": "0", "machinetyType": "Corte"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Preventivo" },
                     { "code": "RUT01", "description": "Ruteadora 01", "useHour": "900", "machinetyType": "Ruteado"  ,"status":"Habilitada","statusMaintenace":"" },
-                    { "code": "ENC01", "description": "Enchapadora 01", "useHour": "0", "machinetyType": "Enchape"  ,"status":"Des-Habilitada","statusMaintenace":"Man.Correctivo" },
-                    { "code": "PER01", "description": "Perforadora 01", "useHour": "1198", "machinetyType": "Preforadora"  ,"status":"Habilitada","statusMaintenace":"" },
-                    { "code": "PER02", "description": "Perforadora 02","useHour": "8870", "machinetyType": "Preforadora"  ,"status":"Habilitada","statusMaintenace":"Man.Proximo" }
+                    { "code": "ENC01", "description": "Enchapadora 01", "useHour": "0", "machinetyType": "Enchape"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Correctivo" },
+                    { "code": "PER01", "description": "Perforadora 01", "useHour": "1198", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"" },
+                    { "code": "PER02", "description": "Perforadora 02","useHour": "8870", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"Man_Proximo" }
                 ]
             }
         ]
