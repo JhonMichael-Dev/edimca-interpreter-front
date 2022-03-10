@@ -13,6 +13,7 @@ import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Badge } from "primereact/badge";
 import OrderDataService from "../../service/OrderDataService";
+import { InputMask } from "primereact/inputmask";
 // Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -23,11 +24,10 @@ export const OrderLstVLComp = observer((props) => {
   Variables
   */
     const dt = useRef(null);
-    const [visible, setVisible] = useState(false);
     const [lstOrders, setLstOrders] = useState([]);
     const [dialogVL, setDialogVL] = useState(false);
     const [date1, setDate1] = useState(null);
-    const [value1, setValue1] = useState("");
+    const [val1, setVal1] = useState("");
     const [value2, setValue2] = useState("");
     const [value3, setValue3] = useState("");
     const [service, setService] = useState([]);
@@ -80,6 +80,9 @@ Init
 
     const hideDLGVL = () => {
         setDialogVL(false);
+        setVal1("");
+        setDate1("");
+        setService([]);
     };
 
     const onServiceChange = (e) => {
@@ -88,6 +91,7 @@ Init
         else selectedService.splice(selectedService.indexOf(e.value), 1);
         setService(selectedService);
     };
+
     const statusProducciom = (rowData) => {
         return (
             <React.Fragment>
@@ -194,17 +198,20 @@ Inner Components
             </div>
             <Dialog visible={dialogVL} style={{ width: "500px" }} header="Crear VL" modal className="p-fluid" onHide={hideDLGVL}>
                 <div className="field">
-                    <b>Numero Doc:</b>&nbsp; <InputText value={value1} onChange={(e) => setValue1(e.target.value)} />
+                    <b>Numero Documento:</b>&nbsp; <InputMask focus id="basic" mask="999-999-999999999" value={val1} placeholder="000-000-000000000" onChange={(e) => setVal1(e.value)}></InputMask>
                 </div>
-                <div className="field">
+                {/*
+                    <div className="field">
                     <b>Nombre Cliente:</b>&nbsp; <InputText value={value2} onChange={(e) => setValue2(e.target.value)} />
-                </div>
+                    </div>
+                    <div className="field">
+                    <b>Indentificaciòn Cliente: </b>&nbsp; <InputText value={value3} onChange={(e) => setValue3(e.target.value)} />
+                    </div>*/}
+
                 <div className="field">
-                    <b>Ind Cliente: </b>&nbsp; <InputText value={value3} onChange={(e) => setValue3(e.target.value)} />
+                    Fecha: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
                 </div>
-                <div className="field">
-                    Fecha: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
-                </div>
+
                 <hr></hr>
                 <div className="grid">
                     <div className="col-6 lg:col-6 xl:col-6">

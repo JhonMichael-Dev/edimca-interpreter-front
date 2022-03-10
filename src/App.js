@@ -218,15 +218,22 @@ const App = () => {
                         },
                     ],
                 },
+
                 {
-                    label: "Talento humano",
+                    label: "Gestion operarios",
                     icon: "pi pi-fw pi-angle-double-right",
-                    to: "/talentoHumano",
-                },
-                {
-                    label: "Médico ocupacional",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    to: "/medicoOcupacional",
+                    items: [
+                        {
+                            label: "Talento humano",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/talentoHumano",
+                        },
+                        {
+                            label: "Médico ocupacional",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/medicoOcupacional",
+                        },
+                    ],
                 },
             ],
         },

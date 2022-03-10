@@ -9,6 +9,13 @@ class OperatorDataService {
     queryServicesByOperator(mcu) {
         return axios.get("assets/demo/data/servicesByOperator.json").then((res) => res.data);
     }
+
+    queryServicesByListOperatorTH() {
+        return axios.get("assets/demo/data/operatorHumanTalent.json").then((res) => res.data);
+    }
+    queryServicesByListOperatorDC() {
+        return axios.get("assets/demo/data/operatorDoctor.json").then((res) => res.data);
+    }
 }
 
 export default new OperatorDataService();

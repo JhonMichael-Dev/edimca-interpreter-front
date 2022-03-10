@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
+import { RadioButton } from "primereact/radiobutton";
 import { Checkbox } from "primereact/checkbox";
 import { SelectButton } from "primereact/selectbutton";
 import { Calendar } from "primereact/calendar";
@@ -12,6 +13,8 @@ import { Dropdown } from "primereact/dropdown";
 import { addLocale } from "primereact/api";
 import { Badge } from "primereact/badge";
 import MachineryDataService from "../../service/MachineryDataService";
+import { OperatorServiceIconComp } from "../operator/OperatorServiceIconComp";
+
 // Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -32,6 +35,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     const [dialogMantemimientoProx, setDialogMantemimientoProx] = useState(false);
     const [dialogMantemimientoCorrec, setDialogMantemimientoCorrec] = useState(false);
     const [date1, setDate1] = useState(null);
+    const [date2, setDate2] = useState(null);
     const [codigoMan, setcodigoMan] = useState("");
     const [descManquina, setdescManquina] = useState("");
     const [categoMaquina, setcategoMaquina] = useState("");
@@ -39,6 +43,20 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     const [d, setD] = useState("");
     const [f, setF] = useState("");
 
+    const categories = [
+        { name: "Daño mecánico", key: "M" },
+        { name: "Daño neumático", key: "N" },
+        { name: "Daño eléctrico", key: "E" },
+    ];
+    const [selectedCategory, setSelectedCategory] = useState([]);
+
+    const damage = [
+        { name: "Falla guillotina", key: "G" },
+        { name: "Falla Calderin", key: "C" },
+        { name: "Falla retestador", key: "RE" },
+        { name: "Falla rascacolas", key: "A" },
+    ];
+    const [selectedDamages, setSelectedDamages] = useState([]);
     /*
   Init
   */
@@ -62,35 +80,59 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         MachineryDataService.queryMachineryByWhMan(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstMachineryFilteredByMcuMan = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
-                console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
+                //console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
                 setLstMachinery(lstMachineryFilteredByMcuMan.machineryMaintenaceList);
             }
         });
     };
     const statusMantenimiento = (rowData) => {
-        if (rowData.statusMaintenace === "Man.Preventivo") {
+        if (rowData.statusMaintenace === "Man_Preventivo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-warning mr-2 ">
-                        <Badge value={rowData.statusMaintenace} severity="warning" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.statusMaintenace.toUpperCase()}
+                            severity="warning"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
         }
-        if (rowData.statusMaintenace === "Man.Correctivo") {
+        if (rowData.statusMaintenace === "Man_Correctivo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-danger mr-2 ">
-                        <Badge value={rowData.statusMaintenace} severity="danger" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.statusMaintenace.toUpperCase()}
+                            severity="danger"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
         }
-        if (rowData.statusMaintenace === "Man.Proximo") {
+        if (rowData.statusMaintenace === "Man_Proximo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
-                        <Badge value={rowData.statusMaintenace} severity="info" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.statusMaintenace.toUpperCase()}
+                            severity="info"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
@@ -98,11 +140,19 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     };
 
     const statusMaquina = (rowData) => {
-        if (rowData.status === "Des-Habilitada") {
+        if (rowData.status === "Des_Habilitada") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-warning mr-2 ">
-                        <Badge value={rowData.status} severity="warning" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.status.toUpperCase()}
+                            severity="warning"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
@@ -111,7 +161,15 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
-                        <Badge value={rowData.status} severity="info" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.status.toUpperCase()}
+                            severity="info"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
@@ -122,11 +180,38 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
-                        <Badge value={rowData.status} severity="info" className="p-mr-2"></Badge>
+                        <Badge
+                            value={rowData.status.toUpperCase()}
+                            severity="info"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
                     </div>
                 </React.Fragment>
             );
         }
+    };
+
+    const onDamageChange = (e) => {
+        let _selectedDamages = [...selectedDamages];
+
+        if (e.checked) {
+            _selectedDamages.push(e.value);
+        } else {
+            for (let i = 0; i < _selectedDamages.length; i++) {
+                const selectedCategory = _selectedDamages[i];
+
+                if (selectedCategory.key === e.value.key) {
+                    _selectedDamages.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        setSelectedDamages(_selectedDamages);
     };
 
     /*
@@ -138,10 +223,10 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             <React.Fragment>
                 <div className="grid">
                     <div className="col-12 lg:col-6 xl:col-6">
-                        <Button label="Habilitar" style={{ width: "100%" }} disabled={rowData.status === "Habilitada" && rowData.statusMaintenace !== "Man.Proximo"} className="p-button-sm p-button-info " onClick={() => statusMaquina("Habilitada")} />
+                        <Button label="Habilitar" style={{ width: "100%", fontSize: "10px" }} disabled={rowData.status === "Habilitada" && rowData.statusMaintenace !== "Man.Proximo"} className="p-button-sm p-button-info " onClick={() => statusMaquina("Habilitada")} />
                     </div>
                     <div className="col-12 lg:col-6 xl:col-6">
-                        <Button label="Mantenimiento" style={{ width: "100%" }} className="p-button-sm p-button-primary " onClick={() => showDlgMan(rowData)} />
+                        <Button label="Mantenimiento" style={{ width: "100%", fontSize: "10px" }} className="p-button-sm p-button-primary " onClick={() => showDlgMan(rowData)} />
                     </div>
                 </div>
             </React.Fragment>
@@ -163,26 +248,24 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         setDialogMantemimientoPrev(false);
         setDialogMantemimiento(false);
     };
+
     const hideDialogProx = () => {
         setDialogMantemimientoProx(false);
         setDialogMantemimiento(false);
     };
+
     const hideDialogCorrec = () => {
         setDialogMantemimientoCorrec(false);
         setDialogMantemimiento(false);
     };
 
-    const dañoSelectItems = [
-        { label: "Daño Mecanico", value: "DM" },
-        { label: "Daño Neumatico", value: "DNE" },
-    ];
-    const fallaSelectItems = [
-        { label: "FALLA GRUPO SIERRA", value: "F1" },
-        { label: "FALLA GRUPO INCISOR", value: "F2" },
-        { label: "FALLA ANCLAJE INFERIOR", value: "F3" },
-        { label: "FALLA MOTOR INCISOR", value: "F4" },
-        { label: "FALLA DE SISTEMA DE AIRE", value: "F5" },
-    ];
+    let serviceTypeIconComp = (rowData) => {
+        return (
+            <div key={rowData.machinetyType}>
+                <OperatorServiceIconComp serviceType={rowData.machinetyType.toUpperCase()} badgeNumber={null} />
+            </div>
+        );
+    };
 
     let tblLisMachineryMauntenance = (
         <DataTable
@@ -227,10 +310,10 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             ></Column>
             <Column
                 header="Tipo"
-                field="machinetyType"
+                body={serviceTypeIconComp}
                 style={{
                     textAlign: "left",
-                    width: "7%",
+                    width: "14%",
                     fontSize: "11px",
                 }}
             ></Column>
@@ -306,10 +389,10 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                     {categoMaquina}
                 </div>
                 <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
+                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
                 </div>
                 <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
+                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
                 </div>
                 <div className="field">
                     <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogPrev()} />
@@ -327,10 +410,10 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                     {categoMaquina}
                 </div>
                 <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
+                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
                 </div>
                 <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
+                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
                 </div>
                 <div className="field">
                     <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogProx()} />
@@ -348,19 +431,35 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                     {categoMaquina}
                 </div>
                 <hr></hr>
+
+                <div className="grid">
+                    <div className="col-3 col-offset-1">
+                        {categories.map((category) => {
+                            return (
+                                <div key={category.key} className="field-radiobutton">
+                                    <RadioButton inputId={category.key} name="category" value={category} onChange={(e) => setSelectedCategory(e.value)} checked={selectedCategory.key === category.key} disabled={category.key === "R"} />
+                                    <label htmlFor={category.key}>{category.name}</label>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="col-7 col-offset-1">
+                        {damage.map((damage) => {
+                            return (
+                                <div key={damage.key} className="field-checkbox">
+                                    <Checkbox inputId={damage.key} name="damage" value={damage} onChange={onDamageChange} checked={selectedDamages.some((item) => item.key === damage.key)} disabled={damage.key === "R"} />
+                                    <label htmlFor={damage.key}>{damage.name}</label>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
                 <div className="field">
-                    <b>Daño: </b>&nbsp;
-                    <Dropdown value={d} options={dañoSelectItems} onChange={(e) => setD(e.value)} placeholder="Seleccione el daño" />
+                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
                 </div>
                 <div className="field">
-                    <b>Falla: </b>&nbsp;
-                    <Dropdown value={f} options={fallaSelectItems} onChange={(e) => setF(e.value)} placeholder="Seleccione la falla" />
-                </div>
-                <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
-                </div>
-                <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} />
+                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
                 </div>
                 <div className="field">
                     <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogCorrec()} />

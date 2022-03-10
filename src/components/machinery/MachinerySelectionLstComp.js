@@ -97,6 +97,8 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let selectionComp = (rowData) => {
         let alreadySelected = selMachinery.code === rowData.code;
+        console.log(rowData.description);
+        localStorage.setItem("selMachinery", rowData.description);
         return <Button key={rowData.username} onClick={() => handleSelectMachinery(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
     };
 
