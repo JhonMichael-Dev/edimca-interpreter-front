@@ -8,15 +8,18 @@ import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
 
 //Componet
+import PrimeReact from "primereact/api";
 import { Dashboard } from "./components/Dashboard";
 import { LoginPrincipalComp } from "./components/login/LoginPrincipalComp";
 import { ProductionControlPage } from "./pages/ProductionControlPage";
+import { ProductionControlComp } from "./components/ProductionControlComp";
 import { TransfersPage } from "./pages/TransfersPage";
 import { ServiceInProcessPage } from "./pages/ServiceInProcessPage";
+
 // Store
 import { Provider } from "mobx-react";
 import { create } from "mobx-persist";
-import PrimeReact from "primereact/api";
+import { observer } from "mobx-react";
 
 //CSS
 import "primereact/resources/primereact.min.css";
@@ -32,14 +35,17 @@ import "./App.css";
 Theme
 */
 import "primereact/resources/themes/fluent-light/theme.css";
-import { DataProvider, useDataStore } from "./data/DataStoreContext";
+import { useDataStore } from "./data/DataStoreContext";
 import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
 import MachineListPage from "./pages/MachineListPage";
 import VlPage from "./pages/VlPage";
 import OtherOrdersPage from "./pages/OtherOrdersPage";
 import HumanTalentPage from "./pages/HumanTalentPage";
 import OccupationalDoctorPage from "./pages/OccupationalDoctorPage";
+import { Badge } from "primereact/badge";
+
 const App = () => {
+    //const App = observer((props) => {
     // Variables
     const [selPrincipalUser, setSelPrincipalUser] = useState(null);
     // React variables
@@ -77,7 +83,7 @@ const App = () => {
         } else {
             removeClass(document.body, "body-overflow-hidden");
         }
-    }, [mobileMenuActive]);
+    }, [mobileMenuActive, dataStore]);
 
     const validatePrincipalUserLogedIn = () => {
         if (!dataStore.authPrincipalUser) {
@@ -184,6 +190,7 @@ const App = () => {
                     label: "Transferencias",
                     icon: "pi pi-fw pi-sort-alt",
                     to: "/transfers",
+                    badge: dataStore.countIncomingTransfers ? <Badge value={dataStore.countIncomingTransfers} /> : "",
                 },
                 {
                     label: "Ordenes en proceso",
@@ -202,27 +209,34 @@ const App = () => {
                         {
                             label: "VL",
                             icon: "pi pi-fw pi-angle-double-right",
-                            to: "/vl" 
+                            to: "/vl",
                         },
                         {
                             label: "Otras Ordenes",
                             icon: "pi pi-fw pi-angle-double-right",
-                            to: "/otherOrders" 
-                        }
-                    ]
+                            to: "/otherOrders",
+                        },
+                    ],
                 },
+
                 {
-                    label: "Talento humano",
+                    label: "Gestion operarios",
                     icon: "pi pi-fw pi-angle-double-right",
-                    to: "/talentoHumano",
+                    items: [
+                        {
+                            label: "Talento humano",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/talentoHumano",
+                        },
+                        {
+                            label: "Médico ocupacional",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/medicoOcupacional",
+                        },
+                    ],
                 },
-                {
-                    label: "Médico ocupacional",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    to: "/medicoOcupacional",
-                }
-            ]
-        }
+            ],
+        },
     ];
 
     const addClass = (element, className) => {
@@ -281,5 +295,6 @@ const App = () => {
         </div>
     );
 };
+//});
 
 export default App;

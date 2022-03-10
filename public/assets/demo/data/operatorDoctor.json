@@ -1,0 +1,23 @@
+{
+    "data": {
+        "success": false,
+        "log": null,
+        "obj": [
+            {
+            
+                "operators": [
+                    { "fullname": "David Patricio", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Marcia de las Mercedes", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Martha Ana", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Gustavo Pachacam", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Andres Wilcatoma", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Enrique Perez", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Daniel Lopez", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Juan Meza", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Maria Flores", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] },
+                    { "fullname": "Ramiro Peralta", "skills": [ {"name":"CORTE", "key":"C"},{"name":"ENCHAPE", "key":"E"},{"name":"RUTEADO", "key":"R"},{"name":"PERFORADO", "key":"P"}] }
+                ]
+            }
+        ]
+    }
+}

@@ -224,10 +224,13 @@ export const OrderLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : ";";
+    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : "";
+
+    let filterMessage = "Solo órdenes pendientes";
+
     let pendingOrdersFilterComp = (
         <div className="col-12 lg:col-8 xl:col-8" style={{ paddingBottom: "10px", textAlign: "right" }}>
-            <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel="Solo ordenes pendientes" offLabel="Solo ordenes pendientes" onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "3em" }} />
+            <ToggleButton checked={onlyPendingOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel={filterMessage} offLabel={filterMessage} onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "3em" }} />
         </div>
     );
 

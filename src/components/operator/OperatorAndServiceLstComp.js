@@ -14,9 +14,7 @@ import { PasswordOperationComp } from "../PasswordOperationComp";
 
 import OperatorDataService from "../../service/OperatorDataService";
 
-
 export const OperatorAndServiceLstComp = observer((props) => {
-
     /*
     Variables
     */
@@ -134,9 +132,7 @@ Init
     };
 
     let operatorCountComp = (rowData) => {
-        return (
-            <OperatorCountComp services={rowData.lstServices} />
-        );
+        return <OperatorCountComp services={rowData.lstServices} />;
     };
 
     let orderServicesIconResumeComp = (rowData) => {
@@ -163,9 +159,7 @@ Init
                 <div className="col-12 lg:col-12 xl:col-12">
                     <b>{rowData.product.code}</b>
                 </div>
-                <div className="col-12 lg:col-12 xl:col-12">
-                    {rowData.product.description1}
-                </div>
+                <div className="col-12 lg:col-12 xl:col-12">{rowData.product.description1}</div>
             </div>
         );
     };

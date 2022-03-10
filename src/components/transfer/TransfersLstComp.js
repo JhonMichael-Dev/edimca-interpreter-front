@@ -13,12 +13,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { OrderStatusComp } from "../order/OrderStatusComp";
 import { TransfersLstDetailComp } from "./TransfersLstDetailComp";
+import { useDataStore } from "../../data/DataStoreContext";
 
 export const TransfersLstComp = observer((props) => {
     /*
   Variables
   */
-    const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+    const [onlyStopedOrders, setOnlyStopedOrders] = useState(true);
     const [lstOrders, setLstOrders] = useState([]);
     const dt = useRef(null);
     const [selOrder, setSelOrder] = useState(null);
@@ -31,8 +32,9 @@ export const TransfersLstComp = observer((props) => {
     }, []);
 
     /*
-  Context  
-  */
+    Store
+    */
+    const dataStore = useDataStore();
 
     /*
   Formats
@@ -45,29 +47,42 @@ export const TransfersLstComp = observer((props) => {
         if (props.lstOrders) {
             setLstOrders(props.lstOrders);
         } else {
-            handleQueryOrders(onlyPendingOrders);
+            handleQueryOrders(onlyStopedOrders);
         }
     };
 
-    const handleQueryOrders = (onlyPendingOrders) => {
-        let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
-
-        if (props.selStore) {
-            props.setLoading(true);
-            OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
-                if (valid.data && valid.data.success) {
-                    let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
-                    //setLstOrders(valid.data.obj);
-                    setLstOrders(lstFiltered);
-                }
-                props.setLoading(false);
-            });
+    const handleQueryOrders = (onlyStopedOrders) => {
+        if (onlyStopedOrders) {
+            queryStoppedOrders();
+        } else {
+            let lstStopedStatus = ["PENDIENTE", "EN_PROCESO"];
+            if (props.selStore) {
+                dataStore.setLoading(true);
+                OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
+                    if (valid.data && valid.data.success) {
+                        let lstFiltered = valid.data.obj.filter((orderX) => lstStopedStatus.includes(orderX.status));
+                        //setLstOrders(valid.data.obj);
+                        setLstOrders(lstFiltered);
+                    }
+                    props.setLoading(false);
+                });
+            }
         }
+    };
+
+    const queryStoppedOrders = () => {
+        dataStore.setLoading(true);
+        OrderDataService.queryStoppedOrdersByStore().then((valid) => {
+            if (valid.data && valid.data.success) {
+                setLstOrders(valid.data.obj);
+            }
+            props.setLoading(false);
+        });
     };
 
     const handleFilterOrders = (ev) => {
         handleQueryOrders(ev);
-        setOnlyPendingOrders(ev);
+        setOnlyStopedOrders(ev);
     };
 
     const handleProcess = (ev) => {
@@ -93,7 +108,7 @@ export const TransfersLstComp = observer((props) => {
             header: "Confirmación",
             icon: "pi pi-exclamation-triangle",
             accept: () => handleProcess(null),
-            reject: () => setOnlyPendingOrders(false),
+            reject: () => setOnlyStopedOrders(false),
             acceptLabel: "Procesar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
@@ -208,7 +223,15 @@ export const TransfersLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <TransfersLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={(ev) => handleProcess(ev)} /> : ";";
+    let orderLstDetailComp = selOrder ? <TransfersLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={(ev) => handleProcess(ev)} /> : "";
+
+    let filterMessage = "Solo órdenes paradas";
+
+    let stopedOrdersFilterComp = (
+        <div className="col-12 lg:col-8 xl:col-8" style={{ paddingBottom: "10px", textAlign: "right" }}>
+            <ToggleButton checked={onlyStopedOrders} onChange={(e) => handleFilterOrders(e.value)} onLabel={filterMessage} offLabel={filterMessage} onIcon="pi pi-check-square" offIcon="pi pi-spinner" style={{ width: "15em", height: "3em" }} />
+        </div>
+    );
 
     /*
   Return
@@ -219,6 +242,7 @@ export const TransfersLstComp = observer((props) => {
                 <div className="col-12 lg:col-4 xl:col-4" style={{ textAlign: "left" }}>
                     <b>{props.header ? props.header : "Lista de órdenes de trabajo"}</b>
                 </div>
+                {stopedOrdersFilterComp}
             </div>
             <div>
                 {orderLstComp}

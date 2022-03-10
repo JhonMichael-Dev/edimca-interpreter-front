@@ -14,5 +14,15 @@ export function createDataStore() {
         removeAuthPrincipalUser() {
             this.authPrincipalUser = null;
         },
+
+        // Transfers
+        countStopedOrder: 0,
+        setCountStopedOrder(count) {
+            this.countStopedOrder = count;
+        },
+        countIncomingTransfers: 0,
+        setCountIncomingTransfers(count) {
+            this.countInputTransfers = count;
+        },
     };
 }

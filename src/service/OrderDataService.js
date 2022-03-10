@@ -13,6 +13,9 @@ class OrderDataService {
     queryIncomingOrdersByStore(payload) {
         return axios.get("assets/demo/data/ordersTransferedIncomingJson.json").then((res) => res.data);
     }
+    queryIncomingOrdersByStoreVL(payload) {
+        return axios.get("assets/demo/data/orderVLJson.json").then((res) => res.data);
+    }
 }
 
 export default new OrderDataService();
