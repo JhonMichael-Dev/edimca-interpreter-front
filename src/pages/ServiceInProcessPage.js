@@ -4,13 +4,11 @@ import { computed } from "mobx";
 import { inject } from "mobx-react";
 
 import { ServicesInProcessComp } from "../components/ServicesInProcessComp";
-import { ProductionControlComp } from "../components/ProductionControlComp";
 
 export class ServiceInProcessPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value1: "",
         };
     }
     /*

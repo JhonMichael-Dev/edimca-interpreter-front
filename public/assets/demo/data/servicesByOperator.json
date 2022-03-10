@@ -13,11 +13,16 @@
                         "product": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
-                            "jdeId": 17069,
+                            "jdeId": 17070,
                             "serviceType": "ENCHAPE"
                         },
-                        "quantity": 8,
-                        "status": "PENDIENTE",
+                        "units": {
+                            "quantity": 8,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
+                        "status": "EN_PAUSA",
+                        "pauseReason": "ALMUERZO/CENA",
                         "statusService": 90,
                         "machine": "Felder G330",
                         "userpos": null
@@ -30,8 +35,13 @@
                             "jdeId": 17069,
                             "serviceType": "CORTE"
                         },
-                        "quantity": 3,
+                        "units": {
+                            "quantity": 3,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
                         "status": "EN_PROCESO",
+                        "pauseReason": "",
                         "statusService": 30,
                         "machine": "Apache P1000",
                         "userpos": null
@@ -48,12 +58,17 @@
                         "product": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
-                            "jdeId": 17069,
+                            "jdeId": 17070,
                             "serviceType": "ENCHAPE"
                         },
-                        "quantity": 3,
-                        "status": "PENDIENTE",
-                        "statusService": 90,
+                        "units": {
+                            "quantity": 3,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
+                        "status": "EN_PROCESO",
+                        "pauseReason": "",
+                        "statusService": 30,
                         "machine": "Felder G330",
                         "userpos": null
                     }
@@ -72,8 +87,13 @@
                             "jdeId": 17069,
                             "serviceType": "CORTE"
                         },
-                        "quantity": 3,
+                        "units": {
+                            "quantity": 3,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
                         "status": "EN_PROCESO",
+                        "pauseReason": "",
                         "statusService": 30,
                         "machine": "Apache P1000",
                         "userpos": null
@@ -86,9 +106,14 @@
                             "jdeId": 6285,
                             "serviceType": "PERFORADO"
                         },
-                        "quantity": 6,
+                        "units": {
+                            "quantity": 6,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
                         "status": "COMPLETADO",
-                        "statusService": 30,
+                        "pauseReason": "",
+                        "statusService": 20,
                         "machine": "Z5150",
                         "userpos": null
                     }
@@ -107,8 +132,13 @@
                             "jdeId": 17069,
                             "serviceType": "CORTE"
                         },
-                        "quantity": 3,
+                        "units": {
+                            "quantity": 3,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
                         "status": "EN_PROCESO",
+                        "pauseReason": "",
                         "statusService": 30,
                         "machine": "Apache P1000",
                         "userpos": null
@@ -121,9 +151,14 @@
                             "jdeId": 6285,
                             "serviceType": "PERFORADO"
                         },
-                        "quantity": 6,
+                        "units": {
+                            "quantity": 6,
+                            "unitCode": "m",
+                            "unitDescription" : "Metros"
+                        },
                         "status": "COMPLETADO",
-                        "statusService": 30,
+                        "pauseReason": "",
+                        "statusService": 20,
                         "machine": "Z5150",
                         "userpos": null
                     }

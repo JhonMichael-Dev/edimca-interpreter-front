@@ -61,7 +61,7 @@ export const OperatorActionsComp = observer((props) => {
                 setLstOrders(valid.data.obj);
             }
         });
-        setPauseDisabled(props.action === "Stop" ? false : false);
+        setPauseDisabled(props.action === "Pausa" ? false : false);
     };
 
     const onLoadingClick = (selAction) => {
@@ -74,7 +74,7 @@ export const OperatorActionsComp = observer((props) => {
                 case "Play":
                     
                     break;
-                case "Stop":
+                case "Pausa":
                     setPauseControl(true);
                     break;
                 case "Daño":
@@ -151,12 +151,12 @@ export const OperatorActionsComp = observer((props) => {
                 </div>
                 <div className="col-4">
                     <div className="col-12 lg:col-12 xl:col-12">
-                        <b>ID:</b>
-                        {props.rowData.product.jdeId}
+                        <b>MAQUINARIA:</b>
+                        {props.rowData.machine}
                     </div>
                     <div className="col-12 lg:col-12 xl:col-12">
-                        <b>DESCRIPCIÓN:</b>
-                        {props.rowData.machine}
+                        <b>ID ORDEN TRABAJO:</b>
+                        {props.rowData.product.jdeId}
                     </div>
                 </div>
                 <div className="col-4">
@@ -241,16 +241,24 @@ export const OperatorActionsComp = observer((props) => {
                 </div>
             </div>
             <div className='grid'>
-                <div className='col-6 col-offset-3'>
-                    <Tooltip 
-                        target=".slider>.p-slider-handle" 
-                        content={`${sliderValue}%`} 
+                <div className='col-3' style={{ textAlign: "right" }}>
+                    {0}
+                </div>
+                <div className='col-6'>
+                    <Tooltip
+                        target=".slider>.p-slider-handle"
+                        content={`${sliderValue} ${props.rowData.units.unitCode}`}
                         position="top" event="focus" />
-                    <Slider 
-                        className="slider" 
+                    <Slider
+                        className="slider"
+                        max={props.rowData.units.quantity}
+                        step={0.1}
                         value={sliderValue}
                         onChange={(e) => setSliderValue(e.value)}
-                        style={{ width: '20rem', height: "6px" }} />
+                        style={{ width: '100%', height: "10px", marginTop: "1%" }} />
+                </div>
+                <div className='col-3'>
+                    {`${props.rowData.units.quantity} ${props.rowData.units.unitDescription}`}
                 </div>
             </div>
             <div className='grid' style={{marginTop: "3%", marginRight: "5%"}}>
@@ -281,11 +289,23 @@ export const OperatorActionsComp = observer((props) => {
         <React.Fragment>
             <Button
                 className={"p-button-rounded p-button-" + props.color}
-                style={{ fontSize: 15, justifyContent: "center" }}
+                style={{ fontSize: 15, justifyContent: "center", width: "100%" }}
                 loading={loading}
                 onClick={() => onLoadingClick(props.action)}
+                disabled={props.rowData.status === "EN_PAUSA" ?
+                            props.action === "Pausa" ?
+                            true :
+                            false
+                        :props.rowData.status === "EN_PROCESO" ?
+                            props.action === "Play" ?
+                            true :
+                            false
+                        :props.rowData.status === "COMPLETADO" ?
+                            props.action === "Play" || props.action === "Pausa" || props.action === "Daño" ?
+                            true:
+                            false
+                        :false}
                 label={props.action}
-                disabled={pauseDisabled}
                 icon={"pi pi-" + props.icon}
             >
             </Button>
