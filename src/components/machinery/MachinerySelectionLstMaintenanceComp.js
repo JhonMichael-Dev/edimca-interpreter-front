@@ -346,6 +346,11 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             ></Column>
         </DataTable>
     );
+
+    const onchengeDano = (e) => {
+        setSelectedCategory(e);
+    };
+
     /*
   Return
   */
@@ -437,7 +442,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                         {categories.map((category) => {
                             return (
                                 <div key={category.key} className="field-radiobutton">
-                                    <RadioButton inputId={category.key} name="category" value={category} onChange={(e) => setSelectedCategory(e.value)} checked={selectedCategory.key === category.key} disabled={category.key === "R"} />
+                                    <RadioButton inputId={category.key} name="category" value={category} onChange={(e) => this.onchengeDano(e.value)} checked={selectedCategory.key === category.key} disabled={category.key === "R"} />
                                     <label htmlFor={category.key}>{category.name}</label>
                                 </div>
                             );

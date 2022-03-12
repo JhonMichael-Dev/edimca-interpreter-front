@@ -27,6 +27,7 @@ export const HumanTalentListComp = observer((props) => {
   */
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
+    const [lstOperatorNew, setLstOperatorNew] = useState([]);
     const [selectedSkill, setSelectedSkilles] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [lstStores, setLstStores] = useState([]);
@@ -49,6 +50,7 @@ Init
         OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
             if (valid.data && valid.data.obj[0].operators) {
                 setLstOperator(valid.data.obj[0].operators);
+                //console.log(valid.data.obj[0].operators);
             }
         });
 
@@ -100,18 +102,18 @@ Init
         );
     };
 
-    const onChangeStore = async (e) => {
-        setSelectedStore(e.value.mcu);
-
-        await lstOperator.filter((ob) => {
-            return console.log(ob.mcu === e.value.mcu);
+    const onChangeStore = (e) => {
+        setSelectedStore(e.value);
+        let lstOperatoTmp = lstOperator.filter((ob) => ob.mcu === e.value.mcu);
+        setLstOperator(lstOperatoTmp);
+        console.log(lstOperatoTmp);
+        /*
+        OperatorDataService.queryServicesByListOperatorTHByBodega(e.value.mcu).then((valid) => {
+            if (valid.data && valid.data.obj[0].operators) {
+                console.log(valid.data.obj);
+            }
         });
-
-        /*  setLstOperator(
-            await lstOperator.filter((ob) => {
-                return ob.mcu === e.value.mcu;
-            })
-        );*/
+        */
     };
 
     const renderHeader1 = () => {

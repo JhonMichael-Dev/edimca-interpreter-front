@@ -13,6 +13,12 @@ class OperatorDataService {
     queryServicesByListOperatorTH() {
         return axios.get("assets/demo/data/operatorHumanTalent.json").then((res) => res.data);
     }
+
+    queryServicesByListOperatorTHByBodega(data) {
+        console.log(data);
+        return axios.get("assets/demo/data/operatorHumanTalent.json").then((res) => res.data);
+    }
+
     queryServicesByListOperatorDC() {
         return axios.get("assets/demo/data/operatorDoctor.json").then((res) => res.data);
     }

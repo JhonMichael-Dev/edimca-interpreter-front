@@ -27,6 +27,9 @@ export const OcupationalDoctorListComp = observer((props) => {
     const [lstOperator, setLstOperator] = useState([]);
     const [lstOperatorSkill, setLstOperatorSkill] = useState([]);
     const [selectedSkill, setSelectedSkilles] = useState([]);
+    const [globalFilter, setGlobalFilter] = useState(null);
+    const [selectedStore, setSelectedStore] = useState(null);
+    const [lstStores, setLstStores] = useState([]);
     /*
 Init
 */
@@ -52,7 +55,7 @@ Methods
     const onSkill = (e) => {
         let _selectedDamages = [...selectedSkill];
 
-        if (e.checked) {
+        if (!e.checked) {
             _selectedDamages.push(e.value);
         } else {
             for (let i = 0; i < _selectedDamages.length; i++) {
@@ -73,7 +76,6 @@ Methods
                 {rowData.skills.map((skill) => {
                     return (
                         <div key={skill.id} className="field-checkbox">
-                            {console.log(skill.id)}
                             <Checkbox inputId={skill.id} name="skill" value={skill} onChange={onSkill} checked={!selectedSkill.some((item) => item.key === skill.key)} />
                             <label htmlFor={skill.id}>{skill.name}</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -84,6 +86,41 @@ Methods
         );
     };
 
+    const renderHeader1 = () => {
+        return (
+            <div className="grid">
+                <div className="col-6 lg:col-6 xl:col-6">
+                    <div className="p-d-flex p-ai-center p-flex-wrap">
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText style={{ width: "60%" }} type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
+                        </span>
+                    </div>
+                </div>
+                <div className="col-6 lg:col-6 xl:col-6">
+                    <div className="p-d-flex p-ai-center p-flex-wrap">
+                        <Dropdown style={{ width: "60%" }} value={selectedStore} options={lstStores} onChange={(e) => onChangeStore(e)} optionLabel="name" placeholder="Seleccione la bodega" />
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const onChangeStore = (e) => {
+        setSelectedStore(e.value);
+
+        let lstOperatoTmp = lstOperator.filter((ob) => ob.mcu === e.value.mcu);
+        setLstOperator(lstOperatoTmp);
+        console.log(lstOperatoTmp);
+        /*
+        OperatorDataService.queryServicesByListOperatorTHByBodega(e.value.mcu).then((valid) => {
+            if (valid.data && valid.data.obj[0].operators) {
+                console.log(valid.data.obj);
+            }
+        });
+        */
+    };
+    const header1 = renderHeader1();
     /*
 Inner Components
 */
@@ -99,7 +136,29 @@ Inner Components
             virtualScrollerOptions={{ itemSize: 46 }}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
+            globalFilter={globalFilter}
+            header={header1}
         >
+            <Column
+                header="Cod."
+                field="jdeAn8"
+                style={{
+                    textAlign: "left",
+                    width: "7%",
+                    fontSize: "10px",
+                    minWidth: "12rem",
+                }}
+            ></Column>
+            <Column
+                header="Usuario"
+                field="username"
+                style={{
+                    textAlign: "left",
+                    width: "10%",
+                    fontSize: "10px",
+                    minWidth: "14rem",
+                }}
+            ></Column>
             <Column
                 header="Nombre "
                 field="fullname"
