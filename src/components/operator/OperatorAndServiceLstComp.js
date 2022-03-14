@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { Dialog } from "primereact/dialog";
 
 import { OperatorIconComp } from "./OperatorIconComp";
+import { OperatorIconComp2 } from "./OperatorIconComp2";
 import { OperatorTurnComp } from "./OperatorTurnComp";
 import { OperatorServicesIconResumeComp } from "./OperatorServicesIconResumeComp";
 import { OperatorCountComp } from "./OperatorCountComp";
@@ -81,7 +82,8 @@ export const OperatorAndServiceLstComp = observer((props) => {
     */
 
     let operatorIconComp = (rowData) => {
-        return <OperatorIconComp operatorUsername={rowData.operator.username} />;
+        //return <OperatorIconComp operatorUsername={rowData.operator.username} />;
+        return <OperatorIconComp2 operator={rowData.operator} />;
     };
 
     let operatorIconComp2 = () => {
@@ -104,7 +106,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     let passwordComp = (
         <PasswordOperationComp
             handleLogin={() => handleLogin()}
-            onHide={() => setShowPasswordDialog(false)} />
+            onHide={() => setSelOperator(null)} />
     );
 
     let operatorActionsComp = (rowData) => {

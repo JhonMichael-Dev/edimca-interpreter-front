@@ -253,7 +253,7 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-orange-500 h-full" style={{ width: "50%" }} />
+                                    <div className="bg-orange-500 h-full" style={{ width: "80%" }} />
                                 </div>
                                 <span className="text-orange-500 ml-3 font-medium">%80</span>
                             </div>
@@ -267,7 +267,7 @@ export const Dashboard = () => {
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
                                     <div className="bg-cyan-500 h-full" style={{ width: "16%" }} />
                                 </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%16</span>
+                                <span className="text-cyan-500 ml-3 font-medium">%20</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -289,9 +289,9 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-green-500 h-full" style={{ width: "35%" }} />
+                                    <div className="bg-green-500 h-full" style={{ width: "25%" }} />
                                 </div>
-                                <span className="text-green-500 ml-3 font-medium">%35</span>
+                                <span className="text-green-500 ml-3 font-medium">%25</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -333,9 +333,9 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-orange-500 h-full" style={{ width: "80%" }} />
+                                    <div className="bg-orange-500 h-full" style={{ width: "40%" }} />
                                 </div>
-                                <span className="text-orange-500 ml-3 font-medium">%80</span>
+                                <span className="text-orange-500 ml-3 font-medium">%40</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -344,9 +344,9 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-cyan-500 h-full" style={{ width: "84%" }} />
+                                    <div className="bg-cyan-500 h-full" style={{ width: "17%" }} />
                                 </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%84</span>
+                                <span className="text-cyan-500 ml-3 font-medium">%17</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -355,9 +355,9 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-pink-500 h-full" style={{ width: "67%" }} />
+                                    <div className="bg-pink-500 h-full" style={{ width: "29%" }} />
                                 </div>
-                                <span className="text-pink-500 ml-3 font-medium">%67</span>
+                                <span className="text-pink-500 ml-3 font-medium">%29</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
@@ -366,20 +366,20 @@ export const Dashboard = () => {
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-green-500 h-full" style={{ width: "79%" }} />
+                                    <div className="bg-green-500 h-full" style={{ width: "9%" }} />
                                 </div>
-                                <span className="text-green-500 ml-3 font-medium">%79</span>
+                                <span className="text-green-500 ml-3 font-medium">%9</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA GUASMO</span>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA SAN BARTOLO</span>
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-purple-500 h-full" style={{ width: "75%" }} />
+                                    <div className="bg-purple-500 h-full" style={{ width: "5%" }} />
                                 </div>
-                                <span className="text-purple-500 ml-3 font-medium">%75</span>
+                                <span className="text-purple-500 ml-3 font-medium">%5</span>
                             </div>
                         </li>
                     </ul>

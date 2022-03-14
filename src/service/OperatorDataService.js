@@ -1,4 +1,6 @@
 import axios from "axios";
+import { conf } from "../Config.js";
+const OPERATOR_API_URL = conf.url.API_URL + "/api/v1/operator";
 
 class OperatorDataService {
     queryOperatorByStore(mcu) {
@@ -20,6 +22,12 @@ class OperatorDataService {
     queryServicesByListOperatorDC() {
         return axios.get("assets/demo/data/operatorDoctor.json").then((res) => res.data);
     }
+
+    getAccountStateFilePath(fileName) {
+        var CURRENT_FILE_URL = `${OPERATOR_API_URL}/getOperatorImageFile/` + fileName;
+        return CURRENT_FILE_URL;
+    }
+
 }
 
 export default new OperatorDataService();
