@@ -6,7 +6,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
-                "operator": { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
+                "operator": { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO", "filename": "operator_ACANGA.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 5,
@@ -51,7 +51,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
-                "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" },
+                "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO", "filename": "operator_PGUTIERREZ.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 1,
@@ -77,7 +77,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12346,
-                "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" },
+                "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO", "filename": "operator_MFLOR.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 2,
@@ -122,7 +122,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12347,
-                "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" },
+                "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO", "filename": "operator_RPERALTA.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 1,
