@@ -27,6 +27,7 @@ export const HumanTalentListComp = observer((props) => {
   */
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
+    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
     const [selectedSkill, setSelectedSkilles] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [lstStores, setLstStores] = useState([]);
@@ -49,6 +50,7 @@ Init
         OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
             if (valid.data && valid.data.obj[0].operators) {
                 setLstOperator(valid.data.obj[0].operators);
+                //console.log(valid.data.obj[0].operators);
             }
         });
 
@@ -57,6 +59,7 @@ Init
                 setLstStores(valid.data.obj);
             }
         });
+        setLstOperatorFilter(lstOperator);
     };
 
     const onSkill = (e) => {
@@ -100,18 +103,10 @@ Init
         );
     };
 
-    const onChangeStore = async (e) => {
-        setSelectedStore(e.value.mcu);
-
-        await lstOperator.filter((ob) => {
-            return console.log(ob.mcu === e.value.mcu);
-        });
-
-        /*  setLstOperator(
-            await lstOperator.filter((ob) => {
-                return ob.mcu === e.value.mcu;
-            })
-        );*/
+    const onChangeStore = (e) => {
+        setSelectedStore(e.value);
+        setLstOperatorFilter(lstOperator.filter((ob) => ob.mcu === e.value.mcu));
+        console.log(lstOperatorFilter);
     };
 
     const renderHeader1 = () => {
@@ -136,11 +131,11 @@ Init
 
     const header1 = renderHeader1();
     /*
-Inner Components
-*/
-    let tblLisTH = (
+    Inner Components
+    */
+    let tableListOperatorTH = (
         <DataTable
-            value={lstOperator}
+            value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
             dataKey="id"
             ref={dt}
             responsiveLayout="scroll"
@@ -210,7 +205,7 @@ Inner Components
                             <b>Lista Operadores Talento Humano</b>
                         </h5>{" "}
                         <br></br>
-                        <div className="col-12 xl:col-12">{tblLisTH}</div>
+                        <div className="col-12 xl:col-12">{tableListOperatorTH}</div>
                     </div>
                 </div>
             </div>
