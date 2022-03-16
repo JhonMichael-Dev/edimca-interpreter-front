@@ -13,6 +13,7 @@ import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Badge } from "primereact/badge";
 import OperatorDataService from "../../service/OperatorDataService";
+import StoreDataService from "../../service/StoreDataService";
 import { InputMask } from "primereact/inputmask";
 // Services
 import { DataTable } from "primereact/datatable";
@@ -30,6 +31,7 @@ export const OcupationalDoctorListComp = observer((props) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [selectedStore, setSelectedStore] = useState(null);
     const [lstStores, setLstStores] = useState([]);
+    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
     /*
 Init
 */
@@ -50,6 +52,13 @@ Methods
                 valid.data.obj[0].operators.map((o) => setLstOperatorSkill(o.skills));
             }
         });
+
+        StoreDataService.queryStores().then((valid) => {
+            if (valid.data && valid.data.success) {
+                setLstStores(valid.data.obj);
+            }
+        });
+        setLstOperatorFilter(lstOperator);
     };
 
     const onSkill = (e) => {
@@ -108,17 +117,8 @@ Methods
 
     const onChangeStore = (e) => {
         setSelectedStore(e.value);
-
-        let lstOperatoTmp = lstOperator.filter((ob) => ob.mcu === e.value.mcu);
-        setLstOperator(lstOperatoTmp);
-        console.log(lstOperatoTmp);
-        /*
-        OperatorDataService.queryServicesByListOperatorTHByBodega(e.value.mcu).then((valid) => {
-            if (valid.data && valid.data.obj[0].operators) {
-                console.log(valid.data.obj);
-            }
-        });
-        */
+        setLstOperatorFilter(lstOperator.filter((ob) => ob.mcu === e.value.mcu));
+        console.log(lstOperatorFilter);
     };
     const header1 = renderHeader1();
     /*
@@ -126,7 +126,7 @@ Inner Components
 */
     let tblLisTH = (
         <DataTable
-            value={lstOperator}
+            value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
             dataKey="id"
             ref={dt}
             responsiveLayout="stack"
