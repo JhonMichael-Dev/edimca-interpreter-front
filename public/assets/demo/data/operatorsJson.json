@@ -6,7 +6,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "operators": [
-                    { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
+                    { "username": "ECANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
                     { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" },
                     { "username": "GMERA", "skills": ["RUTEADO"], "turno": "NOCTURNO" },
                     { "username": "GPACHACAMA", "skills": ["PERFORADO"], "turno": "DIURNO" },

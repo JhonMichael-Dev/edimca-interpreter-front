@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 
 // Prime components
-import { confirmDialog } from "primereact/confirmdialog";
-
-// Images
-//import iconLostSale from "../../images/ruteadoIcon.png";
 
 // Services
-//import OrderDataService from "../service/OrderDataService";
 
 export const OperatorIconComp = observer((props) => {
     /*
   Variables
   */
-    const [visible, setVisible] = useState(false);
-    const [lstOrders, setLstOrders] = useState([]);
 
     /*
   Init
@@ -37,23 +30,9 @@ export const OperatorIconComp = observer((props) => {
   */
     const loadAvailables = () => {};
 
-    const handleProcess = (ev) => {};
-
     /*
   Inner Components
   */
-    const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar..",
-            header: "Confirmación",
-            icon: "pi pi-exclamation-triangle",
-            accept: () => handleProcess(null),
-            reject: () => setVisible(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
-        });
-    };
 
     let imageName = "/assets/images/operator_" + props.operatorUsername + ".png";
 

@@ -1,26 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
-//import { computed } from "mobx";
-// Prime components
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { ToggleButton } from "primereact/togglebutton";
 import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
-import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
-import { Badge } from "primereact/badge";
-import { FilterMatchMode, FilterOperator } from "primereact/api";
-import OperatorDataService from "../../service/OperatorDataService";
-import StoreDataService from "../../service/StoreDataService";
-import { InputMask } from "primereact/inputmask";
-// Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
+
+// Prime components
+import { OperatorIconComp2 } from "../operator/OperatorIconComp2";
+import { FileUploadComp } from "../base/FileUploadComp";
+
+// Services
+import OperatorDataService from "../../service/OperatorDataService";
+import StoreDataService from "../../service/StoreDataService";
+
 export const HumanTalentListComp = observer((props) => {
     /*
   Variables
@@ -31,10 +24,11 @@ export const HumanTalentListComp = observer((props) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [lstStores, setLstStores] = useState([]);
     const [selectedStore, setSelectedStore] = useState(null);
+    const [selOperator, setSelOperator] = useState(null);
 
     /*
-Init
-*/
+    Init
+    */
     useEffect(() => {
         loadAvailables();
     }, []);
@@ -79,7 +73,7 @@ Init
 
     const templTHSkill = (rowData) => {
         return (
-            <div className="grid">
+            <div className="grid" style={{ display: "inline-flex" }}>
                 {rowData.skills.map((skill) => {
                     return (
                         <div key={skill.id} className="field-checkbox">
@@ -88,7 +82,7 @@ Init
                                 name="skill"
                                 value={skill}
                                 onChange={onSkill}
-                                //key={skill.key+codigoUser}
+                                //key={skill.key}
                                 checked={selectedSkill.some((item) => item.key === skill.key)}
                             />
                             <label htmlFor={skill.id}>{skill.name}</label>
@@ -102,10 +96,6 @@ Init
 
     const onChangeStore = async (e) => {
         setSelectedStore(e.value.mcu);
-
-        await lstOperator.filter((ob) => {
-            return console.log(ob.mcu === e.value.mcu);
-        });
 
         /*  setLstOperator(
             await lstOperator.filter((ob) => {
@@ -127,7 +117,7 @@ Init
                 </div>
                 <div className="col-6 lg:col-6 xl:col-6">
                     <div className="p-d-flex p-ai-center p-flex-wrap">
-                        <Dropdown style={{ width: "60%" }} value={selectedStore} options={lstStores} onChange={(e) => onChangeStore(e)} optionLabel="name" placeholder="Seleccione la bodega" />
+                        <Dropdown style={{ width: "60%" }} value={selectedStore} options={lstStores} key={lstStores.mcu} onChange={(e) => onChangeStore(e)} optionLabel="name" placeholder="Seleccione la bodega" />
                     </div>
                 </div>
             </div>
@@ -135,23 +125,35 @@ Init
     };
 
     const header1 = renderHeader1();
+
+    const handleReloadTable = () =>{
+        setLstOperator(null);
+        loadAvailables();
+    };
+
+    const operatorIconComp2 = (rowData) => {
+        //console.log("asdasdasd",rowData.filename);
+        return rowData.filename ?
+            <OperatorIconComp2 operator={rowData} />
+            : <FileUploadComp operator={rowData} onUpdate = {handleReloadTable}/>
+    };
     /*
 Inner Components
 */
     let tblLisTH = (
         <DataTable
             value={lstOperator}
+            selectionMode="single"
+            onRowSelect={e => setSelOperator(e.data)}
             dataKey="id"
             ref={dt}
             responsiveLayout="scroll"
             scrollable
-            scrollHeight="380px"
             style={{ width: "auto" }}
             virtualScrollerOptions={{ itemSize: 46 }}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
             emptyMessage="No customers found."
-            filterDisplay="row"
             globalFilter={globalFilter}
             header={header1}
         >
@@ -159,19 +161,19 @@ Inner Components
                 header="Cod."
                 field="jdeAn8"
                 style={{
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "7%",
-                    fontSize: "10px",
+                    fontSize: "14px",
                     minWidth: "12rem",
                 }}
             ></Column>
             <Column
                 header="Usuario"
-                field="username"
+                body={operatorIconComp2}
                 style={{
-                    textAlign: "left",
-                    width: "10%",
-                    fontSize: "10px",
+                    textAlign: "center",
+                    width: "20%",
+                    fontSize: "14px",
                     minWidth: "14rem",
                 }}
             ></Column>
@@ -179,9 +181,9 @@ Inner Components
                 header="Nombre "
                 field="fullname"
                 style={{
-                    textAlign: "left",
-                    width: "23%",
-                    fontSize: "10px",
+                    textAlign: "center",
+                    width: "20%",
+                    fontSize: "14px",
                     minWidth: "14rem",
                 }}
             ></Column>
@@ -189,9 +191,9 @@ Inner Components
                 header="Skills"
                 body={templTHSkill}
                 style={{
-                    textAlign: "left",
-                    width: "60%",
-                    fontSize: "11px",
+                    textAlign: "center",
+                    width: "50%",
+                    fontSize: "14px",
                 }}
             ></Column>
         </DataTable>
@@ -202,14 +204,12 @@ Inner Components
   */
     return (
         <>
-            {" "}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">
                         <h5>
                             <b>Lista Operadores Talento Humano</b>
-                        </h5>{" "}
-                        <br></br>
+                        </h5>
                         <div className="col-12 xl:col-12">{tblLisTH}</div>
                     </div>
                 </div>
