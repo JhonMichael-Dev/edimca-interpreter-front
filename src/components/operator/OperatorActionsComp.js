@@ -4,14 +4,13 @@ import { observer } from "mobx-react";
 // Prime components
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { RadioButton } from 'primereact/radiobutton';
-import { Checkbox } from 'primereact/checkbox';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { Slider } from 'primereact/slider';
 
 import { OperatorPauseButtonComp } from "./OperatorPauseButtonComp";
-import { OperatorServiceIconComp } from "./OperatorServiceIconComp"
+import { OperatorServiceIconComp } from "./OperatorServiceIconComp";
+import { MachineryFaultsComp } from "../machinery/MachineryFaultsComp";
 
 import OrderDataService from "../../service/OrderDataService";
 
@@ -93,26 +92,6 @@ export const OperatorActionsComp = observer((props) => {
 
     };
 
-    const onDamageChange = (e) => {
-        let _selectedDamages = [...selectedDamages];
-
-        if (e.checked) {
-            _selectedDamages.push(e.value);
-        }
-        else {
-            for (let i = 0; i < _selectedDamages.length; i++) {
-                const selectedCategory = _selectedDamages[i];
-
-                if (selectedCategory.key === e.value.key) {
-                    _selectedDamages.splice(i, 1);
-                    break;
-                }
-            }
-        }
-
-        setSelectedDamages(_selectedDamages);
-    }
-
     const onPauseReasonClick = (selAction) => {
         console.log(selAction.target.textContent);
         setPauseControl(null);
@@ -173,44 +152,9 @@ export const OperatorActionsComp = observer((props) => {
                     <b>Motivo:</b>
                 </div>
             </div>
-            <div className="grid" >
-                <div className="col-3 col-offset-1">
-                    {
-                        categories.map((category) => {
-                            return (
-                                <div key={category.key} className="field-radiobutton">
-                                    <RadioButton
-                                        inputId={category.key}
-                                        name="category"
-                                        value={category}
-                                        onChange={(e) => setSelectedCategory(e.value)}
-                                        checked={selectedCategory.key === category.key}
-                                        disabled={category.key === 'R'} />
-                                    <label htmlFor={category.key}>{category.name}</label>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <div className="col-7 col-offset-1">
-                    {
-                        damage.map((damage) => {
-                            return (
-                                <div key={damage.key} className="field-checkbox">
-                                    <Checkbox
-                                        inputId={damage.key}
-                                        name="damage"
-                                        value={damage}
-                                        onChange={onDamageChange}
-                                        checked={selectedDamages.some((item) => item.key === damage.key)}
-                                        disabled={damage.key === 'R'} />
-                                    <label htmlFor={damage.key}>{damage.name}</label>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            </div>
+
+            <MachineryFaultsComp />
+            
             <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
                 <div className="col-3 col-offset-1">
                     <b>Order N°:</b>
@@ -329,7 +273,7 @@ export const OperatorActionsComp = observer((props) => {
                 visible={damageControl !== null}
                 onHide={() => setDamageControl(null)}
                 style={{
-                    width: "40%"
+                    width: "45%"
                 }}
                 modal
                 closable

@@ -6,7 +6,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
-                "operator": { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO", "filename": "operator_ACANGA.png" },
+                "operator": { "username": "ACANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO", "filename": "operator_ECANGA.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 5,
@@ -51,7 +51,7 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
-                "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO", "filename": "operator_PGUTIERREZ.png" },
+                "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO", "filename": "operator_AGUTIERREZ.png" },
                 "lstServices" : [
                     {
                         "idOrderDetail": 1,
