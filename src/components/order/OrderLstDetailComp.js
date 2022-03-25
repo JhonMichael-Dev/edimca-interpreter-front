@@ -93,9 +93,9 @@ export const OrderLstDetailComp = observer((props) => {
         return (
             <div>
                 <div className="col-12 lg:col-12 xl:col-12">
-                    <b>{rowData.product.code}</b>
+                    <b>{rowData.productDto.code}</b>
                 </div>
-                <div className="col-12 lg:col-12 xl:col-12">{" " + rowData.product.description1}</div>
+                <div className="col-12 lg:col-12 xl:col-12">{" " + rowData.productDto.description1}</div>
             </div>
         );
     };
@@ -104,7 +104,7 @@ export const OrderLstDetailComp = observer((props) => {
         return (
             <OrderStatusComp status={rowData.status} />
             /*
-            <Button key={rowData.idOrderDetail} className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
+            <Button key={rowData.idWorkingOrder} className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
                 {rowData.status}
             </Button>
             */
@@ -117,18 +117,18 @@ export const OrderLstDetailComp = observer((props) => {
 
     let serviceTypeIconComp = (rowData) => {
         return (
-            <div key={rowData.idOrderDetail}>
-                <OrderServicesIconComp serviceType={rowData.product.serviceType} badgeNumber={null} />
+            <div key={rowData.idWorkingOrder}>
+                <OrderServicesIconComp serviceType={rowData.jdeServiceType} badgeNumber={null} />
             </div>
         );
     };
 
     let selectionComp = (rowData) => {
-        let lstSelectableStatus = ["PENDIENTE", "EN_PAUSA"];
+        let lstSelectableStatus = ["PENDIENTE", "PAUSADO"];
         let isSelectable = lstSelectableStatus.includes(rowData.status);
         return (
             <Button
-                key={rowData.idOrderDetail}
+                key={rowData.idWorkingOrder}
                 onClick={() => {
                     setSelOrderDetail(rowData);
                 }}
@@ -141,9 +141,9 @@ export const OrderLstDetailComp = observer((props) => {
     };
 
     let orderDetailTableComp =
-        props.selOrder && props.selOrder.lstOrderDetail && props.selOrder.lstOrderDetail.length > 0 ? (
+        props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? (
             <DataTable
-                value={props.selOrder.lstOrderDetail}
+                value={props.selOrder.lstWorkingOrder}
                 /*
                 selectionMode="single"
                 selection={selOrderDetail}
@@ -151,7 +151,7 @@ export const OrderLstDetailComp = observer((props) => {
                 onRowSelect={onRowSelect}
                 onRowUnselect={onRowUnselect}
                 */
-                dataKey="idOrderDetail"
+                dataKey="idWorkingOrder"
                 ref={dt}
                 header={""}
                 footer={""}
@@ -162,9 +162,9 @@ export const OrderLstDetailComp = observer((props) => {
             >
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
-                <Column header="Cantidad" field="quantity" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantity"></Column>
+                <Column header="Cantidad" field="quantityRequested" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityRequested"></Column>
                 <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="product.description1"></Column>
-                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType"></Column>
+                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType.description1"></Column>
                 <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
             </DataTable>
         ) : (
@@ -176,7 +176,7 @@ export const OrderLstDetailComp = observer((props) => {
             showAsDialog
             handleProcess={(ev) => handleProcessSelectMachinery(ev)}
             storeMcu={null}
-            serviceType={selOrderDetail.product.serviceType}
+            serviceType={selOrderDetail.jdeServiceType}
             onHide={(ev) => {
                 setSelMachinery(null);
                 setSelOrderDetail(null);
@@ -190,7 +190,7 @@ export const OrderLstDetailComp = observer((props) => {
         <OperatorAndAssistantsLstComp
             handleProcess={() => handleProcess()}
             storeMcu={null}
-            skill={selOrderDetail ? selOrderDetail.product.serviceType : null}
+            skill={selOrderDetail ? selOrderDetail.jdeServiceType : null}
             onHide={(ev) => {
                 setSelMachinery(null);
                 setSelOrderDetail(null);

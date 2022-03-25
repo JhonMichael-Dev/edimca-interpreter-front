@@ -20,6 +20,7 @@ export const HumanTalentListComp = observer((props) => {
   */
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
+    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
     const [selectedSkill, setSelectedSkilles] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [lstStores, setLstStores] = useState([]);
@@ -43,6 +44,7 @@ export const HumanTalentListComp = observer((props) => {
         OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
             if (valid.data && valid.data.obj[0].operators) {
                 setLstOperator(valid.data.obj[0].operators);
+                //console.log(valid.data.obj[0].operators);
             }
         });
 
@@ -51,6 +53,7 @@ export const HumanTalentListComp = observer((props) => {
                 setLstStores(valid.data.obj);
             }
         });
+        setLstOperatorFilter(lstOperator);
     };
 
     const onSkill = (e) => {
@@ -138,9 +141,9 @@ export const HumanTalentListComp = observer((props) => {
             : <FileUploadComp operator={rowData} onUpdate = {handleReloadTable}/>
     };
     /*
-Inner Components
-*/
-    let tblLisTH = (
+    Inner Components
+    */
+    let tableListOperatorTH = (
         <DataTable
             value={lstOperator}
             selectionMode="single"

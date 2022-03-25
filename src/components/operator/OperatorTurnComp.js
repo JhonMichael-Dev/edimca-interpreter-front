@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 
 // Prime components
@@ -28,7 +28,7 @@ export const OperatorTurnComp = observer((props) => {
     /*
     Methods
     */
-    const loadAvailables = () => { };
+    const loadAvailables = () => {};
 
     /*
     Inner Components
@@ -40,29 +40,19 @@ export const OperatorTurnComp = observer((props) => {
     return (
         <React.Fragment>
             <Button
-                className={"p-button-rounded p-button-" + (props.status === "NOCTURNO" ?
-                                                            "warning" :
-                                                            props.status === "PENDIENTE" ?
-                                                            "secondary" :
-                                                            props.status === "EN_PROCESO" ?
-                                                            "warning" :
-                                                            props.status === "EN_PAUSA" ?
-                                                            "info" :
-                                                            props.status === "PARADO" ?
-                                                            "danger" :
-                                                            "success")}
+                className={"p-button-rounded p-button-" + (props.status === "NOCTURNO" ? "warning" : props.status === "PENDIENTE" ? "secondary" : props.status === "EN_PROCESO" ? "warning" : props.status === "PAUSADO" ? "info" : props.status === "PARADO" ? "danger" : "success")}
                 style={{ fontWeight: "bold", fontSize: 12, justifyContent: "center" }}
             >
                 {props.status}
             </Button>
-            {props.pauseReason != "" ?
+            {props.pauseReason != "" ? (
                 <React.Fragment>
                     &nbsp;
-                    <div>
-                        {props.pauseReason}
-                    </div>
+                    <div>{props.pauseReason}</div>
                 </React.Fragment>
-                : ""}
+            ) : (
+                ""
+            )}
         </React.Fragment>
     );
 });

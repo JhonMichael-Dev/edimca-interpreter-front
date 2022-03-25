@@ -1,6 +1,7 @@
 const prod = {
   url: {
     API_URL: "http://172.16.148.80:8080",
+    PC_URL: "http://localhost:8080",
     PDF_URL: "http://172.16.148.80:4000",
   },
   urlDbquery: {
@@ -12,6 +13,7 @@ const prod = {
 const dev = {
   url: {
     API_URL: "http://localhost:8100",
+    PC_URL: "http://localhost:8080",
     PDF_URL: "http://172.16.148.80:4000",
   },
   urlDbquery: {

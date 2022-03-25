@@ -7,42 +7,42 @@
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
                 "operator": { "username": "ECANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO", "filename": "operator_ECANGA.png" },
-                "lstServices" : [
+                "lstServices": [
                     {
-                        "idOrderDetail": 5,
-                        "product": {
+                        "idWorkingOrder": 5,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17070,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
                         "units": {
-                            "quantity": 8,
+                            "quantityRequested": 8,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
-                        "status": "EN_PAUSA",
+                        "status": "PAUSADO",
                         "pauseReason": "ALMUERZO/CENA",
-                        "statusService": 90,
+                        "jdeStatusCode": 90,
                         "machine": "Felder G330",
                         "userpos": null
                     },
                     {
-                        "idOrderDetail": 2,
-                        "product": {
+                        "idWorkingOrder": 2,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
                         "units": {
-                            "quantity": 3,
+                            "quantityRequested": 3,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "EN_PROCESO",
                         "pauseReason": "",
-                        "statusService": 30,
+                        "jdeStatusCode": 30,
                         "machine": "Apache P1000",
                         "userpos": null
                     }
@@ -52,23 +52,23 @@
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12345,
                 "operator": { "username": "AGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO", "filename": "operator_AGUTIERREZ.png" },
-                "lstServices" : [
+                "lstServices": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17070,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
                         "units": {
-                            "quantity": 3,
+                            "quantityRequested": 3,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "EN_PROCESO",
                         "pauseReason": "",
-                        "statusService": 30,
+                        "jdeStatusCode": 30,
                         "machine": "Felder G330",
                         "userpos": null
                     }
@@ -78,42 +78,42 @@
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12346,
                 "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO", "filename": "operator_MFLOR.png" },
-                "lstServices" : [
+                "lstServices": [
                     {
-                        "idOrderDetail": 2,
-                        "product": {
+                        "idWorkingOrder": 2,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
                         "units": {
-                            "quantity": 3,
+                            "quantityRequested": 3,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "EN_PROCESO",
                         "pauseReason": "",
-                        "statusService": 30,
+                        "jdeStatusCode": 30,
                         "machine": "Apache P1000",
                         "userpos": null
                     },
                     {
-                        "idOrderDetail": 7,
-                        "product": {
+                        "idWorkingOrder": 7,
+                        "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": "PERFORADO"
+                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
                         },
                         "units": {
-                            "quantity": 6,
+                            "quantityRequested": 6,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "COMPLETADO",
                         "pauseReason": "",
-                        "statusService": 20,
+                        "jdeStatusCode": 20,
                         "machine": "Z5150",
                         "userpos": null
                     }
@@ -123,42 +123,42 @@
                 "store": { "mcu": "2CM00101" },
                 "jdeOrderId": 12347,
                 "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO", "filename": "operator_RPERALTA.png" },
-                "lstServices" : [
+                "lstServices": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
                         "units": {
-                            "quantity": 3,
+                            "quantityRequested": 3,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "EN_PROCESO",
                         "pauseReason": "",
-                        "statusService": 30,
+                        "jdeStatusCode": 30,
                         "machine": "Apache P1000",
                         "userpos": null
                     },
                     {
-                        "idOrderDetail": 2,
-                        "product": {
+                        "idWorkingOrder": 2,
+                        "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": "PERFORADO"
+                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
                         },
                         "units": {
-                            "quantity": 6,
+                            "quantityRequested": 6,
                             "unitCode": "m",
-                            "unitDescription" : "Metros"
+                            "unitDescription": "Metros"
                         },
                         "status": "COMPLETADO",
                         "pauseReason": "",
-                        "statusService": 20,
+                        "jdeStatusCode": 20,
                         "machine": "Z5150",
                         "userpos": null
                     }

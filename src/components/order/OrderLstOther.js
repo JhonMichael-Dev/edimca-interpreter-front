@@ -243,7 +243,7 @@ export const OrderLstOther = observer((props) => {
         //setDialogOther(true);
         lstOrders.filter((objSer) => {
             if (objSer.jdeOrderId === rowData.jdeOrderId) {
-                setLstOrdersFilter(objSer.lstOrderDetail);
+                setLstOrdersFilter(objSer.lstWorkingOrder);
                 setNumOrder(rowData.jdeOrderId);
             }
         });
@@ -506,7 +506,7 @@ Inner Components
                 </div>
             </div>
             <Dialog visible={dialogServ} style={{ width: "500px" }} header="Servicio de la orden" modal className="p-fluid" onHide={hideDlgServicio}>
-                <div className="grid">{lstOrdersFilter.map((o) => serviceTypeIconComp(o.product.serviceType))}</div>
+                <div className="grid">{lstOrdersFilter.map((orderX) => serviceTypeIconComp(orderX.jdeServiceType))}</div>
             </Dialog>
             <Dialog visible={dialogOther} style={{ width: "50%" }} header={dialogoOrder(serveicios)} modal className="p-fluid" onHide={hideDlgServicioOtherOrder} footer={accionesBtnSaveOrder(serveicios)}>
                 <di>
@@ -563,7 +563,7 @@ Inner Components
                 </div>
                 <br></br>
                 <div className="field">
-                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="GMERA" />
+                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="MGUAMAN" />
                 </div>
                 <hr></hr>
             </Dialog>

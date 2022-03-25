@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 
 // Prime components
@@ -27,7 +27,7 @@ export const OperatorCountComp = observer((props) => {
     /*
     Methods
     */
-    const loadAvailables = () => { 
+    const loadAvailables = () => {
         handleCountServices(props.services);
     };
     const handleCountServices = (services) => {
@@ -35,11 +35,11 @@ export const OperatorCountComp = observer((props) => {
 
         /*let count = 0;
         services.map( key =>{
-            count = count + key.quantity;
+            count = count + key.quantityRequested;
         });*/
 
         setServiceCount(services.length);
-    }
+    };
     /*
     Inner Components
     */
@@ -48,10 +48,8 @@ export const OperatorCountComp = observer((props) => {
     Return
     */
     return (
-        <h5 style={{margin: "0%"}}>
-            <b>
-                {serviceCount}
-            </b>
+        <h5 style={{ margin: "0%" }}>
+            <b>{serviceCount}</b>
         </h5>
     );
 });

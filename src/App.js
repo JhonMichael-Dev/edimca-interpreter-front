@@ -187,7 +187,7 @@ const App = () => {
                     to: "/productionControl",
                 },
                 {
-                    label: "Transferencias",
+                    label: "Redireccionamiento",
                     icon: "pi pi-fw pi-sort-alt",
                     to: "/transfers",
                     badge: dataStore.countIncomingTransfers ? <Badge value={dataStore.countIncomingTransfers} /> : "",

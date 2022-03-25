@@ -13,6 +13,7 @@ import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Badge } from "primereact/badge";
 import OperatorDataService from "../../service/OperatorDataService";
+import StoreDataService from "../../service/StoreDataService";
 import { InputMask } from "primereact/inputmask";
 // Services
 import { DataTable } from "primereact/datatable";
@@ -27,6 +28,10 @@ export const OcupationalDoctorListComp = observer((props) => {
     const [lstOperator, setLstOperator] = useState([]);
     const [lstOperatorSkill, setLstOperatorSkill] = useState([]);
     const [selectedSkill, setSelectedSkilles] = useState([]);
+    const [globalFilter, setGlobalFilter] = useState(null);
+    const [selectedStore, setSelectedStore] = useState(null);
+    const [lstStores, setLstStores] = useState([]);
+    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
     /*
 Init
 */
@@ -47,12 +52,19 @@ Methods
                 valid.data.obj[0].operators.map((o) => setLstOperatorSkill(o.skills));
             }
         });
+
+        StoreDataService.queryStores().then((valid) => {
+            if (valid.data && valid.data.success) {
+                setLstStores(valid.data.obj);
+            }
+        });
+        setLstOperatorFilter(lstOperator);
     };
 
     const onSkill = (e) => {
         let _selectedDamages = [...selectedSkill];
 
-        if (e.checked) {
+        if (!e.checked) {
             _selectedDamages.push(e.value);
         } else {
             for (let i = 0; i < _selectedDamages.length; i++) {
@@ -73,7 +85,6 @@ Methods
                 {rowData.skills.map((skill) => {
                     return (
                         <div key={skill.id} className="field-checkbox">
-                            {console.log(skill.id)}
                             <Checkbox inputId={skill.id} name="skill" value={skill} onChange={onSkill} checked={!selectedSkill.some((item) => item.key === skill.key)} />
                             <label htmlFor={skill.id}>{skill.name}</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -84,12 +95,38 @@ Methods
         );
     };
 
+    const renderHeader1 = () => {
+        return (
+            <div className="grid">
+                <div className="col-6 lg:col-6 xl:col-6">
+                    <div className="p-d-flex p-ai-center p-flex-wrap">
+                        <span className="p-input-icon-left">
+                            <i className="pi pi-search" />
+                            <InputText style={{ width: "60%" }} type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
+                        </span>
+                    </div>
+                </div>
+                <div className="col-6 lg:col-6 xl:col-6">
+                    <div className="p-d-flex p-ai-center p-flex-wrap">
+                        <Dropdown style={{ width: "60%" }} value={selectedStore} options={lstStores} onChange={(e) => onChangeStore(e)} optionLabel="name" placeholder="Seleccione la bodega" />
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const onChangeStore = (e) => {
+        setSelectedStore(e.value);
+        setLstOperatorFilter(lstOperator.filter((ob) => ob.mcu === e.value.mcu));
+        console.log(lstOperatorFilter);
+    };
+    const header1 = renderHeader1();
     /*
 Inner Components
 */
     let tblLisTH = (
         <DataTable
-            value={lstOperator}
+            value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
             dataKey="id"
             ref={dt}
             responsiveLayout="stack"
@@ -99,7 +136,29 @@ Inner Components
             virtualScrollerOptions={{ itemSize: 46 }}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
+            globalFilter={globalFilter}
+            header={header1}
         >
+            <Column
+                header="Cod."
+                field="jdeAn8"
+                style={{
+                    textAlign: "left",
+                    width: "7%",
+                    fontSize: "10px",
+                    minWidth: "12rem",
+                }}
+            ></Column>
+            <Column
+                header="Usuario"
+                field="username"
+                style={{
+                    textAlign: "left",
+                    width: "10%",
+                    fontSize: "10px",
+                    minWidth: "14rem",
+                }}
+            ></Column>
             <Column
                 header="Nombre "
                 field="fullname"

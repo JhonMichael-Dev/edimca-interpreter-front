@@ -1,11 +1,12 @@
 import axios from "axios";
-import Tokenize from "./Tokenize";
+//import Tokenize from "./Tokenize";
 import DataStore from "../data/DataStore";
 
 class MasterService {
+    /*
     decryptedToken = () => {
         return Tokenize.decryptToken(DataStore.token, DataStore.user.username);
-    };
+    };*/
 
     getDataService(apiUrl) {
         return axios
