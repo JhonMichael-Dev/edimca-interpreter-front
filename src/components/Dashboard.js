@@ -19,7 +19,7 @@ const lineData = {
     datasets: [
         {
             label: "Ordenes Pendientes",
-            data: [20, 36, 49, 66, 56, 56, 45, 30,20],
+            data: [20, 36, 49, 66, 56, 56, 45, 30, 20],
             fill: false,
             backgroundColor: "#2f4860",
             borderColor: "#2f4860",
@@ -27,7 +27,7 @@ const lineData = {
         },
         {
             label: "Ordenes En_Proceso",
-            data: [0, 30, 40, 66, 46, 44 ,30, 16, 8],
+            data: [0, 30, 40, 66, 46, 44, 30, 16, 8],
             fill: false,
             backgroundColor: "#00bb7e",
             borderColor: "#00bb7e",
@@ -37,52 +37,52 @@ const lineData = {
 };
 
 const chartData = {
-    labels: ['ACANGA', 'PGUTIERREZ', 'GMERA', 'GPACHACAMA', 'YWANG', 'MFLOR', 'RPERALTA'],
+    labels: ["ACANGA", "PGUTIERREZ", "GMERA", "GPACHACAMA", "YWANG", "MFLOR", "RPERALTA"],
     datasets: [
         {
-            label: 'ANTEAYER',
-            backgroundColor: 'rgba(0, 0, 139,0.2)',
-            borderColor: 'rgba(0, 0, 139,1)',
-            pointBackgroundColor: 'rgba(0, 0, 139,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(0, 0, 139,1)',
-            data: [75, 69, 50, 71, 59, 65, 65]
+            label: "ANTEAYER",
+            backgroundColor: "rgba(0, 0, 139,0.2)",
+            borderColor: "rgba(0, 0, 139,1)",
+            pointBackgroundColor: "rgba(0, 0, 139,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(0, 0, 139,1)",
+            data: [75, 69, 50, 71, 59, 65, 65],
         },
         {
-            label: 'AYER',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
-            pointBackgroundColor: 'rgba(255,99,132,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(255,99,132,1)',
-            data: [80, 66, 47, 69, 66, 67, 70]
-        }
-    ]
+            label: "AYER",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            pointBackgroundColor: "rgba(255,99,132,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(255,99,132,1)",
+            data: [80, 66, 47, 69, 66, 67, 70],
+        },
+    ],
 };
 
 const lightOptions = {
     plugins: {
         legend: {
             labels: {
-                color: '#495057'
-            }
-        }
+                color: "#495057",
+            },
+        },
     },
     scales: {
         r: {
             pointLabels: {
-                color: '#495057',
+                color: "#495057",
             },
             grid: {
-                color: '#d99d00',
+                color: "#d99d00",
             },
             angleLines: {
-                color: '#d99d00'
-            }
-        }
-    }
+                color: "#d99d00",
+            },
+        },
+    },
 };
 
 export const Dashboard = () => {
@@ -138,9 +138,17 @@ export const Dashboard = () => {
     };
 
     const handleQueryMachineryByWh = () => {
+        /*
         MachineryDataService.queryMachineryByWhMan(null).then((valid) => {
             if (valid.data && valid.data.success) {
                 setLstMachinery(valid.data.obj[0].machineryMaintenaceList);
+            }
+        });*/
+        MachineryDataService.getMachineAll().then((valid) => {
+            if (valid.data) {
+                let lstMachineryFilteredByMcuMan = valid.data.sort().reverse();
+                console.log(lstMachineryFilteredByMcuMan);
+                setLstMachinery(lstMachineryFilteredByMcuMan);
             }
         });
     };
@@ -188,22 +196,14 @@ export const Dashboard = () => {
             <div className="col-12">
                 <div className="card">
                     <h5>Listado de maquinarias</h5>
-                    <DataTable
-                        value={lstMachinery}
-                        dataKey="code"
-                        responsiveLayout="scroll"
-                        scrollable
-                        scrollHeight="380px"
-                        virtualScrollerOptions={{ itemSize: 46 }}
-                    >
+                    <DataTable value={lstMachinery} dataKey="code" responsiveLayout="scroll" scrollable scrollHeight="380px" virtualScrollerOptions={{ itemSize: 46 }}>
                         <Column header="Maquinaria" body={machineryIconComp} style={{ width: "20%", textAlign: "center" }} sortable sortField="code"></Column>
                         <Column header="Descripción" field="description" style={{ width: "30%", textAlign: "center", alignContent: "center" }} sortable sortField="description"></Column>
                         <Column header="Estado" field="status" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
-                        <Column header="Est. Mantemiento" field="statusMaintenace" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}
-                        ></Column>
+                        <Column header="Est. Mantemiento" field="statusMaintenace" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
                         <Column
                             header="View"
-                            style={{width:"10%"}}
+                            style={{ width: "10%" }}
                             body={() => (
                                 <>
                                     <Button icon="pi pi-search" type="button" className="p-button-text" />
@@ -211,21 +211,20 @@ export const Dashboard = () => {
                             )}
                         />
                     </DataTable>
-
                 </div>
             </div>
 
             <div className="col-12 xl:col-6">
                 <div className="card" style={{ textAlign: "center" }}>
                     <h5>Producción Diaria / ?</h5>
-                    <Chart type="line" data={lineData} style={{ width: '100%', display: "inline-block" }}/>
+                    <Chart type="line" data={lineData} style={{ width: "100%", display: "inline-block" }} />
                 </div>
             </div>
 
             <div className="col-12 xl:col-6">
                 <div className="card" style={{ textAlign: "center" }}>
                     <h5>Producción Por Operador</h5>
-                    <Chart type="radar" data={chartData} options={lightOptions} style={{ width: '50%', display: "inline-block" }} />
+                    <Chart type="radar" data={chartData} options={lightOptions} style={{ width: "50%", display: "inline-block" }} />
                 </div>
             </div>
 
