@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 
 // Prime components
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { RadioButton } from 'primereact/radiobutton';
-import { Checkbox } from 'primereact/checkbox';
-import { InputText } from 'primereact/inputtext';
-import { Tooltip } from 'primereact/tooltip';
-import { Slider } from 'primereact/slider';
+import { RadioButton } from "primereact/radiobutton";
+import { Checkbox } from "primereact/checkbox";
+import { InputText } from "primereact/inputtext";
+import { Tooltip } from "primereact/tooltip";
+import { Slider } from "primereact/slider";
 
 import { OperatorPauseButtonComp } from "./OperatorPauseButtonComp";
-import { OperatorServiceIconComp } from "./OperatorServiceIconComp"
+import { OperatorServiceIconComp } from "./OperatorServiceIconComp";
 
 import OrderDataService from "../../service/OrderDataService";
 
@@ -26,10 +26,19 @@ export const OperatorActionsComp = observer((props) => {
     const [orderInfo, setOrderInfo] = useState(null);
     const [pauseDisabled, setPauseDisabled] = useState(null);
 
-    const categories = [{ name: 'Daño mecánico', key: 'M' }, { name: 'Daño neumático', key: 'N' }, { name: 'Daño eléctrico', key: 'E' }];
+    const categories = [
+        { name: "Daño mecánico", key: "M" },
+        { name: "Daño neumático", key: "N" },
+        { name: "Daño eléctrico", key: "E" },
+    ];
     const [selectedCategory, setSelectedCategory] = useState([]);
 
-    const damage = [{ name: 'Falla guillotina', key: 'G' }, { name: 'Falla Calderin', key: 'C' }, { name: 'Falla retestador', key: 'RE' }, { name: 'Falla rascacolas', key: 'A' }];
+    const damage = [
+        { name: "Falla guillotina", key: "G" },
+        { name: "Falla Calderin", key: "C" },
+        { name: "Falla retestador", key: "RE" },
+        { name: "Falla rascacolas", key: "A" },
+    ];
     const [selectedDamages, setSelectedDamages] = useState([]);
 
     const [sliderValue, setSliderValue] = useState(0);
@@ -72,25 +81,21 @@ export const OperatorActionsComp = observer((props) => {
 
             switch (selAction) {
                 case "Play":
-                    
                     break;
                 case "Pausa":
                     setPauseControl(true);
                     break;
                 case "Daño":
-                    setDamageControl(true)
+                    setDamageControl(true);
                     let lstFiltered = lstOrders.filter((orderX) => orderX.jdeOrderId === props.selOrder.jdeOrderId);
                     setOrderInfo(lstFiltered[0]);
                     break;
                 case "Fin":
                     break;
                 default:
-
                     break;
             }
-
         }, 500);
-
     };
 
     const onDamageChange = (e) => {
@@ -98,8 +103,7 @@ export const OperatorActionsComp = observer((props) => {
 
         if (e.checked) {
             _selectedDamages.push(e.value);
-        }
-        else {
+        } else {
             for (let i = 0; i < _selectedDamages.length; i++) {
                 const selectedCategory = _selectedDamages[i];
 
@@ -111,7 +115,7 @@ export const OperatorActionsComp = observer((props) => {
         }
 
         setSelectedDamages(_selectedDamages);
-    }
+    };
 
     const onPauseReasonClick = (selAction) => {
         console.log(selAction.target.textContent);
@@ -124,19 +128,73 @@ export const OperatorActionsComp = observer((props) => {
     let pauseOptions = (
         <div className="grid">
             <div className="col-4">
-                <OperatorPauseButtonComp status="warning" label="REABASTECIMIENTO" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="warning" label="NO COINCIDEN PLANOS" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="warning" label="INCONFORMIDAD DE MATERIALES" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="warning" label="ALMUERZO / CENA" onClick={(e) => {onPauseReasonClick(e)}}/>
+                <OperatorPauseButtonComp
+                    status="warning"
+                    label="REABASTECIMIENTO"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="warning"
+                    label="NO COINCIDEN PLANOS"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="warning"
+                    label="INCONFORMIDAD DE MATERIALES"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="warning"
+                    label="ALMUERZO / CENA"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
             </div>
             <div className="col-4">
-                <OperatorPauseButtonComp status="info" label="PAUSA ACTIVA" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="info" label="BAÑO" onClick={(e) => {onPauseReasonClick(e)}}/>
+                <OperatorPauseButtonComp
+                    status="info"
+                    label="PAUSA ACTIVA"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="info"
+                    label="BAÑO"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
             </div>
             <div className="col-4">
-                <OperatorPauseButtonComp status="success" label="MANTENIMIENTO PREVENTIVO" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="success" label="CAMBIO DE HERRAMIENTA" onClick={(e) => {onPauseReasonClick(e)}}/>
-                <OperatorPauseButtonComp status="success" label="FINAL DE JORNADA" onClick={(e) => {onPauseReasonClick(e)}}/>
+                <OperatorPauseButtonComp
+                    status="success"
+                    label="MANTENIMIENTO PREVENTIVO"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="success"
+                    label="CAMBIO DE HERRAMIENTA"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="success"
+                    label="FINAL DE JORNADA"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
             </div>
         </div>
     );
@@ -146,7 +204,7 @@ export const OperatorActionsComp = observer((props) => {
             <div className="grid">
                 <div className="col-4" style={{ textAlign: "center" }}>
                     <div style={{ display: "inline-block" }}>
-                        <OperatorServiceIconComp serviceType={props.rowData.product.serviceType} badgeNumber={null} />
+                        <OperatorServiceIconComp serviceType={props.rowData.jdeServiceType} badgeNumber={null} />
                     </div>
                 </div>
                 <div className="col-4">
@@ -156,128 +214,78 @@ export const OperatorActionsComp = observer((props) => {
                     </div>
                     <div className="col-12 lg:col-12 xl:col-12">
                         <b>ID ORDEN TRABAJO:</b>
-                        {props.rowData.product.jdeId}
+                        {props.rowData.productDto.jdeId}
                     </div>
                 </div>
                 <div className="col-4">
                     <div className="col-12 lg:col-12 xl:col-12">
                         <b>JEFE DE SUCURSAL:</b>
                     </div>
-                    <div className="col-12 lg:col-12 xl:col-12">
-                        Pilar Gutierrez
-                    </div>
+                    <div className="col-12 lg:col-12 xl:col-12">Pilar Gutierrez</div>
                 </div>
             </div>
-            <div className='grid'>
-                <div className='col-2 col-offset-1'>
+            <div className="grid">
+                <div className="col-2 col-offset-1">
                     <b>Motivo:</b>
                 </div>
             </div>
-            <div className="grid" >
+            <div className="grid">
                 <div className="col-3 col-offset-1">
-                    {
-                        categories.map((category) => {
-                            return (
-                                <div key={category.key} className="field-radiobutton">
-                                    <RadioButton
-                                        inputId={category.key}
-                                        name="category"
-                                        value={category}
-                                        onChange={(e) => setSelectedCategory(e.value)}
-                                        checked={selectedCategory.key === category.key}
-                                        disabled={category.key === 'R'} />
-                                    <label htmlFor={category.key}>{category.name}</label>
-                                </div>
-                            )
-                        })
-                    }
+                    {categories.map((category) => {
+                        return (
+                            <div key={category.key} className="field-radiobutton">
+                                <RadioButton inputId={category.key} name="category" value={category} onChange={(e) => setSelectedCategory(e.value)} checked={selectedCategory.key === category.key} disabled={category.key === "R"} />
+                                <label htmlFor={category.key}>{category.name}</label>
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className="col-7 col-offset-1">
-                    {
-                        damage.map((damage) => {
-                            return (
-                                <div key={damage.key} className="field-checkbox">
-                                    <Checkbox
-                                        inputId={damage.key}
-                                        name="damage"
-                                        value={damage}
-                                        onChange={onDamageChange}
-                                        checked={selectedDamages.some((item) => item.key === damage.key)}
-                                        disabled={damage.key === 'R'} />
-                                    <label htmlFor={damage.key}>{damage.name}</label>
-                                </div>
-                            )
-                        })
-                    }
+                    {damage.map((damage) => {
+                        return (
+                            <div key={damage.key} className="field-checkbox">
+                                <Checkbox inputId={damage.key} name="damage" value={damage} onChange={onDamageChange} checked={selectedDamages.some((item) => item.key === damage.key)} disabled={damage.key === "R"} />
+                                <label htmlFor={damage.key}>{damage.name}</label>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
                 <div className="col-3 col-offset-1">
                     <b>Order N°:</b>
-                    <InputText
-                        value={orderInfo ? orderInfo.jdeOrderId : ""}
-                        style={{ border: "none", width: "60%", fontSize: "14px" }}
-                        disabled />
+                    <InputText value={orderInfo ? orderInfo.jdeOrderId : ""} style={{ border: "none", width: "60%", fontSize: "14px" }} disabled />
                 </div>
                 <div className="col-4">
                     <b>Cliente:</b>
-                    <InputText
-                        value={orderInfo ? orderInfo.client.firstName +" "+ orderInfo.client.lastName : ""}
-                        style={{ border: "none", width: "77%", fontSize: "14px" }}
-                        disabled />
+                    <InputText value={orderInfo ? orderInfo.client.firstName + " " + orderInfo.client.lastName : ""} style={{ border: "none", width: "77%", fontSize: "14px" }} disabled />
                 </div>
                 <div className="col-3">
                     <b>Tipo de Orden:</b>
-                    <InputText
-                        value={orderInfo ? orderInfo.jdeOrderType.code : ""}
-                        style={{ border: "none", width: "40%", fontSize: "14px" }}
-                        disabled />
+                    <InputText value={orderInfo ? orderInfo.jdeOrderType.code : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
                 </div>
             </div>
 
-            <div className='grid' style={{marginBottom: "3%", marginTop: "1%"}}>
-                <div className='col-6 col-offset-1'>
+            <div className="grid" style={{ marginBottom: "3%", marginTop: "1%" }}>
+                <div className="col-6 col-offset-1">
                     <b>Avance de Orden:</b>
                 </div>
             </div>
-            <div className='grid'>
-                <div className='col-3' style={{ textAlign: "right" }}>
+            <div className="grid">
+                <div className="col-3" style={{ textAlign: "right" }}>
                     {0}
                 </div>
-                <div className='col-6'>
-                    <Tooltip
-                        target=".slider>.p-slider-handle"
-                        content={`${sliderValue} ${props.rowData.units.unitCode}`}
-                        position="top" event="focus" />
-                    <Slider
-                        className="slider"
-                        max={props.rowData.units.quantity}
-                        step={0.1}
-                        value={sliderValue}
-                        onChange={(e) => setSliderValue(e.value)}
-                        style={{ width: '100%', height: "10px", marginTop: "1%" }} />
+                <div className="col-6">
+                    <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${props.rowData.units.unitCode}`} position="top" event="focus" />
+                    <Slider className="slider" max={props.rowData.units.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
                 </div>
-                <div className='col-3'>
-                    {`${props.rowData.units.quantity} ${props.rowData.units.unitDescription}`}
-                </div>
+                <div className="col-3">{`${props.rowData.units.quantityRequested} ${props.rowData.units.unitDescription}`}</div>
             </div>
-            <div className='grid' style={{marginTop: "3%", marginRight: "5%"}}>
-                <div className='col-12' style={{textAlign: "right"}}>
-                    <Button
-                        className={"p-button p-button-primary"}
-                        style={{ display: "inline-block", borderRadius:"10%"}}
-                        onClick={() => setDamageControl(null)}
-                        label="Aceptar"
-                    >
-                    </Button>
+            <div className="grid" style={{ marginTop: "3%", marginRight: "5%" }}>
+                <div className="col-12" style={{ textAlign: "right" }}>
+                    <Button className={"p-button p-button-primary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Aceptar"></Button>
                     &nbsp;
-                    <Button
-                        className={"p-button p-button-secondary"}
-                        style={{ display: "inline-block", borderRadius:"10%"}}
-                        onClick={() => setDamageControl(null)}
-                        label="Cancelar"
-                    >
-                    </Button>
+                    <Button className={"p-button p-button-secondary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Cancelar"></Button>
                 </div>
             </div>
         </React.Fragment>
@@ -292,30 +300,31 @@ export const OperatorActionsComp = observer((props) => {
                 style={{ fontSize: 15, justifyContent: "center", width: "100%" }}
                 loading={loading}
                 onClick={() => onLoadingClick(props.action)}
-                disabled={props.rowData.status === "EN_PAUSA" ?
-                            props.action === "Pausa" ?
-                            true :
-                            false
-                        :props.rowData.status === "EN_PROCESO" ?
-                            props.action === "Play" ?
-                            true :
-                            false
-                        :props.rowData.status === "COMPLETADO" ?
-                            props.action === "Play" || props.action === "Pausa" || props.action === "Daño" ?
-                            true:
-                            false
-                        :false}
+                disabled={
+                    props.rowData.status === "PAUSADO"
+                        ? props.action === "Pausa"
+                            ? true
+                            : false
+                        : props.rowData.status === "EN_PROCESO"
+                        ? props.action === "Play"
+                            ? true
+                            : false
+                        : props.rowData.status === "COMPLETADO"
+                        ? props.action === "Play" || props.action === "Pausa" || props.action === "Daño"
+                            ? true
+                            : false
+                        : false
+                }
                 label={props.action}
                 icon={"pi pi-" + props.icon}
-            >
-            </Button>
+            ></Button>
             <Dialog
                 header={"Motivos Pausa"}
                 visible={pauseControl !== null}
                 onHide={() => setPauseControl(null)}
                 style={{
                     width: "50%",
-                    textAlign: "center"
+                    textAlign: "center",
                 }}
                 modal
                 closable
@@ -329,7 +338,7 @@ export const OperatorActionsComp = observer((props) => {
                 visible={damageControl !== null}
                 onHide={() => setDamageControl(null)}
                 style={{
-                    width: "40%"
+                    width: "40%",
                 }}
                 modal
                 closable

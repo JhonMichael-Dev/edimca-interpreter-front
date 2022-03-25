@@ -210,8 +210,8 @@ export const OrderLstComp = observer((props) => {
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "150px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cliente" body={clientComp} style={{ width: "20%" }} sortable sortField="client.firstName"></Column>
-                <Column header="Fch.pedido" style={{ width: "15%" }} field="fecha_pedido" sortable sortField="fecha_pedido"></Column>
-                <Column header="Asesor" style={{ width: "13%" }} field="asesor" sortable sortField="asesor"></Column>
+                <Column header="Fch.pedido" style={{ width: "15%" }} field="transactionDate" sortable sortField="transactionDate"></Column>
+                <Column header="Asesor" style={{ width: "13%" }} field="userpos.username" sortable sortField="userpos.username"></Column>
                 <Column
                     header="Servicios pendientes"
                     body={orderServicesIconResumeComp}

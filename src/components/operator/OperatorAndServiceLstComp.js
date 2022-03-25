@@ -9,8 +9,8 @@ import { OperatorIconComp2 } from "./OperatorIconComp2";
 import { OperatorTurnComp } from "./OperatorTurnComp";
 import { OperatorServicesIconResumeComp } from "./OperatorServicesIconResumeComp";
 import { OperatorCountComp } from "./OperatorCountComp";
-import { OperatorServiceIconComp } from "./OperatorServiceIconComp"
-import { OperatorActionsComp } from "./OperatorActionsComp"
+import { OperatorServiceIconComp } from "./OperatorServiceIconComp";
+import { OperatorActionsComp } from "./OperatorActionsComp";
 import { PasswordOperationComp } from "../PasswordOperationComp";
 
 import OperatorDataService from "../../service/OperatorDataService";
@@ -72,7 +72,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
         //props.handleProcess(selOperatorObj.username);
     };
 
-    const handleHideDialog = () =>{
+    const handleHideDialog = () => {
         setSelOperator(null);
         setShowPasswordDialog(false);
     };
@@ -91,46 +91,36 @@ export const OperatorAndServiceLstComp = observer((props) => {
     };
 
     let operatorTurnComp = (rowData) => {
-        return (
-            <OperatorTurnComp status={rowData.operator.turno} pauseReason={""} />
-        );
+        return <OperatorTurnComp status={rowData.operator.turno} pauseReason={""} />;
     };
 
     let operatorStatusComp = (rowData) => {
         //console.log(rowData.status);
-        return (
-            <OperatorTurnComp status={rowData.status} pauseReason={rowData.pauseReason} />
-        );
+        return <OperatorTurnComp status={rowData.status} pauseReason={rowData.pauseReason} />;
     };
 
-    let passwordComp = (
-        <PasswordOperationComp
-            handleLogin={() => handleLogin()}
-            onHide={() => setSelOperator(null)} />
-    );
+    let passwordComp = <PasswordOperationComp handleLogin={() => handleLogin()} onHide={() => setSelOperator(null)} />;
 
     let operatorActionsComp = (rowData) => {
-        const result = currentServices.lstCurrentService.filter(service =>
-            service.operator.username === selOperator.operator.username &&
-            service.product.jdeId === rowData.product.jdeId
-        );
+        const result = currentServices.lstCurrentService.filter((service) => service.operator.username === selOperator.operator.username && service.productDto.jdeId === rowData.productDto.jdeId);
 
-        let respuesta = 
-                <div className="grid">
-                    <div className="col-3">
-                        <OperatorActionsComp action={"Play"} icon={"play"} color={"warning"} rowData={rowData} selOrder={selOperator} />
-                    </div>
-                    <div className="col-3">
-                        <OperatorActionsComp action={"Pausa"} icon={"pause"} color={"info"} rowData={rowData} selOrder={selOperator} />
-                    </div>
-                    <div className="col-3">
-                        <OperatorActionsComp action={"Daño"} icon={"exclamation-triangle"} color={"danger"} rowData={rowData} selOrder={selOperator} />
-                    </div>
-                    <div className="col-3">
-                        <OperatorActionsComp action={"Fin"} icon={"shopping-cart"} color={"success"} rowData={rowData} selOrder={selOperator} />
-                    </div>
+        let respuesta = (
+            <div className="grid">
+                <div className="col-3">
+                    <OperatorActionsComp action={"Play"} icon={"play"} color={"warning"} rowData={rowData} selOrder={selOperator} />
                 </div>
-        return (result.length ? respuesta: "");
+                <div className="col-3">
+                    <OperatorActionsComp action={"Pausa"} icon={"pause"} color={"info"} rowData={rowData} selOrder={selOperator} />
+                </div>
+                <div className="col-3">
+                    <OperatorActionsComp action={"Daño"} icon={"exclamation-triangle"} color={"danger"} rowData={rowData} selOrder={selOperator} />
+                </div>
+                <div className="col-3">
+                    <OperatorActionsComp action={"Fin"} icon={"shopping-cart"} color={"success"} rowData={rowData} selOrder={selOperator} />
+                </div>
+            </div>
+        );
+        return result.length ? respuesta : "";
     };
 
     let operatorCountComp = (rowData) => {
@@ -148,9 +138,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
                     alignContent: "center",
                 }}
             >
-                <OperatorServicesIconResumeComp
-                    services={rowData.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")}
-                    selStore={props.storeMcu} />
+                <OperatorServicesIconResumeComp services={rowData.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")} selStore={props.storeMcu} />
             </div>
         );
     };
@@ -159,33 +147,23 @@ export const OperatorAndServiceLstComp = observer((props) => {
         return (
             <div>
                 <div className="col-12 lg:col-12 xl:col-12">
-                    <b>{rowData.product.code}</b>
+                    <b>{rowData.productDto.code}</b>
                 </div>
-                <div className="col-12 lg:col-12 xl:col-12">{rowData.product.description1}</div>
+                <div className="col-12 lg:col-12 xl:col-12">{rowData.productDto.description1}</div>
             </div>
         );
     };
 
     let serviceTypeIconComp = (rowData) => {
         return (
-            <div key={rowData.idOrderDetail}>
-                <OperatorServiceIconComp serviceType={rowData.product.serviceType} badgeNumber={null} />
+            <div key={rowData.idWorkingOrder}>
+                <OperatorServiceIconComp serviceType={rowData.jdeServiceType} badgeNumber={null} />
             </div>
         );
     };
 
     let operatorTableComp = (
-        <DataTable
-            value={lstOperators}
-            selectionMode="single"
-            onRowSelect={e => setSelOperator(e.data)}
-            dataKey="username"
-            ref={dt}
-            responsiveLayout="scroll"
-            scrollable
-            scrollHeight="700px"
-            virtualScrollerOptions={{ itemSize: 46 }}
-        >
+        <DataTable value={lstOperators} selectionMode="single" onRowSelect={(e) => setSelOperator(e.data)} dataKey="username" ref={dt} responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
             <Column header="Operador" body={operatorIconComp} style={{ width: "45%", textAlign: "center" }} sortable sortField="username"></Column>
             <Column header="Turno" body={operatorTurnComp} style={{ width: "10%", textAlign: "center", justifyContent: "center" }} sortable sortField="turno"></Column>
             <Column header="Servicios asignados" body={operatorCountComp} style={{ width: "20%", textAlign: "center" }}></Column>
@@ -194,7 +172,8 @@ export const OperatorAndServiceLstComp = observer((props) => {
                 body={orderServicesIconResumeComp}
                 style={{
                     width: "45%",
-                    textAlign: "center", justifyContent: "center"
+                    textAlign: "center",
+                    justifyContent: "center",
                 }}
             ></Column>
         </DataTable>
@@ -202,7 +181,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
 
     let operatorServiceComp = (selOperator) => {
         //console.log(selOperator);
-        
+
         return (
             <Dialog
                 header="Servicios en Proceso"
@@ -217,35 +196,16 @@ export const OperatorAndServiceLstComp = observer((props) => {
                 resizable={false}
                 draggable={false}
             >
-                <DataTable
-                    value={selOperator.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")}
-                    selectionMode="single"
-                    responsiveLayout="scroll"
-                    scrollable
-                    scrollHeight="700px"
-                    virtualScrollerOptions={{ itemSize: 46 }}
-                >
+                <DataTable value={selOperator.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")} selectionMode="single" responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
                     <Column header="Operador" body={operatorIconComp2} style={{ width: "15%", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
                     <Column header="Estado" body={operatorStatusComp} style={{ width: "10%", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="Estado"></Column>
-                    <Column header="Producto" body={serviceComp} style={{ width: "15%" }} ></Column>
-                    <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "10%" }} ></Column>
+                    <Column header="Producto" body={serviceComp} style={{ width: "15%" }}></Column>
+                    <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "10%" }}></Column>
                     <Column header="Seleccionar" body={operatorActionsComp} style={{ width: "30%", textAlign: "center", alignContent: "center", justifyContent: "center" }}></Column>
                 </DataTable>
             </Dialog>
         );
     };
 
-    return (
-        <div>
-            {
-                selOperator === null ?
-                    operatorTableComp
-                    :
-                    showPasswordDialog ?
-                    operatorServiceComp(selOperator)
-                    :
-                    passwordComp
-            }
-        </div>
-    );
+    return <div>{selOperator === null ? operatorTableComp : showPasswordDialog ? operatorServiceComp(selOperator) : passwordComp}</div>;
 });

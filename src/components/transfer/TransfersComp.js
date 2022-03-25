@@ -123,7 +123,7 @@ export const TransfersComp = observer((props) => {
 
     let lstOrderComp =
         lstStoppedOrders && lstStoppedOrders.length > 0 && dataStore.authPrincipalUser ? (
-            <TransfersLstComp lstOrders={lstStoppedOrders} selStore={dataStore.authPrincipalUser.store} header="Lista de órdenes de trabajo paradas" showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} />
+            <TransfersLstComp lstOrders={lstStoppedOrders} selStore={dataStore.authPrincipalUser.store} header="Lista de órdenes de trabajo paradas en mi bodega" showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} />
         ) : (
             ""
         );

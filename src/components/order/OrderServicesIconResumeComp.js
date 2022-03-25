@@ -46,15 +46,15 @@ export const OrderServicesIconResumeComp = observer((props) => {
 
     const handleResumeServices = (selOrder) => {
         setLstOrders(props.selOrder);
-        if (selOrder && selOrder.lstOrderDetail && selOrder.lstOrderDetail.length > 0) {
+        if (selOrder && selOrder.lstWorkingOrder && selOrder.lstWorkingOrder.length > 0) {
             //console.log("mapServices.size0: ", mapServices.size);
             let mapServicesAux = new Map();
 
-            let lstDetailSortedByServiceType = selOrder.lstOrderDetail.sort((a, b) => a.product.serviceType > b.product.serviceType);
+            let lstDetailSortedByServiceType = selOrder.lstWorkingOrder.sort((a, b) => a.jdeServiceType > b.jdeServiceType);
 
-            //selOrder.lstOrderDetail.map((detX) => {
+            //selOrder.lstWorkingOrder.map((detX) => {
             lstDetailSortedByServiceType.map((detX) => {
-                let keyX = detX.product.serviceType;
+                let keyX = detX.jdeServiceType;
                 let isPending = detX.status !== "COMPLETADO";
                 let objectX = mapServicesAux.get(keyX);
                 let countX = objectX ? objectX : 0;
@@ -71,12 +71,10 @@ export const OrderServicesIconResumeComp = observer((props) => {
     let resumeIconComp =
         mapServices && mapServices.size > 0
             ? [...mapServices.keys()].map((keyX) => {
-                  //console.log("keyX", keyX);
-                  //console.log(lstOrders.lstOrderDetail.map((key) => key.product.serviceType === keyX));
                   let valueX = mapServices.get(keyX);
                   return (
                       <div key={keyX}>
-                          <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} statusService={lstOrders.lstOrderDetail.map((key) => (key.product.serviceType === keyX && key.statusService !== undefined ? key.statusService + " - " : ""))} />
+                          <OrderServicesIconComp serviceType={keyX} badgeNumber={valueX ? valueX : 0} statusService={lstOrders.lstWorkingOrder.map((key) => (key.jdeServiceType === keyX && key.jdeStatusCode !== undefined ? key.jdeStatusCode + " - " : ""))} />
                       </div>
                   );
               })

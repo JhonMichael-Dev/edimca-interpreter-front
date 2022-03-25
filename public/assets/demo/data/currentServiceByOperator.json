@@ -5,38 +5,38 @@
         "obj": {
             "lstCurrentService": [
                 {
-                    "product": {
+                    "productDto": {
                         "code": "SERRUTS0020",
                         "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                         "jdeId": 17069,
-                        "serviceType": "CORTE"
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
                     },
-                    "operator": { "username": "ACANGA", "assistants": ["PGUTIERREZ", "AWILCATOMA"] }
+                    "operator": { "username": "ECANGA", "assistants": ["AGUTIERREZ", "AWILCATOMA"] }
                 },
                 {
-                    "product": {
+                    "productDto": {
                         "code": "SERECTS0008",
                         "description1": "SERV ENCHAPADO PUR ML",
                         "jdeId": 17070,
-                        "serviceType": "ENCHAPE"
+                        "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                     },
-                    "operator": { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" }
+                    "operator": { "username": "AGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" }
                 },
                 {
-                    "product": {
+                    "productDto": {
                         "code": "SERRUTS0020",
                         "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                         "jdeId": 17069,
-                        "serviceType": "CORTE"
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
                     },
                     "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" }
                 },
                 {
-                    "product": {
+                    "productDto": {
                         "code": "SERRUTS0020",
                         "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                         "jdeId": 17069,
-                        "serviceType": "CORTE"
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
                     },
                     "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" }
                 }
