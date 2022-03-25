@@ -1,0 +1,77 @@
+{
+    "data": {
+        "success": false,
+        "log": null,
+        "obj": [
+            {
+            
+                "operators": [  
+                    {
+                        "id":1, 
+                        "jdeAn8": 2038,
+                        "mcu": "2CM00101" ,
+                        "username": "DPAREDEZ",
+                        "fullname": "David Patricio",                 
+                        "skills": [ 
+                            {"name":"CORTE", "key":"C1"},
+                            {"name":"ENCHAPE", "key":"E1"},
+                            {"name":"RUTEADO", "key":"R1"},
+                            {"name":"PERFORADO", "key":"P1"}
+                            ]
+         
+                    },
+                        {
+                            "id":2, 
+                            "jdeAn8": 2058, 
+                            "mcu": "2CM01401" ,
+                            "username": "MMERCEDES",
+                            "fullname": "Marcia de las Mercedes",
+                             "skills": [ 
+                                {"name":"CORTE", "key":"C2"},
+                                {"name":"ENCHAPE", "key":"E2"},
+                                {"name":"RUTEADO", "key":"R2"},
+                                {"name":"PERFORADO", "key":"P2"}
+                            ] 
+                        },
+                        {
+                            "id":3,  
+                            "jdeAn8": 2009,
+                            "mcu": "2CM00101" ,
+                            "username": "MGUAMAN",
+                            "fullname": "Martha GUAMAN", 
+                            "skills": [ 
+                                {"name":"CORTE", "key":"C3"},
+                                {"name":"ENCHAPE", "key":"E3"},
+                                {"name":"RUTEADO", "key":"R3"},
+                                {"name":"PERFORADO", "key":"P3"}] 
+                        },                 
+                        {
+                        "id":4,   
+                        "jdeAn8": 4938,                           
+                        "mcu": "2CM00301" ,
+                        "username": "GPACHACAMA",
+                        "fullname": "Gustavo Pachacama",
+                        "skills": [ 
+                            {"name":"CORTE", "key":"C4"},
+                            {"name":"ENCHAPE", "key":"E4"},
+                            {"name":"RUTEADO", "key":"R4"},
+                            {"name":"PERFORADO", "key":"P4"}] 
+                        },
+
+                        {
+                            "id":5, 
+                            "jdeAn8": 5438,
+                            "mcu": "2CM01401" ,
+                            "username": "AWILCATOMA", 
+                            "fullname": "Andres Wilcatoma",
+                            "skills": [ {"name":"CORTE", "key":"C5"},
+                            {"name":"ENCHAPE", "key":"E5"},
+                            {"name":"RUTEADO", "key":"R5"},
+                            {"name":"PERFORADO", "key":"P5"}
+                            ] 
+                        }
+                ]
+            }
+        ]
+    } 
+}

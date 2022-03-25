@@ -204,7 +204,6 @@ export const TransfersLstIncomingComp = observer((props) => {
                 //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
-                <Column header="Origen" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
                 <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "8%" }} sortable sortField="jdeOrderType.code"></Column>
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>

@@ -66,7 +66,7 @@ export const OrderServicesIconComp = observer((props) => {
                 {props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""}
                 <div style={{ fontSize: 8 }}> {props.serviceType}</div>
             </i>
-            <div style={{ fontSize: 8 }}> {props.statusService}</div>
+            <div style={{ fontSize: 8 }}> {props.jdeStatusCode}</div>
         </div>
     );
 });

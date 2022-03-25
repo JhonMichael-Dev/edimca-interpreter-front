@@ -25,33 +25,35 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 15.2,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 15.2,
                         "quantityCompleted": 15.2,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 3,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] },
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] },
                         "storeTransferedFrom": {
                             "mcu": "2CM00101",
                             "name": "BODEGA FISICA MATRIZ QUITO",
@@ -97,33 +99,35 @@
                 },
                 "total": 223.92,
                 "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 15.2,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 15.2,
                         "quantityCompleted": 15.2,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 3,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] },
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] },
                         "storeTransferedFrom": {
                             "mcu": "2CM00301",
                             "name": "BODEGA FISICA SAN RAFAEL      ",

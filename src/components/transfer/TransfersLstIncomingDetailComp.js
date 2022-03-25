@@ -90,9 +90,9 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
         return (
             <div>
                 <div className="col-12 lg:col-12 xl:col-12">
-                    <b>{rowData.product.code}</b>
+                    <b>{rowData.productDto.code}</b>
                 </div>
-                <div className="col-12 lg:col-12 xl:col-12">{" " + rowData.product.description1}</div>
+                <div className="col-12 lg:col-12 xl:col-12">{" " + rowData.productDto.description1}</div>
             </div>
         );
     };
@@ -101,7 +101,7 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
         return (
             <OrderStatusComp status={rowData.status} />
             /*
-            <Button key={rowData.idOrderDetail} className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
+            <Button key={rowData.idWorkingOrder} className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 12 }}>
                 {rowData.status}
             </Button>
             */
@@ -114,8 +114,8 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
 
     let serviceTypeIconComp = (rowData) => {
         return (
-            <div key={rowData.idOrderDetail}>
-                <OrderServicesIconComp serviceType={rowData.product.serviceType} badgeNumber={null} />
+            <div key={rowData.idWorkingOrder}>
+                <OrderServicesIconComp serviceType={rowData.jdeServiceType} badgeNumber={null} />
             </div>
         );
     };
@@ -125,7 +125,7 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
         let isSelectable = lstSelectableStatus.includes(rowData.status) && rowData.pauseReason.hardCoded === "S";
         return (
             <Button
-                key={rowData.idOrderDetail}
+                key={rowData.idWorkingOrder}
                 onClick={() => {
                     setSelOrderDetail(rowData);
                 }}
@@ -138,23 +138,23 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
     };
 
     let orderDetailTableComp =
-        props.selOrder && props.selOrder.lstOrderDetail && props.selOrder.lstOrderDetail.length > 0 ? (
-            <DataTable value={props.selOrder.lstOrderDetail} dataKey="idOrderDetail" ref={dt} header={""} footer={""} responsiveLayout="scroll" scrollable scrollHeight="480px" virtualScrollerOptions={{ itemSize: 46 }}>
+        props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? (
+            <DataTable value={props.selOrder.lstWorkingOrder} dataKey="idWorkingOrder" ref={dt} header={""} footer={""} responsiveLayout="scroll" scrollable scrollHeight="480px" virtualScrollerOptions={{ itemSize: 46 }}>
                 <Column header="Tienda Origen" field="storeTransferedFrom.mcu" style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="storeTransferedFrom.mcu"></Column>
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Motivo" field="pauseReason.description1" style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="pauseReason.description1"></Column>
-                <Column header="Cantidad" field="quantity" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantity"></Column>
+                <Column header="Cantidad" field="quantityRequested" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityRequested"></Column>
                 <Column header="Cantidad completada" field="quantityCompleted" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityCompleted"></Column>
                 <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="product.description1"></Column>
-                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType"></Column>
+                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType.description1"></Column>
                 <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
             </DataTable>
         ) : (
             <></>
         );
 
-    let incomeSetDataComp = selOrderDetail ? <TransferIncomeSetData handleProcess={(ev) => handleProcess(ev)} storeMcu={selOrderDetail.storeTransferedTo} skill={selOrderDetail.product.serviceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
+    let incomeSetDataComp = selOrderDetail ? <TransferIncomeSetData handleProcess={(ev) => handleProcess(ev)} storeMcu={selOrderDetail.storeTransferedTo} skill={selOrderDetail.jdeServiceType} onHide={(ev) => setSelOrderDetail(null)} /> : "";
 
     /*
   Return

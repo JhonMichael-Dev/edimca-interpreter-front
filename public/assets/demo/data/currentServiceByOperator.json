@@ -1,0 +1,46 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": {
+            "lstCurrentService": [
+                {
+                    "productDto": {
+                        "code": "SERRUTS0020",
+                        "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                        "jdeId": 17069,
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
+                    },
+                    "operator": { "username": "ECANGA", "assistants": ["AGUTIERREZ", "AWILCATOMA"] }
+                },
+                {
+                    "productDto": {
+                        "code": "SERECTS0008",
+                        "description1": "SERV ENCHAPADO PUR ML",
+                        "jdeId": 17070,
+                        "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
+                    },
+                    "operator": { "username": "AGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" }
+                },
+                {
+                    "productDto": {
+                        "code": "SERRUTS0020",
+                        "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                        "jdeId": 17069,
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
+                    },
+                    "operator": { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" }
+                },
+                {
+                    "productDto": {
+                        "code": "SERRUTS0020",
+                        "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                        "jdeId": 17069,
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
+                    },
+                    "operator": { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" }
+                }
+            ]
+        }
+    }
+}

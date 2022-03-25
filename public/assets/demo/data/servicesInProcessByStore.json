@@ -4,58 +4,58 @@
         "log": null,
         "obj": {
             "store": { "mcu": "2CM00101" },
-            "lstOrderDetail": [
+            "lstWorkingOrder": [
                 {
-                    "idOrderDetail": 2,
-                    "product": {
+                    "idWorkingOrder": 2,
+                    "productDto": {
                         "code": "SERRUTS0023",
                         "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                         "jdeId": 17767,
-                        "serviceType": "RUTEADO"
+                        "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                     },
-                    "quantity": 12.3,
+                    "quantityRequested": 12.3,
                     "status": "EN_PROCESO",
-                    "operator": { "username": "ACANGA", "assistants": ["PGUTIERREZ", "AWILCATOMA"] }
+                    "operator": { "username": "ECANGA", "assistants": ["AGUTIERREZ", "AWILCATOMA"] }
                 },
                 {
-                    "idOrderDetail": 7,
-                    "product": {
+                    "idWorkingOrder": 7,
+                    "productDto": {
                         "code": "SERECTS0008",
                         "description1": "SERV ENCHAPADO PUR ML",
                         "jdeId": 17069,
-                        "serviceType": "ENCHAPE"
+                        "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                     },
-                    "quantity": 4,
-                    "status": "EN_PAUSA",
+                    "quantityRequested": 4,
+                    "status": "PAUSADO",
                     "stopReason": {
                         "idMaster": 5001,
                         "code": "ALM",
                         "description1": "Almuerzo"
                     },
-                    "operator": { "username": "ACANGA", "assistants": [] }
+                    "operator": { "username": "ECANGA", "assistants": [] }
                 },
                 {
-                    "idOrderDetail": 222,
-                    "product": {
+                    "idWorkingOrder": 222,
+                    "productDto": {
                         "code": "SERRUTS0023",
                         "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                         "jdeId": 17767,
-                        "serviceType": "RUTEADO"
+                        "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                     },
-                    "quantity": 12.3,
+                    "quantityRequested": 12.3,
                     "status": "EN_PROCESO",
-                    "operator": { "username": "GMERA", "assistants": [] }
+                    "operator": { "username": "MGUAMAN", "assistants": [] }
                 },
                 {
-                    "idOrderDetail": 22,
-                    "product": {
+                    "idWorkingOrder": 22,
+                    "productDto": {
                         "code": "SERRUTS0023",
                         "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                         "jdeId": 17767,
-                        "serviceType": "RUTEADO"
+                        "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                     },
-                    "quantity": 12.3,
-                    "status": "EN_PAUSA",
+                    "quantityRequested": 12.3,
+                    "status": "PAUSADO",
                     "stopReason": {
                         "idMaster": 5003,
                         "code": "DAN",
@@ -64,15 +64,15 @@
                     "operator": { "username": "YWANG", "assistants": [] }
                 },
                 {
-                    "idOrderDetail": 5,
-                    "product": {
+                    "idWorkingOrder": 5,
+                    "productDto": {
                         "code": "SERRUTS0020",
                         "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                         "jdeId": 17069,
-                        "serviceType": "CORTE"
+                        "serviceType": { "code": "COR", "description1": "CORTE" }
                     },
-                    "quantity": 8,
-                    "status": "EN_PAUSA",
+                    "quantityRequested": 8,
+                    "status": "PAUSADO",
                     "stopReason": {
                         "idMaster": 5001,
                         "code": "ALM",

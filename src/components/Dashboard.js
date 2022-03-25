@@ -4,25 +4,30 @@ import { Button } from "primereact/button";
 import { Chart } from "primereact/chart";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useHistory } from "react-router";
+
 import { ProductService } from "../service/ProductService";
 import OrderDataService from "../service/OrderDataService";
-import { useHistory } from "react-router";
+import MachineryDataService from "../service/MachineryDataService";
+
 import { LoginPrincipalComp } from "./login/LoginPrincipalComp";
+import { MachineryIconComp } from "./machinery/MachineryIconComp";
 import { useDataStore } from "../data/DataStoreContext";
+
 const lineData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["8:00", "9:00", "10:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"],
     datasets: [
         {
-            label: "First Dataset",
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: "Ordenes Pendientes",
+            data: [20, 36, 49, 66, 56, 56, 45, 30, 20],
             fill: false,
             backgroundColor: "#2f4860",
             borderColor: "#2f4860",
             tension: 0.4,
         },
         {
-            label: "Second Dataset",
-            data: [28, 48, 40, 19, 86, 27, 90],
+            label: "Ordenes En_Proceso",
+            data: [0, 30, 40, 66, 46, 44, 30, 16, 8],
             fill: false,
             backgroundColor: "#00bb7e",
             borderColor: "#00bb7e",
@@ -30,14 +35,63 @@ const lineData = {
         },
     ],
 };
+
+const chartData = {
+    labels: ["ECANGA", "AGUTIERREZ", "MGUAMAN", "GPACHACAMA", "YWANG", "MFLOR", "RPERALTA"],
+    datasets: [
+        {
+            label: "ANTEAYER",
+            backgroundColor: "rgba(0, 0, 139,0.2)",
+            borderColor: "rgba(0, 0, 139,1)",
+            pointBackgroundColor: "rgba(0, 0, 139,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(0, 0, 139,1)",
+            data: [75, 69, 50, 71, 59, 65, 65],
+        },
+        {
+            label: "AYER",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            pointBackgroundColor: "rgba(255,99,132,1)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(255,99,132,1)",
+            data: [80, 66, 47, 69, 66, 67, 70],
+        },
+    ],
+};
+
+const lightOptions = {
+    plugins: {
+        legend: {
+            labels: {
+                color: "#495057",
+            },
+        },
+    },
+    scales: {
+        r: {
+            pointLabels: {
+                color: "#495057",
+            },
+            grid: {
+                color: "#d99d00",
+            },
+            angleLines: {
+                color: "#d99d00",
+            },
+        },
+    },
+};
+
 export const Dashboard = () => {
-    //const [selStore, setSelStore] = useState(null);
-    const [products, setProducts] = useState(null);
+    //const [products, setProducsetProductsts] = useState(null);
     const menu1 = useRef(null);
-    const menu2 = useRef(null);
     const [numberOrde, selNumberOrde] = useState(0);
     const [numberOrdeProcess, selNumberOrdeProcess] = useState(0);
     const history = useHistory();
+    const [lstMachinery, setLstMachinery] = useState([]);
 
     /*
     Store
@@ -46,13 +100,10 @@ export const Dashboard = () => {
 
     useEffect(() => {
         const productService = new ProductService();
-        productService.getProductsSmall().then((data) => setProducts(data));
+        //productService.getProductsSmall().then((data) => setProducts(data));
         numbrePendingOrde();
+        handleQueryMachineryByWh();
     }, []);
-
-    const formatCurrency = (value) => {
-        return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
-    };
 
     async function numbrePendingOrde() {
         let lstPendingStatus = ["PENDIENTE"];
@@ -86,15 +137,28 @@ export const Dashboard = () => {
         });
     };
 
+    const handleQueryMachineryByWh = () => {
+        MachineryDataService.queryMachineryByWhMan(null).then((valid) => {
+            if (valid.data && valid.data.success) {
+                setLstMachinery(valid.data.obj[0].machineryMaintenaceList);
+            }
+        });
+    };
+
     /*
     Inner components
     */
+
+    let machineryIconComp = (rowData) => {
+        return <MachineryIconComp machineryData={rowData} />;
+    };
+
     let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => dataStore.setAuthPrincipalUser(ev)} /> : "";
 
     return (
         <div className="grid">
             {loginPrincipalComp}
-            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClickOrder(e)}>
+            <div className="col-12 lg:col-6" onClick={(e) => onEnvClickOrder(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
@@ -107,12 +171,12 @@ export const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 lg:col-6 xl:col-3" onClick={(e) => onEnvClickService(e)}>
+            <div className="col-12 lg:col-6" onClick={(e) => onEnvClickService(e)}>
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Ordenes en proceso</span>
-                            <div className="text-900 font-medium text-xl">{numberOrdeProcess}</div>
+                            <div className="text-green-500 font-medium text-xl">{numberOrdeProcess}</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
                             <i className="pi pi-angle-double-right text-orange-500 text-xl" />
@@ -120,46 +184,18 @@ export const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Customers</span>
-                            <div className="text-900 font-medium text-xl">28441</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <i className="pi pi-inbox text-cyan-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">520 </span>
-                    <span className="text-500">newly registered</span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Comments</span>
-                            <div className="text-900 font-medium text-xl">152 Unread</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <i className="pi pi-comment text-purple-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">85 </span>
-                    <span className="text-500">responded</span>
-                </div>
-            </div>
 
-            <div className="col-12 xl:col-6">
+            <div className="col-12">
                 <div className="card">
-                    <h5>Recent Sales</h5>
-                    <DataTable value={products} className="p-datatable-customers" rows={5} paginator columnResizeMode="fit">
-                        <Column header="Image" body={(data) => <img src={`assets/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
-                        <Column field="name" header="Name" sortable style={{ innerHeight: "189" }} />
-                        <Column field="price" header="Price" sortable body={(data) => formatCurrency(data.price)} />
+                    <h5>Listado de maquinarias</h5>
+                    <DataTable value={lstMachinery} dataKey="code" responsiveLayout="scroll" scrollable scrollHeight="380px" virtualScrollerOptions={{ itemSize: 46 }}>
+                        <Column header="Maquinaria" body={machineryIconComp} style={{ width: "20%", textAlign: "center" }} sortable sortField="code"></Column>
+                        <Column header="Descripción" field="description" style={{ width: "30%", textAlign: "center", alignContent: "center" }} sortable sortField="description"></Column>
+                        <Column header="Estado" field="status" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
+                        <Column header="Est. Mantemiento" field="statusMaintenace" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
                         <Column
                             header="View"
+                            style={{ width: "10%" }}
                             body={() => (
                                 <>
                                     <Button icon="pi pi-search" type="button" className="p-button-text" />
@@ -168,9 +204,26 @@ export const Dashboard = () => {
                         />
                     </DataTable>
                 </div>
+            </div>
+
+            <div className="col-12 xl:col-6">
+                <div className="card" style={{ textAlign: "center" }}>
+                    <h5>Producción Diaria / ?</h5>
+                    <Chart type="line" data={lineData} style={{ width: "100%", display: "inline-block" }} />
+                </div>
+            </div>
+
+            <div className="col-12 xl:col-6">
+                <div className="card" style={{ textAlign: "center" }}>
+                    <h5>Producción Por Operador</h5>
+                    <Chart type="radar" data={chartData} options={lightOptions} style={{ width: "50%", display: "inline-block" }} />
+                </div>
+            </div>
+
+            <div className="col-12 xl:col-6">
                 <div className="card">
                     <div className="flex justify-content-between align-items-center mb-5">
-                        <h5>Best Selling Products</h5>
+                        <h5>TOP Servicios Transformados / Lógica de porcentajes?</h5>
                         <div>
                             <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu1.current.toggle(event)} />
                             <Menu
@@ -186,32 +239,32 @@ export const Dashboard = () => {
                     <ul className="list-none p-0 m-0">
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Space T-Shirt</span>
-                                <div className="mt-1 text-600">Clothing</div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">CORTE</span>
+                                <div className="mt-1 text-600">Contadora recta 01</div>
                             </div>
                             <div className="mt-2 md:mt-0 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-orange-500 h-full" style={{ width: "50%" }} />
+                                    <div className="bg-orange-500 h-full" style={{ width: "80%" }} />
                                 </div>
-                                <span className="text-orange-500 ml-3 font-medium">%50</span>
+                                <span className="text-orange-500 ml-3 font-medium">%80</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Portal Sticker</span>
-                                <div className="mt-1 text-600">Accessories</div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">CORTE</span>
+                                <div className="mt-1 text-600">Contadora recta 02</div>
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
                                     <div className="bg-cyan-500 h-full" style={{ width: "16%" }} />
                                 </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%16</span>
+                                <span className="text-cyan-500 ml-3 font-medium">%20</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Supernova Sticker</span>
-                                <div className="mt-1 text-600">Accessories</div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">ENRUTADO</span>
+                                <div className="mt-1 text-600">Enrutadora 01</div>
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
@@ -222,20 +275,20 @@ export const Dashboard = () => {
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Wonders Notebook</span>
-                                <div className="mt-1 text-600">Office</div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">PERFORADO</span>
+                                <div className="mt-1 text-600">Perforadora 01</div>
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-green-500 h-full" style={{ width: "35%" }} />
+                                    <div className="bg-green-500 h-full" style={{ width: "25%" }} />
                                 </div>
-                                <span className="text-green-500 ml-3 font-medium">%35</span>
+                                <span className="text-green-500 ml-3 font-medium">%25</span>
                             </div>
                         </li>
                         <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
                             <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Mat Black Case</span>
-                                <div className="mt-1 text-600">Accessories</div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">PERFORADO</span>
+                                <div className="mt-1 text-600">Perforadora 02</div>
                             </div>
                             <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
                                 <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
@@ -244,35 +297,18 @@ export const Dashboard = () => {
                                 <span className="text-purple-500 ml-3 font-medium">%75</span>
                             </div>
                         </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">Robots T-Shirt</span>
-                                <div className="mt-1 text-600">Clothing</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-teal-500 h-full" style={{ width: "40%" }} />
-                                </div>
-                                <span className="text-teal-500 ml-3 font-medium">%40</span>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
 
             <div className="col-12 xl:col-6">
                 <div className="card">
-                    <h5>Sales Overview</h5>
-                    <Chart type="line" data={lineData} />
-                </div>
-
-                <div className="card">
-                    <div className="flex align-items-center justify-content-between mb-4">
-                        <h5>Notifications</h5>
+                    <div className="flex justify-content-between align-items-center mb-5">
+                        <h5>Producción Otras Tiendas</h5>
                         <div>
-                            <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu2.current.toggle(event)} />
+                            <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu1.current.toggle(event)} />
                             <Menu
-                                ref={menu2}
+                                ref={menu1}
                                 popup
                                 model={[
                                     { label: "Add New", icon: "pi pi-fw pi-plus" },
@@ -281,69 +317,63 @@ export const Dashboard = () => {
                             />
                         </div>
                     </div>
-
-                    <span className="block text-600 font-medium mb-3">TODAY</span>
-                    <ul className="p-0 mx-0 mt-0 mb-4 list-none">
-                        <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                            <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                                <i className="pi pi-dollar text-xl text-blue-500" />
+                    <ul className="list-none p-0 m-0">
+                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                            <div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA MATRIZ QUITO</span>
                             </div>
-                            <span className="text-900 line-height-3">
-                                Richard Jones
-                                <span className="text-700">
-                                    {" "}
-                                    has purchased a blue t-shirt for <span className="text-blue-500">79$</span>
-                                </span>
-                            </span>
+                            <div className="mt-2 md:mt-0 flex align-items-center">
+                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
+                                    <div className="bg-orange-500 h-full" style={{ width: "40%" }} />
+                                </div>
+                                <span className="text-orange-500 ml-3 font-medium">%40</span>
+                            </div>
                         </li>
-                        <li className="flex align-items-center py-2">
-                            <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-orange-100 border-circle mr-3 flex-shrink-0">
-                                <i className="pi pi-download text-xl text-orange-500" />
+                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                            <div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA GUAMANI</span>
                             </div>
-                            <span className="text-700 line-height-3">
-                                Your request for withdrawal of <span className="text-blue-500 font-medium">2500$</span> has been initiated.
-                            </span>
+                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
+                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
+                                    <div className="bg-cyan-500 h-full" style={{ width: "17%" }} />
+                                </div>
+                                <span className="text-cyan-500 ml-3 font-medium">%17</span>
+                            </div>
+                        </li>
+                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                            <div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA MARISCAL SUCRE</span>
+                            </div>
+                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
+                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
+                                    <div className="bg-pink-500 h-full" style={{ width: "29%" }} />
+                                </div>
+                                <span className="text-pink-500 ml-3 font-medium">%29</span>
+                            </div>
+                        </li>
+                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                            <div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA SAN RAFAEL</span>
+                            </div>
+                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
+                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
+                                    <div className="bg-green-500 h-full" style={{ width: "9%" }} />
+                                </div>
+                                <span className="text-green-500 ml-3 font-medium">%9</span>
+                            </div>
+                        </li>
+                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
+                            <div>
+                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA SAN BARTOLO</span>
+                            </div>
+                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
+                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
+                                    <div className="bg-purple-500 h-full" style={{ width: "5%" }} />
+                                </div>
+                                <span className="text-purple-500 ml-3 font-medium">%5</span>
+                            </div>
                         </li>
                     </ul>
-
-                    <span className="block text-600 font-medium mb-3">YESTERDAY</span>
-                    <ul className="p-0 m-0 list-none">
-                        <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                            <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
-                                <i className="pi pi-dollar text-xl text-blue-500" />
-                            </div>
-                            <span className="text-900 line-height-3">
-                                Keyser Wick
-                                <span className="text-700">
-                                    {" "}
-                                    has purchased a black jacket for <span className="text-blue-500">59$</span>
-                                </span>
-                            </span>
-                        </li>
-                        <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                            <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
-                                <i className="pi pi-question text-xl text-pink-500" />
-                            </div>
-                            <span className="text-900 line-height-3">
-                                Jane Davis
-                                <span className="text-700"> has posted a new questions about your product.</span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                <div
-                    className="px-4 py-5 shadow-2 flex flex-column md:flex-row md:align-items-center justify-content-between mb-3"
-                    style={{ borderRadius: "1rem", background: "linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1C80CF 47.88%, #FFFFFF 100.01%)" }}
-                >
-                    <div>
-                        <div className="text-blue-100 font-medium text-xl mt-2 mb-3">TAKE THE NEXT STEP</div>
-                        <div className="text-white font-medium text-5xl">Try PrimeBlocks</div>
-                    </div>
-                    <div className="mt-4 mr-auto md:mt-0 md:mr-0">
-                        <a href="https://www.primefaces.org/primeblocks-react" className="p-button font-bold px-5 py-3 p-button-warning p-button-rounded p-button-raised">
-                            Get Started
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
