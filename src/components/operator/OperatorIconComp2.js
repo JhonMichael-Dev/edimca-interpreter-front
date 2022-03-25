@@ -29,20 +29,12 @@ Formats
 Methods
 */
   const loadAvailables = () => {
-    console.log(OperatorDataService.getAccountStateFilePath(props.operator.filename));
+    //console.log(OperatorDataService.getAccountStateFilePath(props.operator.filename));
   };
 
 
-  let operatorimage = () => {
-    let aux;
-    OperatorDataService.getAccountStateFilePath(props.operator.filename).then(response => {
-      console.log(response.data)
-      aux = response.data;
-    });
-    return (
-      { aux }
-    );
-  };
+  let imageName = "/assets/images/default.png";
+
   /*
 Inner Components
 */
@@ -58,7 +50,7 @@ Return
       <i className="p-overlay-badge">
         <img
           src={OperatorDataService.getAccountStateFilePath(props.operator.filename)}
-          alt="new"
+          alt="Sin Foto"
           style={{ width: "70px", height: "70px" }}
         />
         <div style={{ fontSize: 10 }}> {props.operator.username}</div>
