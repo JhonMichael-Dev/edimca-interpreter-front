@@ -119,7 +119,7 @@ export const OperatorActionsComp = observer((props) => {
     };
 
     const onPauseReasonClick = (selAction) => {
-        console.log(selAction.target.textContent);
+        //console.log(selAction.target.textContent);
         setPauseControl(null);
     };
 
@@ -232,7 +232,7 @@ export const OperatorActionsComp = observer((props) => {
             </div>
 
             <MachineryFaultsComp />
-            
+
             <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
                 <div className="col-3 col-offset-1">
                     <b>Order N°:</b>
@@ -244,7 +244,7 @@ export const OperatorActionsComp = observer((props) => {
                 </div>
                 <div className="col-3">
                     <b>Tipo de Orden:</b>
-                    <InputText value={orderInfo ? orderInfo.jdeOrderType.code : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
+                    <InputText value={orderInfo ? orderInfo.jdeOrderTypeCode : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
                 </div>
             </div>
 
@@ -320,7 +320,7 @@ export const OperatorActionsComp = observer((props) => {
                 visible={damageControl !== null}
                 onHide={() => setDamageControl(null)}
                 style={{
-                    width: "45%"
+                    width: "45%",
                 }}
                 modal
                 closable

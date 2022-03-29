@@ -83,7 +83,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                     .filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)
                     .sort()
                     .reverse();
-                console.log(lstMachineryFilteredByMcuMan);
+                //console.log(lstMachineryFilteredByMcuMan);
                 setLstMachinery(lstMachineryFilteredByMcuMan);
             }
         });

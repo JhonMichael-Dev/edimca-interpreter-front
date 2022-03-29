@@ -55,6 +55,7 @@ export const MachinerySelectionLstComp = observer((props) => {
     const handleQueryMachineryByWh = () => {
         MachineryDataService.queryMachineryByWh(props.storeMcu).then((valid) => {
             //console.log("handleQueryMachineryByWh", valid);
+            //console.log("props.serviceType", props.serviceType);
             if (valid.data && valid.data.success) {
                 let lstMachineryFilteredByMcu = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
                 let lstMachineryFilteredByServiceType = lstMachineryFilteredByMcu.machineryList.filter((machinery2ObjX) => machinery2ObjX.machinetyType.code === props.serviceType);
@@ -97,7 +98,7 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let selectionComp = (rowData) => {
         let alreadySelected = selMachinery.code === rowData.code;
-        console.log(rowData.description);
+        //console.log(rowData.description);
         localStorage.setItem("selMachinery", rowData.description);
         return <Button key={rowData.username} onClick={() => handleSelectMachinery(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
     };

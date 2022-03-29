@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 
 // Services
 import OrderDataService from "../../service/OrderDataService";
+import ProductDataService from "../../service/ProductDataService";
 import { OrderShowComp } from "./OrderShowComp";
 import { OrderServicesIconComp } from "./OrderServicesIconComp";
 import { OrderServicesIconResumeComp } from "./OrderServicesIconResumeComp";
@@ -23,6 +24,7 @@ import { OperatorIconComp } from "../operator/OperatorIconComp";
 import { OrderStatusComp } from "./OrderStatusComp";
 import { OperatorAndAssistantsLstComp } from "../operator/OperatorAndAssistantsLstComp";
 import { MachinerySelectionLstComp } from "../machinery/MachinerySelectionLstComp";
+import { ProductInfoComp } from "../product/ProductInfoComp";
 
 export const OrderLstDetailComp = observer((props) => {
     /*
@@ -64,40 +66,75 @@ export const OrderLstDetailComp = observer((props) => {
     };
 
     const handleProcessSelectMachinery = (ev) => {
+        //console.log("handleProcessSelectMachinery", ev);
         setSelMachinery(ev);
     };
 
-    const handleProcess = (ev) => {
+    const handleSelectOperators = (ev) => {
+        //console.log("handleSelectOperators", ev.username);
         setSelOrderDetail(null);
-        showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
-        props.handleProcess();
+        //showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
+        let payload = {
+            idWorkingOrder: selOrderDetail.idWorkingOrder,
+            machinery: selMachinery,
+            operator: ev,
+        };
+        props.handleProcess(payload);
+    };
+
+    const handleQueryProductByJdeCode = async (jdeProductCode) => {
+        await ProductDataService.queryProductByCode(jdeProductCode).then((valid) => {
+            //console.log("handleQueryProductByJdeCode", valid);
+            if (valid && valid.data.success) {
+                //console.log("valid.data.obj", jdeProductCode, valid.data.obj);
+                return valid.data.obj;
+            }
+        });
     };
 
     /*
   Inner Components
   */
-    const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar..",
-            header: "Confirmación",
-            icon: "pi pi-question",
-            accept: () => handleProcess(null),
-            reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
-        });
-    };
-
     let productComp = (rowData) => {
-        return (
-            <div>
-                <div className="col-12 lg:col-12 xl:col-12">
-                    <b>{rowData.productDto.code}</b>
-                </div>
-                <div className="col-12 lg:col-12 xl:col-12">{" " + rowData.productDto.description1}</div>
-            </div>
-        );
+        //console.log("rowData", rowData);
+        return <ProductInfoComp jdeProductCode={rowData.jdeProductCode} description1 code />;
+        /*
+        ProductDataService.queryProductByCode(rowData.jdeProductCode).then((valid) => {
+            //console.log("handleQueryProductByJdeCode", valid);
+            if (valid && valid.data.success) {
+                let _product = valid.data.obj;
+                //console.log("valid.data.objj", rowData.jdeProductCode, _product);
+                //return valid.data.obj;
+                if (_product) {
+                    //console.log("returned");
+                    // TODO: component does not get drawed
+                    //return _product.code + " " + _product.description1;
+                    return (
+                        <div>
+                            <div className="col-12 lg:col-12 xl:col-12">
+                                <b>{_product.code}</b>
+                            </div>
+                            <div className="col-12 lg:col-12 xl:col-12">{" " + _product.description1}</div>
+                        </div>
+                    );
+                }
+            }
+        });
+        */
+        /*
+        handleQueryProductByJdeCode(rowData.jdeProductCode).then((_product) => {
+            //console.log("_productDto1", rowData.jdeProductCode, _product); // TODO: returned object is null =????
+            if (_product)
+                return (
+                    <div>
+                        <div className="col-12 lg:col-12 xl:col-12">
+                            <b>{_product.code}</b>
+                        </div>
+                        <div className="col-12 lg:col-12 xl:col-12">{" " + _product.description1}</div>
+                    </div>
+                );
+        });
+        */
     };
 
     let statusComp = (rowData) => {
@@ -159,11 +196,12 @@ export const OrderLstDetailComp = observer((props) => {
                 scrollable
                 scrollHeight="480px"
                 virtualScrollerOptions={{ itemSize: 46 }}
+                lazy
             >
                 <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cantidad" field="quantityRequested" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityRequested"></Column>
-                <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="product.description1"></Column>
+                <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="productDto.description1"></Column>
                 <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType.description1"></Column>
                 <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
             </DataTable>
@@ -188,7 +226,7 @@ export const OrderLstDetailComp = observer((props) => {
 
     let operatorAndAssistantsLstComp = selMachinery ? (
         <OperatorAndAssistantsLstComp
-            handleProcess={() => handleProcess()}
+            handleProcess={(ev) => handleSelectOperators(ev)}
             storeMcu={null}
             skill={selOrderDetail ? selOrderDetail.jdeServiceType : null}
             onHide={(ev) => {
@@ -207,7 +245,7 @@ export const OrderLstDetailComp = observer((props) => {
         <>
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
             <Dialog
-                header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
+                header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderTypeCode + " " + props.selOrder.jdeOrderId}
                 visible={props.selOrder !== null}
                 onHide={(ev) => props.setSelOrder(null)}
                 style={{

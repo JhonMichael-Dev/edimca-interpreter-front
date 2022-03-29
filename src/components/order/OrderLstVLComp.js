@@ -49,7 +49,7 @@ Init
         OrderDataService.queryIncomingOrdersByStoreVL(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstOrderVL = valid.data.obj.filter((OrObjX) => true || OrObjX.store.mcu === props.storeMcu)[0];
-                console.log("lstOrderVL", lstOrderVL);
+                //console.log("lstOrderVL", lstOrderVL);
                 setLstOrders(valid.data.obj);
             }
         });

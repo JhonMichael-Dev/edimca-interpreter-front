@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -80,7 +80,7 @@
             {
                 "jdeOrderId": 12346,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2005,
                     "identification": "1717463150",

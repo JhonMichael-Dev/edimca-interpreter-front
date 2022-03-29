@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -26,7 +26,7 @@
                 "total": 123.12,
                 "status": "EN_PROCESO",
                 "transactionDate": "21/01/2022 12:00:00 PM",
-                "userpos": { "username": "CMORA" },
+                "userposUsername": "CMORA",
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
@@ -90,7 +90,7 @@
             {
                 "jdeOrderId": 12346,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -156,7 +156,7 @@
             {
                 "jdeOrderId": 12347,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -209,7 +209,7 @@
             {
                 "jdeOrderId": 12348,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -249,7 +249,7 @@
             {
                 "jdeOrderId": 12349,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -316,7 +316,7 @@
             {
                 "jdeOrderId": 12350,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -381,7 +381,7 @@
             {
                 "jdeOrderId": 12351,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -434,7 +434,7 @@
             {
                 "jdeOrderId": 12352,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -474,7 +474,7 @@
             {
                 "jdeOrderId": 12353,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -554,7 +554,7 @@
             {
                 "jdeOrderId": 12354,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -620,7 +620,7 @@
             {
                 "jdeOrderId": 12355,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -673,7 +673,7 @@
             {
                 "jdeOrderId": 12356,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -711,7 +711,7 @@
             {
                 "jdeOrderId": 12357,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -777,7 +777,7 @@
             {
                 "jdeOrderId": 12358,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -843,7 +843,7 @@
             {
                 "jdeOrderId": 12359,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -894,7 +894,7 @@
             {
                 "jdeOrderId": 12360,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",

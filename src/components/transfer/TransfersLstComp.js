@@ -120,7 +120,7 @@ export const TransfersLstComp = observer((props) => {
             ? lstOrders.map((orderX) => {
                   return (
                       <div key={orderX.jdeOrderId} className="grid">
-                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderType.code}</div>
+                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderTypeCode}</div>
                           <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderId}</div>
                           <OrderServicesIconResumeComp selOrder={orderX} />
                       </div>
@@ -164,8 +164,8 @@ export const TransfersLstComp = observer((props) => {
     };
 
     let priorityComp = (rowData) => {
-        let _color = rowData.priority && rowData.priority.code === "EXPRESS" ? "darkmagenta" : "";
-        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority.code}</div>;
+        let _color = rowData.priority && rowData.priority === "EXPRESS" ? "darkmagenta" : "";
+        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority}</div>;
     };
 
     let statusComp = (rowData) => {
@@ -182,7 +182,7 @@ export const TransfersLstComp = observer((props) => {
         //console.log("data111");
         //console.log(data);
         return {
-            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EXPRESS",
+            "row-boContainsInProcessDevolutions": data.priority && data.priority === "EXPRESS",
         };
     };
 

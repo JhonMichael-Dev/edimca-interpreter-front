@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -87,7 +87,7 @@
             {
                 "jdeOrderId": 12349,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -154,7 +154,7 @@
             {
                 "jdeOrderId": 12353,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",

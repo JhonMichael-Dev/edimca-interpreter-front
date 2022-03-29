@@ -1,7 +1,7 @@
 import axios from "axios";
 import { conf } from "../Config.js";
 import MasterService from "./MasterService";
-const MACHINE_API_URL = conf.url.API_URL + "/api/v1/machine";
+const MACHINE_API_URL = conf.url.PC_URL + "/api/v1/machine";
 
 class MachineryDataService {
     queryMachineryByWh(mcu) {
@@ -15,7 +15,7 @@ class MachineryDataService {
 
     getMachineAll() {
         var CURRENT_FILE_URL = `${MACHINE_API_URL}/allMachine`;
-        console.log(".....", MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL));
+        //console.log(".....", MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL));
         return MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL);
     }
 }

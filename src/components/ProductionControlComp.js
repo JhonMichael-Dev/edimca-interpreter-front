@@ -100,7 +100,7 @@ export const ProductionControlComp = observer((props) => {
     };
 
     const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
+        //if (!ev) await timeout(400);
 
         dataStore.setLoading(ev);
     };

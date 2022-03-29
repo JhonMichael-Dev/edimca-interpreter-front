@@ -6,7 +6,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useHistory } from "react-router";
 
-import { ProductService } from "../service/ProductService";
+//import { ProductService } from "../service/ProductService";
 import OrderDataService from "../service/OrderDataService";
 import MachineryDataService from "../service/MachineryDataService";
 
@@ -99,7 +99,7 @@ export const Dashboard = () => {
     const dataStore = useDataStore();
 
     useEffect(() => {
-        const productService = new ProductService();
+        //const productService = new ProductService();
         //productService.getProductsSmall().then((data) => setProducts(data));
         numbrePendingOrde();
         handleQueryMachineryByWh();
@@ -109,7 +109,7 @@ export const Dashboard = () => {
         let lstPendingStatus = ["PENDIENTE"];
         let numbreOrdenPending = [];
         await OrderDataService.queryOrdersByStore().then((valid) => {
-            if (valid.data && valid.data.success) {
+            if (valid && valid.data && valid.data.success) {
                 numbreOrdenPending = valid.data.obj.filter((orderX) => lstPendingStatus.includes(orderX.status));
                 selNumberOrde(numbreOrdenPending.length);
             }
@@ -118,7 +118,7 @@ export const Dashboard = () => {
         let lstProcessStatus = ["EN_PROCESO"];
         let numbreOrdenProcess = [];
         await OrderDataService.queryOrdersByStore().then((valid) => {
-            if (valid.data && valid.data.success) {
+            if (valid && valid.data && valid.data.success) {
                 numbreOrdenProcess = valid.data.obj.filter((orderX) => lstProcessStatus.includes(orderX.status));
                 selNumberOrdeProcess(numbreOrdenProcess.length);
             }
@@ -147,7 +147,7 @@ export const Dashboard = () => {
         MachineryDataService.getMachineAll().then((valid) => {
             if (valid.data) {
                 let lstMachineryFilteredByMcuMan = valid.data.sort().reverse();
-                console.log(lstMachineryFilteredByMcuMan);
+                //console.log(lstMachineryFilteredByMcuMan);
                 setLstMachinery(lstMachineryFilteredByMcuMan);
             }
         });

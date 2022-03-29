@@ -104,7 +104,9 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
 
     const handleLogin = () => {
         setShowPasswordDialog(false);
-        props.handleProcess(selOperatorObj.username);
+        //props.handleProcess(selOperatorObj.username);
+        //SelOperatorObj // david
+        props.handleProcess(selOperatorObj);
     };
 
     /*

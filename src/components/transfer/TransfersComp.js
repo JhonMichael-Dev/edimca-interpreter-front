@@ -107,7 +107,7 @@ export const TransfersComp = observer((props) => {
     };
 
     const verificationOrderEmer = (e) => {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         setSelOption(e.value);
 
         let ev = { severity: "warn", summary: "Mensaje Informativo", message: "Tiene una transferencia emergente" };

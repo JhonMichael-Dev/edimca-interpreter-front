@@ -7,20 +7,18 @@
                 "store": { "mcu": "2CM00101" },
                 "operators": [
                     { "username": "ECANGA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
-<<<<<<< HEAD
-                    { "username": "PGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" },
-                    { "username": "GMERA", "skills": ["RUTEADO"], "turno": "NOCTURNO" },
-=======
+
                     { "username": "AGUTIERREZ", "skills": ["ENCHAPE"], "turno": "DIURNO" },
                     { "username": "MGUAMAN", "skills": ["RUTEADO"], "turno": "NOCTURNO" },
->>>>>>> origin/develop
+
                     { "username": "GPACHACAMA", "skills": ["PERFORADO"], "turno": "DIURNO" },
                     { "username": "AWILCATOMA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
                     { "username": "EPEREZ", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
                     { "username": "DLOPEZ", "skills": ["CORTE", "RUTEADO"], "turno": "NOCTURNO" },
                     { "username": "YWANG", "skills": ["CORTE", "RUTEADO"], "turno": "DIURNO" },
                     { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" },
-                    { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" }
+                    { "username": "RPERALTA", "skills": ["CORTE", "PERFORADO"], "turno": "DIURNO" },
+                    { "username": "TFUENTES", "skills": ["RUTEADO"], "turno": "NOCTURNO" }
                 ]
             }
         ]
