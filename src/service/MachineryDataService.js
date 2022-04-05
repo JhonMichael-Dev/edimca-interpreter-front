@@ -15,7 +15,7 @@ class MachineryDataService {
 
     getMachineAll() {
         var CURRENT_FILE_URL = `${MACHINE_API_URL}/allMachine`;
-        console.log(".....", MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL));
+        //console.log(".....", MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL));
         return MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL);
     }
 }

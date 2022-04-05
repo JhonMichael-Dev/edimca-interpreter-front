@@ -77,24 +77,21 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
   */
 
     const handleQueryMachineryByWhMan = () => {
-        MachineryDataService.getMachineAll().then((valid) => {
-            if (valid.data) {
-                let lstMachineryFilteredByMcuMan = valid.data
-                    .filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)
-                    .sort()
-                    .reverse();
-                console.log(lstMachineryFilteredByMcuMan);
-                setLstMachinery(lstMachineryFilteredByMcuMan);
+        MachineryDataService.queryMachineryByWhMan(props.storeMcu).then((valid) => {
+            if (valid.data && valid.data.success) {
+                let lstMachineryFilteredByMcuMan = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
+                //console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
+                setLstMachinery(lstMachineryFilteredByMcuMan.machineryMaintenaceList);
             }
         });
     };
     const statusMantenimiento = (rowData) => {
-        if (rowData.statusMaintenanceMachine === "P") {
+        if (rowData.statusMaintenace === "Man_Preventivo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-warning mr-2 ">
                         <Badge
-                            value={"Man_Preventivo".toUpperCase()}
+                            value={rowData.statusMaintenace}
                             severity="warning"
                             className="p-mr-2"
                             style={{
@@ -106,12 +103,12 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 </React.Fragment>
             );
         }
-        if (rowData.statusMaintenanceMachine === "C") {
+        if (rowData.statusMaintenace === "Man_Correctivo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-danger mr-2 ">
                         <Badge
-                            value={"Man_Correctivo".toUpperCase()}
+                            value={rowData.statusMaintenace}
                             severity="danger"
                             className="p-mr-2"
                             style={{
@@ -123,30 +120,13 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 </React.Fragment>
             );
         }
-        if (rowData.statusMaintenanceMachine === "O") {
+        if (rowData.statusMaintenace === "Man_Proximo") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
                         <Badge
-                            value={"Man_Proximo".toUpperCase()}
+                            value={rowData.statusMaintenace}
                             severity="info"
-                            className="p-mr-2"
-                            style={{
-                                textAlign: "center",
-                                fontSize: "9px",
-                            }}
-                        ></Badge>
-                    </div>
-                </React.Fragment>
-            );
-        }
-        if (rowData.statusMaintenanceMachine === "N") {
-            return (
-                <React.Fragment>
-                    <div className="p-button-rounded p-button-info mr-2 ">
-                        <Badge
-                            value={"N/A".toUpperCase()}
-                            severity=""
                             className="p-mr-2"
                             style={{
                                 textAlign: "center",
@@ -160,12 +140,12 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     };
 
     const statusMaquina = (rowData) => {
-        if (!rowData.statusMachine) {
+        if (rowData.status === "Des_Habilitada") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-warning mr-2 ">
                         <Badge
-                            value={"DES_HABILITADA".toUpperCase()}
+                            value={rowData.status}
                             severity="warning"
                             className="p-mr-2"
                             style={{
@@ -177,12 +157,31 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 </React.Fragment>
             );
         }
-        if (rowData.statusMachine) {
+        if (rowData.status === "Habilitada") {
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
                         <Badge
-                            value={"Habilitada".toUpperCase()}
+                            value={rowData.status}
+                            severity="info"
+                            className="p-mr-2"
+                            style={{
+                                textAlign: "center",
+                                fontSize: "9px",
+                            }}
+                        ></Badge>
+                    </div>
+                </React.Fragment>
+            );
+        }
+
+        if (rowData === "Habilitada") {
+            console.log(rowData);
+            return (
+                <React.Fragment>
+                    <div className="p-button-rounded p-button-info mr-2 ">
+                        <Badge
+                            value={rowData.status}
                             severity="info"
                             className="p-mr-2"
                             style={{
@@ -215,6 +214,11 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         setSelectedDamages(_selectedDamages);
     };
 
+    let machineryIconComp = (rowData) => {
+        //console.log("tbl... ", rowData);
+        return <MachineryIconComp machineryData={rowData} />;
+    };
+
     /*
   Inner Components
   */
@@ -224,7 +228,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             <React.Fragment>
                 <div className="grid">
                     <div className="col-12 lg:col-6 xl:col-6">
-                        <Button label="Habilitar" style={{ width: "100%", fontSize: "10px" }} disabled={rowData.statusMachine && rowData.statusMaintenanceMachine !== "O"} className="p-button-sm p-button-info " onClick={() => statusMaquina(rowData.statusMachine)} />
+                        <Button label="Habilitar" style={{ width: "100%", fontSize: "10px" }} disabled={rowData.status === "Habilitada" && rowData.statusMaintenace !== "Man.Proximo"} className="p-button-sm p-button-info " onClick={() => statusMaquina("Habilitada")} />
                     </div>
                     <div className="col-12 lg:col-6 xl:col-6">
                         <Button label="Mantenimiento" style={{ width: "100%", fontSize: "10px" }} className="p-button-sm p-button-primary " onClick={() => showDlgMan(rowData)} />
@@ -235,9 +239,9 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     };
 
     const showDlgMan = (rowData) => {
-        setcodigoMan(rowData.jdeCode);
-        setdescManquina(rowData.nameMachine);
-        setcategoMaquina(rowData.category);
+        setcodigoMan(rowData.code);
+        setdescManquina(rowData.description);
+        setcategoMaquina(rowData.machinetyType);
         setDialogMantemimiento(true);
     };
 
@@ -262,38 +266,16 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
 
     let serviceTypeIconComp = (rowData) => {
         return (
-            <div key={rowData.category}>
-                <OperatorServiceIconComp serviceType={rowData.category.toUpperCase()} badgeNumber={null} />
+            <div key={rowData.machinetyType}>
+                <OperatorServiceIconComp serviceType={rowData.machinetyType.toUpperCase()} badgeNumber={null} />
             </div>
-        );
-    };
-
-    let machineryIconComp = (rowData) => {
-        //console.log("tbl... ", rowData);
-        return <MachineryIconComp machineryData={rowData} />;
-    };
-    const descriptionMachineTemplate = (rowData) => {
-        return (
-            <React.Fragment>
-                <div
-                    className="grid"
-                    style={{
-                        textAlign: "center",
-                        width: "100%",
-                        fontSize: "11px",
-                        border: "1px solid",
-                    }}
-                >
-                    <div>{rowData.nameMachine}</div>
-                </div>
-            </React.Fragment>
         );
     };
 
     let tblLisMachineryMauntenance = (
         <DataTable
             value={lstMachinery}
-            dataKey="jdeCode"
+            dataKey="code"
             ref={dt}
             responsiveLayout="stack"
             scrollable
@@ -317,17 +299,16 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             ></Column>
             <Column
                 header="Descripciòn"
-                field="nameMachine"
+                field="description"
                 style={{
                     textAlign: "center",
                     width: "20%",
                     fontSize: "11px",
-                    wordWrap: "break-word",
                 }}
             ></Column>
             <Column
-                header="Total Hora"
-                field="useHoursTotal"
+                header="Tola Hora uso"
+                field="useHour"
                 style={{
                     textAlign: "center",
                     width: "10%",
