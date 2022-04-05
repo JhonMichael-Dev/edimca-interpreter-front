@@ -93,11 +93,12 @@ export const MachinerySelectionLstComp = observer((props) => {
     };
 
     let machineryIconComp = (rowData) => {
+        //console.log("machineryIconComp", rowData);
         return <MachineryIconComp machineryData={rowData} />;
     };
 
     let selectionComp = (rowData) => {
-        let alreadySelected = selMachinery.code === rowData.code;
+        let alreadySelected = selMachinery.jdeCode === rowData.jdeCode;
         //console.log(rowData.description);
         localStorage.setItem("selMachinery", rowData.description);
         return <Button key={rowData.username} onClick={() => handleSelectMachinery(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
@@ -129,7 +130,7 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let dialogFooterComp = (
         <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
-            <Button onClick={() => handleProcess(selMachinery)} label="Aceptar" disabled={!selMachinery.code} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
+            <Button onClick={() => handleProcess(selMachinery)} label="Aceptar" disabled={!selMachinery.jdeCode} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
         </div>
     );
 

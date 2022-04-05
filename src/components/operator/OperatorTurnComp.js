@@ -48,7 +48,7 @@ export const OperatorTurnComp = observer((props) => {
             {props.pauseReason != "" ? (
                 <React.Fragment>
                     &nbsp;
-                    <div>{props.pauseReason}</div>
+                    <div style={{ fontSize: "12px" }}>{props.pauseReason}</div>
                 </React.Fragment>
             ) : (
                 ""

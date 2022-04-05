@@ -37,7 +37,7 @@ const lineData = {
 };
 
 const chartData = {
-    labels: ["ECANGA", "AGUTIERREZ", "MGUAMAN", "GPACHACAMA", "YWANG", "MFLOR", "RPERALTA"],
+    labels: ["ECANGA", "AGUTIERREZ", "TFUENTES", "GPACHACAMA", "YWANG", "MFLOR", "RPERALTA"],
     datasets: [
         {
             label: "ANTEAYER",

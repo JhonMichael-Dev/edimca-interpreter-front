@@ -36,6 +36,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeProductCode": "SERRUTS0020",
                         "jdeServiceType": "CORTE",
                         "quantityRequested": 25.8,
                         "status": "COMPLETADO",
@@ -50,11 +51,12 @@
                             "jdeId": 17767,
                             "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
+                        "jdeProductCode": "SERRUTS0023",
                         "jdeServiceType": "RUTEADO",
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 30,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -64,6 +66,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeProductCode": "SERECTS0008",
                         "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 4,
                         "status": "PAUSADO",
@@ -77,9 +80,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "jdeServiceType": "PERFORACION",
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 90,
@@ -120,6 +123,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 90,
@@ -133,6 +137,7 @@
                             "jdeId": 6285,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 16,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -146,6 +151,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -186,6 +192,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 8,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 30,
@@ -197,8 +204,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 90,
@@ -239,6 +247,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -279,6 +288,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 25.8,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 30,
@@ -292,6 +302,7 @@
                             "jdeId": 17767,
                             "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
+                        "jdeServiceType": "RUTEADO",
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 30,
@@ -305,6 +316,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 4,
                         "status": "PAUSADO",
                         "jdeStatusCode": 90,
@@ -422,7 +434,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
@@ -520,7 +532,7 @@
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 90,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -542,7 +554,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
@@ -661,7 +673,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
@@ -757,7 +769,7 @@
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 90,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 4,
@@ -765,7 +777,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
@@ -882,7 +894,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",

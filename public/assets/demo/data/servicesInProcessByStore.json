@@ -44,7 +44,7 @@
                     },
                     "quantityRequested": 12.3,
                     "status": "EN_PROCESO",
-                    "operator": { "username": "MGUAMAN", "assistants": [] }
+                    "operator": { "username": "TFUENTES", "assistants": [] }
                 },
                 {
                     "idWorkingOrder": 22,

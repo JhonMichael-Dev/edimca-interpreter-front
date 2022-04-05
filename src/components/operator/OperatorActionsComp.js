@@ -150,13 +150,6 @@ export const OperatorActionsComp = observer((props) => {
                         onPauseReasonClick(e);
                     }}
                 />
-                <OperatorPauseButtonComp
-                    status="warning"
-                    label="ALMUERZO / CENA"
-                    onClick={(e) => {
-                        onPauseReasonClick(e);
-                    }}
-                />
             </div>
             <div className="col-4">
                 <OperatorPauseButtonComp
@@ -169,6 +162,13 @@ export const OperatorActionsComp = observer((props) => {
                 <OperatorPauseButtonComp
                     status="info"
                     label="BAÑO"
+                    onClick={(e) => {
+                        onPauseReasonClick(e);
+                    }}
+                />
+                <OperatorPauseButtonComp
+                    status="info"
+                    label="ALMUERZO / CENA"
                     onClick={(e) => {
                         onPauseReasonClick(e);
                     }}
@@ -258,10 +258,10 @@ export const OperatorActionsComp = observer((props) => {
                     {0}
                 </div>
                 <div className="col-6">
-                    <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${props.rowData.units.unitCode}`} position="top" event="focus" />
-                    <Slider className="slider" max={props.rowData.units.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
+                    <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${props.rowData.productDto.unitOfMeasure.code}`} position="top" event="focus" />
+                    <Slider className="slider" max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
                 </div>
-                <div className="col-3">{`${props.rowData.units.quantityRequested} ${props.rowData.units.unitDescription}`}</div>
+                <div className="col-3">{`${props.rowData.quantityRequested} ${props.rowData.productDto.unitOfMeasure.description1}`}</div>
             </div>
             <div className="grid" style={{ marginTop: "3%", marginRight: "5%" }}>
                 <div className="col-12" style={{ textAlign: "right" }}>

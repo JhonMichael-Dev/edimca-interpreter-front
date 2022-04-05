@@ -563,7 +563,7 @@ Inner Components
                 </div>
                 <br></br>
                 <div className="field">
-                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="MGUAMAN" />
+                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="TFUENTES" />
                 </div>
                 <hr></hr>
             </Dialog>

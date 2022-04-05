@@ -61,7 +61,7 @@ export const OrderLstComp = observer((props) => {
     const handleQueryOrders = (onlyPendingOrders) => {
         if (props.selStore) {
             props.setLoading(true);
-            console.log("onlyPendingOrders", onlyPendingOrders);
+            //console.log("onlyPendingOrders", onlyPendingOrders);
             if (onlyPendingOrders) {
                 OrderDataService.queryPendingOrdersByStore(props.selStore).then((valid) => {
                     if (valid.data && valid.data.success) {
@@ -86,7 +86,7 @@ export const OrderLstComp = observer((props) => {
     };
 
     const handleProcess = (ev) => {
-        console.log("order.handleProcess", ev);
+        //console.log("order.handleProcess", ev);
         let _payload = {
             idWorkingOrder: ev.idWorkingOrder,
             idMachine: ev.machinery.idMachine,
@@ -94,14 +94,18 @@ export const OrderLstComp = observer((props) => {
             assistants: ev.operator.assistants,
         };
         console.log("_payload", _payload);
-        OrderDataService.processWorkingOrder(_payload).then((valid) => {
-            console.log("processWorkingOrder.valid", valid);
+        /* // TODO: borrar
+        OrderDataService.startWorkingOrder(_payload).then((valid) => {
+            //console.log("startWorkingOrder.valid", valid);
             if (valid && valid.data.success) {
                 setSelOrder(null);
                 props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
                 handleQueryOrders(onlyPendingOrders);
             }
         });
+        */
+        setSelOrder(null);
+        props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
     };
 
     const onRowSelect = (event) => {
@@ -122,7 +126,7 @@ export const OrderLstComp = observer((props) => {
             icon: "pi pi-exclamation-triangle",
             accept: () => handleProcess(null),
             reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
+            acceptLabel: "Aceptar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
         });

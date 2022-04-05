@@ -97,7 +97,7 @@ export const OrderLstDetailComp = observer((props) => {
   */
     let productComp = (rowData) => {
         //console.log("rowData", rowData);
-        return <ProductInfoComp jdeProductCode={rowData.jdeProductCode} description1 code />;
+        return <ProductInfoComp jdeProductCode={rowData.jdeProductCode} code description1 />;
         /*
         ProductDataService.queryProductByCode(rowData.jdeProductCode).then((valid) => {
             //console.log("handleQueryProductByJdeCode", valid);
