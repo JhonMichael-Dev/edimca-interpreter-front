@@ -26,11 +26,12 @@ class MasterService {
     postDataService(...args) {
         let uri = args[0];
         let payload = args[1];
+        let contentType = args[2];
         return axios
             .post(uri, payload, {
-                // headers: {
-                //   Authorization: this.decryptedToken()
-                // }
+                headers: {
+                    "Content-Type": contentType ? contentType : "application/json; charset=utf-8",
+                },
             })
             .then((response) => {
                 return response;

@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -52,7 +52,7 @@
                         "quantityRequested": 12.3,
                         "status": "PAUSADO",
                         "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -75,9 +75,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "jdeServiceType": "PERFORACION",
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "userpos": null
@@ -87,7 +87,7 @@
             {
                 "jdeOrderId": 12349,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -154,7 +154,7 @@
             {
                 "jdeOrderId": 12353,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -199,7 +199,7 @@
                         "jdeServiceType": "RUTEADO",
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -222,9 +222,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "jdeServiceType": "PERFORACION",
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "userpos": null

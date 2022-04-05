@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 //import { computed } from "mobx";
+import Moment from "moment";
 
 // Prime components
 import { Card } from "primereact/card";
@@ -58,18 +59,24 @@ export const OrderLstComp = observer((props) => {
     };
 
     const handleQueryOrders = (onlyPendingOrders) => {
-        let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
-
         if (props.selStore) {
             props.setLoading(true);
-            OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
-                if (valid.data && valid.data.success) {
-                    let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
-                    //setLstOrders(valid.data.obj);
-                    setLstOrders(lstFiltered);
-                }
-                props.setLoading(false);
-            });
+            //console.log("onlyPendingOrders", onlyPendingOrders);
+            if (onlyPendingOrders) {
+                OrderDataService.queryPendingOrdersByStore(props.selStore).then((valid) => {
+                    if (valid.data && valid.data.success) {
+                        setLstOrders(valid.data.obj);
+                    }
+                    props.setLoading(false);
+                });
+            } else {
+                OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
+                    if (valid.data && valid.data.success) {
+                        setLstOrders(valid.data.obj);
+                    }
+                    props.setLoading(false);
+                });
+            }
         }
     };
 
@@ -79,6 +86,24 @@ export const OrderLstComp = observer((props) => {
     };
 
     const handleProcess = (ev) => {
+        //console.log("order.handleProcess", ev);
+        let _payload = {
+            idWorkingOrder: ev.idWorkingOrder,
+            idMachine: ev.machinery.idMachine,
+            operatorUsername: ev.operator.username,
+            assistants: ev.operator.assistants,
+        };
+        console.log("_payload", _payload);
+        /* // TODO: borrar
+        OrderDataService.startWorkingOrder(_payload).then((valid) => {
+            //console.log("startWorkingOrder.valid", valid);
+            if (valid && valid.data.success) {
+                setSelOrder(null);
+                props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
+                handleQueryOrders(onlyPendingOrders);
+            }
+        });
+        */
         setSelOrder(null);
         props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
     };
@@ -101,7 +126,7 @@ export const OrderLstComp = observer((props) => {
             icon: "pi pi-exclamation-triangle",
             accept: () => handleProcess(null),
             reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
+            acceptLabel: "Aceptar",
             acceptIcon: "pi pi-check",
             rejectIcon: "pi pi-times",
         });
@@ -113,7 +138,7 @@ export const OrderLstComp = observer((props) => {
                   return (
                       <div key={orderX.jdeOrderId} className="grid">
                           {/*<OrderShowComp selOrder={orderX} /> */}
-                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderType.code}</div>
+                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderTypeCode}</div>
                           <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderId}</div>
                           <OrderServicesIconResumeComp selOrder={orderX} />
                           {/*
@@ -162,9 +187,14 @@ export const OrderLstComp = observer((props) => {
         );
     };
 
+    let transDateComp = (rowData) => {
+        Moment.locale("es");
+        return <div>{Moment(rowData.transactionDate).format("YYYY/MM/DD")}</div>;
+    };
+
     let priorityComp = (rowData) => {
-        let _color = rowData.priority && rowData.priority.code === "EXPRESS" ? "darkmagenta" : "";
-        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority.code}</div>;
+        let _color = rowData.priority && rowData.priority === "EXPRESS" ? "darkmagenta" : "";
+        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority}</div>;
     };
 
     let statusComp = (rowData) => {
@@ -181,7 +211,7 @@ export const OrderLstComp = observer((props) => {
         //console.log("data111");
         //console.log(data);
         return {
-            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EXPRESS",
+            "row-boContainsInProcessDevolutions": data.priority && data.priority === "EXPRESS",
         };
     };
 
@@ -206,12 +236,12 @@ export const OrderLstComp = observer((props) => {
                 //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
-                <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "8%" }} sortable sortField="jdeOrderType.code"></Column>
+                <Column header="Tipo orden" field="jdeOrderTypeCode" style={{ width: "8%" }} sortable sortField="jdeOrderTypeCode"></Column>
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "150px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>
                 <Column header="Cliente" body={clientComp} style={{ width: "20%" }} sortable sortField="client.firstName"></Column>
-                <Column header="Fch.pedido" style={{ width: "15%" }} field="transactionDate" sortable sortField="transactionDate"></Column>
-                <Column header="Asesor" style={{ width: "13%" }} field="userpos.username" sortable sortField="userpos.username"></Column>
+                <Column header="Fch.pedido2" body={transDateComp} style={{ width: "15%" }} sortable sortField="transactionDate"></Column>
+                <Column header="Asesor" style={{ width: "13%" }} field="userposUsername" sortable sortField="userposUsername"></Column>
                 <Column
                     header="Servicios pendientes"
                     body={orderServicesIconResumeComp}
@@ -224,7 +254,7 @@ export const OrderLstComp = observer((props) => {
             <></>
         );
 
-    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={() => handleProcess()} /> : "";
+    let orderLstDetailComp = selOrder ? <OrderLstDetailComp selOrder={selOrder} setSelOrder={(ev) => setSelOrder(ev)} handleProcess={(ev) => handleProcess(ev)} /> : "";
 
     let filterMessage = "Solo órdenes pendientes";
 

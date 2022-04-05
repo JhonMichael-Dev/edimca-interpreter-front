@@ -74,7 +74,7 @@ export const OrderLstOther = observer((props) => {
     */
     useEffect(() => {
         loadAvailables();
-        console.log(new Date().getTime());
+        //console.log(new Date().getTime());
     }, []);
     /*
   Formats
@@ -96,7 +96,7 @@ export const OrderLstOther = observer((props) => {
         OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
-                console.log(lstFiltered);
+                //console.log(lstFiltered);
                 setLstOrders(lstFiltered);
             }
         });
@@ -223,7 +223,7 @@ export const OrderLstOther = observer((props) => {
     };
 
     const showDlgOtherOder = (data) => {
-        console.log(localStorage.getItem("GOrden"));
+        //console.log(localStorage.getItem("GOrden"));
         setFlgAsig(false);
         setServeicios(data.toUpperCase());
         setDialogOther(true);
@@ -239,7 +239,7 @@ export const OrderLstOther = observer((props) => {
         setIndentificacion(rowData.client.identification);
         setAsesor(rowData.asesor);
         setNumOrdern(rowData.jdeOrderId);
-        setTypeOrdern(rowData.jdeOrderType.code);
+        setTypeOrdern(rowData.jdeOrderTypeCode);
         //setDialogOther(true);
         lstOrders.filter((objSer) => {
             if (objSer.jdeOrderId === rowData.jdeOrderId) {
@@ -563,7 +563,7 @@ Inner Components
                 </div>
                 <br></br>
                 <div className="field">
-                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="MGUAMAN" />
+                    <b>Operador Ayudante:</b>&nbsp; <Dropdown value={selectOperatorsA} options={lstOperatorsA} onChange={(e) => setSelectOperatorsA(e.value)} optionLabel="username" placeholder="TFUENTES" />
                 </div>
                 <hr></hr>
             </Dialog>

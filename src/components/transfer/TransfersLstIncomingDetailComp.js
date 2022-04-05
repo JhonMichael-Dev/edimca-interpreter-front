@@ -163,7 +163,7 @@ export const TransfersLstIncomingDetailComp = observer((props) => {
         <>
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
             <Dialog
-                header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderType.code + " " + props.selOrder.jdeOrderId}
+                header={"Detalle de servicios, orden: " + props.selOrder.jdeOrderTypeCode + " " + props.selOrder.jdeOrderId}
                 visible={props.selOrder !== null}
                 onHide={(ev) => props.setSelOrder(null)}
                 style={{

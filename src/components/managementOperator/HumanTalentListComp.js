@@ -129,25 +129,23 @@ export const HumanTalentListComp = observer((props) => {
 
     const header1 = renderHeader1();
 
-    const handleReloadTable = () =>{
+    const handleReloadTable = () => {
         setLstOperator(null);
         loadAvailables();
     };
 
     const operatorIconComp2 = (rowData) => {
         //console.log("asdasdasd",rowData.filename);
-        return rowData.filename ?
-            <OperatorIconComp2 operator={rowData} />
-            : <FileUploadComp operator={rowData} onUpdate = {handleReloadTable}/>
+        return rowData.filename ? <OperatorIconComp2 operator={rowData} /> : <FileUploadComp operator={rowData} onUpdate={handleReloadTable} />;
     };
     /*
     Inner Components
     */
-    let tableListOperatorTH = (
+    let tblLisTH = (
         <DataTable
             value={lstOperator}
             selectionMode="single"
-            onRowSelect={e => setSelOperator(e.data)}
+            onRowSelect={(e) => setSelOperator(e.data)}
             dataKey="id"
             ref={dt}
             responsiveLayout="scroll"

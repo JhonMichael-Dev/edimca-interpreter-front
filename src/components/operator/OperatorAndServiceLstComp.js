@@ -14,6 +14,8 @@ import { OperatorActionsComp } from "./OperatorActionsComp";
 import { PasswordOperationComp } from "../PasswordOperationComp";
 
 import OperatorDataService from "../../service/OperatorDataService";
+import { ProductInfoComp } from "../product/ProductInfoComp";
+import { OrderServicesIconComp } from "../order/OrderServicesIconComp";
 
 export const OperatorAndServiceLstComp = observer((props) => {
     /*
@@ -81,13 +83,16 @@ export const OperatorAndServiceLstComp = observer((props) => {
     Inner Components
     */
 
-    let operatorIconComp = (rowData) => {
+    let operatorIconComp2 = (rowData) => {
         //return <OperatorIconComp operatorUsername={rowData.operator.username} />;
         return <OperatorIconComp2 operator={rowData.operator} />;
     };
 
-    let operatorIconComp2 = () => {
-        return <OperatorIconComp operatorUsername={selOperator.operator.username} />;
+    let operatorIconComp = (rowData) => {
+        //console.log("operatorIconComp", rowData);
+        //return <OperatorIconComp operatorUsername={selOperator.operator.username} />;
+        // return <OperatorIconComp2 operator={rowData.operator} />;
+        return <OperatorIconComp operatorUsername={rowData.operator.username} />; // TODO: borrar
     };
 
     let operatorTurnComp = (rowData) => {
@@ -124,7 +129,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     };
 
     let operatorCountComp = (rowData) => {
-        return <OperatorCountComp services={rowData.lstServices} />;
+        return <OperatorCountComp services={rowData.lstWorkingOrder} />;
     };
 
     let orderServicesIconResumeComp = (rowData) => {
@@ -138,12 +143,13 @@ export const OperatorAndServiceLstComp = observer((props) => {
                     alignContent: "center",
                 }}
             >
-                <OperatorServicesIconResumeComp services={rowData.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")} selStore={props.storeMcu} />
+                <OperatorServicesIconResumeComp services={rowData.lstWorkingOrder.filter((serviceX) => serviceX.status != "PENDIENTE")} selStore={props.storeMcu} />
             </div>
         );
     };
 
     let serviceComp = (rowData) => {
+        /*
         return (
             <div>
                 <div className="col-12 lg:col-12 xl:col-12">
@@ -152,12 +158,14 @@ export const OperatorAndServiceLstComp = observer((props) => {
                 <div className="col-12 lg:col-12 xl:col-12">{rowData.productDto.description1}</div>
             </div>
         );
+        */
+        return <ProductInfoComp jdeProductCode={rowData.jdeProductCode} code description1 />;
     };
 
     let serviceTypeIconComp = (rowData) => {
         return (
             <div key={rowData.idWorkingOrder}>
-                <OperatorServiceIconComp serviceType={rowData.jdeServiceType} badgeNumber={null} />
+                <OrderServicesIconComp serviceType={rowData.jdeServiceType} badgeNumber={null} />
             </div>
         );
     };
@@ -165,7 +173,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     let operatorTableComp = (
         <DataTable value={lstOperators} selectionMode="single" onRowSelect={(e) => setSelOperator(e.data)} dataKey="username" ref={dt} responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
             <Column header="Operador" body={operatorIconComp} style={{ width: "45%", textAlign: "center" }} sortable sortField="username"></Column>
-            <Column header="Turno" body={operatorTurnComp} style={{ width: "10%", textAlign: "center", justifyContent: "center" }} sortable sortField="turno"></Column>
+            <Column header="Turno" body={operatorTurnComp} style={{ width: "120px", textAlign: "center", justifyContent: "center" }} sortable sortField="turno"></Column>
             <Column header="Servicios asignados" body={operatorCountComp} style={{ width: "20%", textAlign: "center" }}></Column>
             <Column
                 header="Servicios pendientes"
@@ -180,8 +188,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     );
 
     let operatorServiceComp = (selOperator) => {
-        //console.log(selOperator);
-
+        //console.log("operatorServiceComp", selOperator);
         return (
             <Dialog
                 header="Servicios en Proceso"
@@ -196,8 +203,8 @@ export const OperatorAndServiceLstComp = observer((props) => {
                 resizable={false}
                 draggable={false}
             >
-                <DataTable value={selOperator.lstServices.filter((serviceX) => serviceX.status != "PENDIENTE")} selectionMode="single" responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
-                    <Column header="Operador" body={operatorIconComp2} style={{ width: "15%", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
+                <DataTable value={selOperator.lstWorkingOrder.filter((serviceX) => serviceX.status != "PENDIENTE")} selectionMode="single" responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
+                    <Column header="Operador" body={operatorIconComp} style={{ width: "15%", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
                     <Column header="Estado" body={operatorStatusComp} style={{ width: "10%", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="Estado"></Column>
                     <Column header="Producto" body={serviceComp} style={{ width: "15%" }}></Column>
                     <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "10%" }}></Column>
@@ -207,5 +214,14 @@ export const OperatorAndServiceLstComp = observer((props) => {
         );
     };
 
-    return <div>{selOperator === null ? operatorTableComp : showPasswordDialog ? operatorServiceComp(selOperator) : passwordComp}</div>;
+    return (
+        <div className="grid card">
+            <div className="grid col-12 lg:col-12 xl:col-12">
+                <div className="col-12 lg:col-4 xl:col-4" style={{ textAlign: "left" }}>
+                    <b>Lista de órdenes en proceso</b>
+                </div>
+                {selOperator === null ? operatorTableComp : showPasswordDialog ? operatorServiceComp(selOperator) : passwordComp}
+            </div>
+        </div>
+    );
 });

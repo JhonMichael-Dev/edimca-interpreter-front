@@ -1,12 +1,11 @@
 import axios from "axios";
 import { conf } from "../Config.js";
-const MASTER_DATA_API_URL = conf.url.PC_URL + "/api/v1/apiMasterData";
+const MASTER_DATA_API_URL = conf.url.API_URL + "/api/v1/apiMasterData";
 
 class MasterDataService {
     queryStopReasons(mcu) {
         return axios.get("assets/demo/data/serviceStopReason.json").then((res) => res.data);
     }
-
 
     queryMasterData(payload) {
         var CURRENT_API_URL = `${MASTER_DATA_API_URL}/queryMasterData/`;
@@ -31,7 +30,6 @@ class MasterDataService {
                 // console.log(err);
             });
     }
-
 }
 
 export default new MasterDataService();

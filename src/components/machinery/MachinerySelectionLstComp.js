@@ -55,6 +55,7 @@ export const MachinerySelectionLstComp = observer((props) => {
     const handleQueryMachineryByWh = () => {
         MachineryDataService.queryMachineryByWh(props.storeMcu).then((valid) => {
             //console.log("handleQueryMachineryByWh", valid);
+            //console.log("props.serviceType", props.serviceType);
             if (valid.data && valid.data.success) {
                 let lstMachineryFilteredByMcu = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
                 let lstMachineryFilteredByServiceType = lstMachineryFilteredByMcu.machineryList.filter((machinery2ObjX) => machinery2ObjX.machinetyType.code === props.serviceType);
@@ -92,12 +93,13 @@ export const MachinerySelectionLstComp = observer((props) => {
     };
 
     let machineryIconComp = (rowData) => {
+        //console.log("machineryIconComp", rowData);
         return <MachineryIconComp machineryData={rowData} />;
     };
 
     let selectionComp = (rowData) => {
-        let alreadySelected = selMachinery.code === rowData.code;
-        console.log(rowData.description);
+        let alreadySelected = selMachinery.jdeCode === rowData.jdeCode;
+        //console.log(rowData.description);
         localStorage.setItem("selMachinery", rowData.description);
         return <Button key={rowData.username} onClick={() => handleSelectMachinery(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
     };
@@ -128,7 +130,7 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let dialogFooterComp = (
         <div className="grid" style={{ justifyContent: "center", alignContent: "center", padding: "10" }}>
-            <Button onClick={() => handleProcess(selMachinery)} label="Aceptar" disabled={!selMachinery.code} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
+            <Button onClick={() => handleProcess(selMachinery)} label="Aceptar" disabled={!selMachinery.jdeCode} icon="pi pi-check" className={"p-button-lg p-button-rounded p-button-secondary "} style={{ fontWeight: "bold", fontSize: 13, justifyContent: "center" }}></Button>
         </div>
     );
 

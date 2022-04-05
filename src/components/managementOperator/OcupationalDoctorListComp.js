@@ -118,7 +118,7 @@ Methods
     const onChangeStore = (e) => {
         setSelectedStore(e.value);
         setLstOperatorFilter(lstOperator.filter((ob) => ob.mcu === e.value.mcu));
-        console.log(lstOperatorFilter);
+        //console.log(lstOperatorFilter);
     };
     const header1 = renderHeader1();
     /*

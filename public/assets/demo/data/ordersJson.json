@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -26,7 +26,7 @@
                 "total": 123.12,
                 "status": "EN_PROCESO",
                 "transactionDate": "21/01/2022 12:00:00 PM",
-                "userpos": { "username": "CMORA" },
+                "userposUsername": "CMORA",
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
@@ -36,6 +36,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeProductCode": "SERRUTS0020",
                         "jdeServiceType": "CORTE",
                         "quantityRequested": 25.8,
                         "status": "COMPLETADO",
@@ -50,11 +51,12 @@
                             "jdeId": 17767,
                             "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
+                        "jdeProductCode": "SERRUTS0023",
                         "jdeServiceType": "RUTEADO",
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 30,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -64,6 +66,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeProductCode": "SERECTS0008",
                         "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 4,
                         "status": "PAUSADO",
@@ -77,9 +80,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "jdeServiceType": "PERFORACION",
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 90,
@@ -90,7 +93,7 @@
             {
                 "jdeOrderId": 12346,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -120,6 +123,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 90,
@@ -133,6 +137,7 @@
                             "jdeId": 6285,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 16,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -146,6 +151,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -156,7 +162,7 @@
             {
                 "jdeOrderId": 12347,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -186,6 +192,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 8,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 30,
@@ -197,8 +204,9 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
+                        "jdeServiceType": "PERFORADO",
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 90,
@@ -209,7 +217,7 @@
             {
                 "jdeOrderId": 12348,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -239,6 +247,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "jdeStatusCode": 30,
@@ -249,7 +258,7 @@
             {
                 "jdeOrderId": 12349,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -279,6 +288,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
+                        "jdeServiceType": "CORTE",
                         "quantityRequested": 25.8,
                         "status": "COMPLETADO",
                         "jdeStatusCode": 30,
@@ -292,6 +302,7 @@
                             "jdeId": 17767,
                             "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
+                        "jdeServiceType": "RUTEADO",
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 30,
@@ -305,6 +316,7 @@
                             "jdeId": 17069,
                             "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
+                        "jdeServiceType": "ENCHAPE",
                         "quantityRequested": 4,
                         "status": "PAUSADO",
                         "jdeStatusCode": 90,
@@ -316,7 +328,7 @@
             {
                 "jdeOrderId": 12350,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -381,7 +393,7 @@
             {
                 "jdeOrderId": 12351,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -422,7 +434,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
@@ -434,7 +446,7 @@
             {
                 "jdeOrderId": 12352,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -474,7 +486,7 @@
             {
                 "jdeOrderId": 12353,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -520,7 +532,7 @@
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 90,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 3,
@@ -542,7 +554,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
@@ -554,7 +566,7 @@
             {
                 "jdeOrderId": 12354,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -620,7 +632,7 @@
             {
                 "jdeOrderId": 12355,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -661,7 +673,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
@@ -673,7 +685,7 @@
             {
                 "jdeOrderId": 12356,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
@@ -711,7 +723,7 @@
             {
                 "jdeOrderId": 12357,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -757,7 +769,7 @@
                         "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "jdeStatusCode": 90,
-                        "operator": { "username": "MGUAMAN", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
                         "idWorkingOrder": 4,
@@ -765,7 +777,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 8,
                         "status": "PENDIENTE",
@@ -777,7 +789,7 @@
             {
                 "jdeOrderId": 12358,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2032,
                     "identification": "1717463151",
@@ -843,7 +855,7 @@
             {
                 "jdeOrderId": 12359,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2034,
                     "identification": "1717463152",
@@ -882,7 +894,7 @@
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": { "code": "PRF", "description1": "PERFORACION" }
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
                         "quantityRequested": 16,
                         "status": "COMPLETADO",
@@ -894,7 +906,7 @@
             {
                 "jdeOrderId": 12360,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EXPRESS" },
+                "priority": "EXPRESS",
                 "client": {
                     "jdeAn8": 2038,
                     "identification": "1717463158",
