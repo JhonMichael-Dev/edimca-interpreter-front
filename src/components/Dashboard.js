@@ -138,19 +138,19 @@ export const Dashboard = () => {
     };
 
     const handleQueryMachineryByWh = () => {
-        /*
         MachineryDataService.queryMachineryByWhMan(null).then((valid) => {
             if (valid.data && valid.data.success) {
                 setLstMachinery(valid.data.obj[0].machineryMaintenaceList);
             }
-        });*/
+        });
+        /*
         MachineryDataService.getMachineAll().then((valid) => {
             if (valid.data) {
                 let lstMachineryFilteredByMcuMan = valid.data.sort().reverse();
                 //console.log(lstMachineryFilteredByMcuMan);
                 setLstMachinery(lstMachineryFilteredByMcuMan);
             }
-        });
+        });*/
     };
 
     /*
