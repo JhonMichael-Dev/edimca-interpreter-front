@@ -363,7 +363,7 @@ Inner Components
         >
             <Column
                 header="Priodidad"
-                field="priority.code"
+                field="priority"
                 style={{
                     textAlign: "center",
                     width: "9%",
