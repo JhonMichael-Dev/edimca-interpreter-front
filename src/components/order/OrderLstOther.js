@@ -363,7 +363,8 @@ Inner Components
         >
             <Column
                 header="Priodidad"
-                field="priority.code"
+                field="priority"
+                //field="priority.code"
                 style={{
                     textAlign: "center",
                     width: "9%",
@@ -421,6 +422,7 @@ Inner Components
     );
 
     let serviceTypeIconComp = (data) => {
+        console.log(data);
         return (
             <div key={data}>
                 <div className="card" style={{ width: "100%", textAlign: "center", wordWrap: "break-word" }} title={data.toUpperCase()}>
@@ -506,7 +508,7 @@ Inner Components
                 </div>
             </div>
             <Dialog visible={dialogServ} style={{ width: "500px" }} header="Servicio de la orden" modal className="p-fluid" onHide={hideDlgServicio}>
-                <div className="grid">{lstOrdersFilter.map((orderX) => serviceTypeIconComp(orderX.jdeServiceType))}</div>
+                <div className="grid">{lstOrdersFilter.map((orderX) => serviceTypeIconComp(orderX.productDto.serviceType.description1))}</div>
             </Dialog>
             <Dialog visible={dialogOther} style={{ width: "50%" }} header={dialogoOrder(serveicios)} modal className="p-fluid" onHide={hideDlgServicioOtherOrder} footer={accionesBtnSaveOrder(serveicios)}>
                 <di>
