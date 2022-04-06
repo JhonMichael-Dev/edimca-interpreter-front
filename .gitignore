@@ -2,6 +2,7 @@
 
 .sass-cache
 .vscode
+nohup.out
 
 # dependencies
 /node_modules
