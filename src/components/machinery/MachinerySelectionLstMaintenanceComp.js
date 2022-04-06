@@ -176,7 +176,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         }
 
         if (rowData === "Habilitada") {
-            console.log(rowData);
+            //console.log(rowData);
             return (
                 <React.Fragment>
                     <div className="p-button-rounded p-button-info mr-2 ">
