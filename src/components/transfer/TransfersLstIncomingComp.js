@@ -108,7 +108,7 @@ export const TransfersLstIncomingComp = observer((props) => {
             ? lstOrders.map((orderX) => {
                   return (
                       <div key={orderX.jdeOrderId} className="grid">
-                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderType.code}</div>
+                          <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderTypeCode}</div>
                           <div className="p-grid col-4 lg:col-2 xl:col-2">{orderX.jdeOrderId}</div>
                           <OrderServicesIconResumeComp selOrder={orderX} />
                       </div>
@@ -161,8 +161,8 @@ export const TransfersLstIncomingComp = observer((props) => {
     };
 
     let priorityComp = (rowData) => {
-        let _color = rowData.priority && rowData.priority.code === "EXPRESS" ? "darkmagenta" : "";
-        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority.code}</div>;
+        let _color = rowData.priority && rowData.priority === "EXPRESS" ? "darkmagenta" : "";
+        return <div style={{ fontWeight: "bold", color: _color, fontSize: 12 }}>{rowData.priority}</div>;
     };
 
     let statusComp = (rowData) => {
@@ -179,7 +179,7 @@ export const TransfersLstIncomingComp = observer((props) => {
         //console.log("data111");
         //console.log(data);
         return {
-            "row-boContainsInProcessDevolutions": data.priority && data.priority.code === "EMERGENTE",
+            "row-boContainsInProcessDevolutions": data.priority && data.priority === "EMERGENTE",
         };
     };
 
@@ -204,7 +204,6 @@ export const TransfersLstIncomingComp = observer((props) => {
                 //virtualScrollerOptions={{ itemSize: 46 }}
             >
                 <Column header="Prioridad" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
-                <Column header="Origen" body={priorityComp} style={{ width: "10%", textAlign: "center", alignContent: "center" }} sortable sortField="priority.code"></Column>
                 <Column header="Tipo orden" field="jdeOrderType.code" style={{ width: "8%" }} sortable sortField="jdeOrderType.code"></Column>
                 <Column header="Num. orden" field="jdeOrderId" style={{ width: "8%" }} sortable sortField="jdeOrderId"></Column>
                 <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="status"></Column>

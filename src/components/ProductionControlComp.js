@@ -82,7 +82,7 @@ export const ProductionControlComp = observer((props) => {
         });
     };
 
-    const handleSelectStore = (ev) => {
+    const handleSelectPrincipalUser = (ev) => {
         //console.log("..........handle..... ", ev);
         //setSelStore(ev);
         dataStore.setAuthPrincipalUser(ev);
@@ -100,7 +100,7 @@ export const ProductionControlComp = observer((props) => {
     };
 
     const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
+        //if (!ev) await timeout(400);
 
         dataStore.setLoading(ev);
     };
@@ -112,7 +112,7 @@ export const ProductionControlComp = observer((props) => {
     /*
   Inner components
   */
-    let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectStore(ev)} /> : "";
+    let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectPrincipalUser(ev)} /> : "";
     let orderLstComp = dataStore.authPrincipalUser ? <OrderLstComp selStore={dataStore.authPrincipalUser.store} showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} /> : "";
     /*
   Return
@@ -121,7 +121,7 @@ export const ProductionControlComp = observer((props) => {
         <div className="p-fluid p-grid">
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
             {loginPrincipalComp}
-            <StoreSelectionComp DataStore={props.DataStore} rendered={false} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectStore(ev)} />
+            <StoreSelectionComp DataStore={props.DataStore} rendered={false} showMessage={(ev) => showMessage(ev)} handleSelectStore={(ev) => handleSelectPrincipalUser(ev)} />
             {orderLstComp}
         </div>
     );

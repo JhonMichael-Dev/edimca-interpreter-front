@@ -104,24 +104,32 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
 
     const handleLogin = () => {
         setShowPasswordDialog(false);
-        props.handleProcess(selOperatorObj.username);
+        //props.handleProcess(selOperatorObj.username);
+        //SelOperatorObj // david
+        props.handleProcess(selOperatorObj);
     };
 
     /*
   Inner Components
   */
     const showProcessConfirmDialog = () => {
-        confirmDialog({
-            message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", ayudantes: " + selOperatorObj.assistants : "") + "?",
-            header: "Confirmación",
-            icon: "pi pi-question",
-            //accept: () => handleProcess(null),
-            accept: () => setShowPasswordDialog(true),
-            reject: () => setOnlyPendingOrders(false),
-            acceptLabel: "Procesar",
-            acceptIcon: "pi pi-check",
-            rejectIcon: "pi pi-times",
-        });
+        if (props.flag === true) {
+            localStorage.setItem("setOperatios", selOperatorObj.username + "-" + selOperatorObj.assistants);
+            props.operadorOperation();
+            props.onHide();
+        } else {
+            confirmDialog({
+                message: "Seguro desea procesar, operario principal: " + selOperatorObj.username + (selOperatorObj.assistants.length !== 0 ? ", ayudantes: " + selOperatorObj.assistants : "") + "?",
+                header: "Confirmación",
+                icon: "pi pi-question",
+                //accept: () => handleProcess(null),
+                accept: () => setShowPasswordDialog(true),
+                reject: () => null,
+                acceptLabel: "Aceptar",
+                acceptIcon: "pi pi-check",
+                rejectIcon: "pi pi-times",
+            });
+        }
     };
 
     let operatorIconComp = (rowData) => {
@@ -190,7 +198,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         </div>
     );
 
-    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} /> : "";
+    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} onHide={() => setShowPasswordDialog(false)} aceptLabel="Play" icon="pi pi-check" /> : "";
 
     /*
   Return

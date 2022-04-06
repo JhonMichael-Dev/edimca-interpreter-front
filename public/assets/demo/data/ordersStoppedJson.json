@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -24,57 +24,61 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "status": "PARADO",
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 15.2,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 15.2,
                         "quantityCompleted": 15.2,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 2,
-                        "product": {
+                        "idWorkingOrder": 2,
+                        "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                             "jdeId": 17767,
-                            "serviceType": "RUTEADO"
+                            "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
-                        "quantity": 12.3,
-                        "status": "EN_PAUSA",
+                        "jdeServiceType": "RUTEADO",
+                        "quantityRequested": 12.3,
+                        "status": "PAUSADO",
                         "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
-                        "operator": { "username": "GMERA", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 3,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 4,
-                        "product": {
+                        "idWorkingOrder": 4,
+                        "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": "PERFORADO"
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "quantity": 8,
+                        "jdeServiceType": "PERFORADO",
+                        "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "userpos": null
                     }
@@ -83,7 +87,7 @@
             {
                 "jdeOrderId": 12349,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -101,53 +105,56 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "status": "PARADO",
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 25.8,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 25.8,
                         "quantityCompleted": 25.8,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 22,
-                        "product": {
+                        "idWorkingOrder": 22,
+                        "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                             "jdeId": 17767,
-                            "serviceType": "RUTEADO"
+                            "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
-                        "quantity": 12.3,
+                        "jdeServiceType": "RUTEADO",
+                        "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
                         "operator": { "username": "YWANG", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 1,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] }
                     }
                 ]
             },
             {
                 "jdeOrderId": 12353,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -165,56 +172,60 @@
                     }
                 },
                 "total": 123.12,
-                "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "status": "PARADO",
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 5.4,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 5.4,
                         "quantityCompleted": 5.4,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 222,
-                        "product": {
+                        "idWorkingOrder": 222,
+                        "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
                             "jdeId": 17767,
-                            "serviceType": "RUTEADO"
+                            "serviceType": { "code": "RUT", "description1": "RUTEADO" }
                         },
-                        "quantity": 12.3,
+                        "jdeServiceType": "RUTEADO",
+                        "quantityRequested": 12.3,
                         "status": "EN_PROCESO",
-                        "operator": { "username": "GMERA", "assistants": [] }
+                        "operator": { "username": "TFUENTES", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 2,
-                        "status": "EN_PAUSA",
+                        "status": "PAUSADO",
                         "pauseReason": { "code": "FIN_JORN", "description1": "FIN DE LA JORNADA", "hardCoded": null },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] }
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 4,
-                        "product": {
+                        "idWorkingOrder": 4,
+                        "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
                             "jdeId": 6285,
-                            "serviceType": "PERFORADO"
+                            "serviceType": { "code": "PRF", "description1": "PERFORADO" }
                         },
-                        "quantity": 8,
+                        "jdeServiceType": "PERFORADO",
+                        "quantityRequested": 8,
                         "status": "PENDIENTE",
                         "userpos": null
                     }

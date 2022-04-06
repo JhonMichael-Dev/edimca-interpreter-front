@@ -38,9 +38,11 @@ export const TransfersComp = observer((props) => {
     Init
     */
     useEffect(() => {
-        loadAvailables();
-        loadSelectedOption();
-    }, []);
+        if (selTransferUser) {
+            loadAvailables();
+            loadSelectedOption();
+        }
+    }, [selTransferUser]);
 
     /*
     Formats
@@ -55,7 +57,7 @@ export const TransfersComp = observer((props) => {
     };
 
     const loadSelectedOption = () => {
-        setSelOption(selOption ? selOption : null);
+        setSelOption(selOption ? selOption : options[0]);
     };
 
     const queryStoppedOrders = () => {
@@ -70,6 +72,8 @@ export const TransfersComp = observer((props) => {
         OrderDataService.queryIncomingOrdersByStore().then((valid) => {
             if (valid.data && valid.data.success) {
                 setLstIncomingOrders(valid.data.obj);
+                dataStore.setCountIncomingTransfers(valid.data.obj.length);
+                //console.log("setCountIncomingTransfers", valid.data.obj.length);
             }
         });
     };
@@ -103,7 +107,7 @@ export const TransfersComp = observer((props) => {
     };
 
     const verificationOrderEmer = (e) => {
-        console.log(e.target.value);
+        //console.log(e.target.value);
         setSelOption(e.value);
 
         let ev = { severity: "warn", summary: "Mensaje Informativo", message: "Tiene una transferencia emergente" };
@@ -119,7 +123,7 @@ export const TransfersComp = observer((props) => {
 
     let lstOrderComp =
         lstStoppedOrders && lstStoppedOrders.length > 0 && dataStore.authPrincipalUser ? (
-            <TransfersLstComp lstOrders={lstStoppedOrders} selStore={dataStore.authPrincipalUser.store} header="Lista de órdenes de trabajo paradas" showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} />
+            <TransfersLstComp lstOrders={lstStoppedOrders} selStore={dataStore.authPrincipalUser.store} header="Lista de órdenes de trabajo paradas en mi bodega" showMessage={(ev) => showMessage(ev)} setLoading={(ev) => setLoader(ev)} />
         ) : (
             ""
         );

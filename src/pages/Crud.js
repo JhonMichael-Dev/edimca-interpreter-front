@@ -362,8 +362,8 @@ export const Crud = () => {
                                 <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, "price")} mode="currency" currency="USD" locale="en-US" />
                             </div>
                             <div className="field col">
-                                <label htmlFor="quantity">Quantity</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, "quantity")} integeronly />
+                                <label htmlFor="quantityRequested">Quantity</label>
+                                <InputNumber id="quantityRequested" value={product.quantityRequested} onValueChange={(e) => onInputNumberChange(e, "quantityRequested")} integeronly />
                             </div>
                         </div>
                     </Dialog>

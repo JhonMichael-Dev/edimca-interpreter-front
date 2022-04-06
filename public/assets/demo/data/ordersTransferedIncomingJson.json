@@ -6,7 +6,7 @@
             {
                 "jdeOrderId": 12345,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "NORMAL" },
+                "priority": "NORMAL",
                 "client": {
                     "jdeAn8": 2004,
                     "identification": "1717463150",
@@ -25,33 +25,35 @@
                 },
                 "total": 123.12,
                 "status": "EN_PROCESO",
-                "lstOrderDetail": [
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 1,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
                             "jdeId": 17069,
-                            "serviceType": "CORTE"
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
                         },
-                        "quantity": 15.2,
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 15.2,
                         "quantityCompleted": 15.2,
                         "status": "COMPLETADO",
-                        "operator": { "username": "ACANGA", "assistants": [] }
+                        "operator": { "username": "ECANGA", "assistants": [] }
                     },
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 3,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] },
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] },
                         "storeTransferedFrom": {
                             "mcu": "2CM00101",
                             "name": "BODEGA FISICA MATRIZ QUITO",
@@ -76,15 +78,14 @@
                 ]
             },
             {
-                "jdeOrderId": 1234005,
+                "jdeOrderId": 12346,
                 "jdeOrderType": { "code": "VM" },
-                "priority": { "code": "EMERGENTE" },
-                "promise":"Fecha y hora de entrega 10/09/2022 10:00am",
+                "priority": "NORMAL",
                 "client": {
-                    "jdeAn8": 2004,
+                    "jdeAn8": 2005,
                     "identification": "1717463150",
-                    "firstName": "David Patricio",
-                    "lastName": "Paredes F."
+                    "firstName": "Marcia de las M.",
+                    "lastName": "Flor Peralta"
                 },
                 "store": {
                     "mcu": "2CM00101",
@@ -96,27 +97,42 @@
                         "description1": "Bodega"
                     }
                 },
-                "total": 123.12,
-                "status": "PENDIENTE",
-                "lstOrderDetail": [
+                "total": 223.92,
+                "status": "EN_PROCESO",
+                "lstWorkingOrder": [
                     {
-                        "idOrderDetail": 3,
-                        "product": {
+                        "idWorkingOrder": 1,
+                        "productDto": {
+                            "code": "SERRUTS0020",
+                            "description1": "SERVICIO CORTE A 45 ML (CANTO)",
+                            "jdeId": 17069,
+                            "serviceType": { "code": "COR", "description1": "CORTE" }
+                        },
+                        "jdeServiceType": "CORTE",
+                        "quantityRequested": 15.2,
+                        "quantityCompleted": 15.2,
+                        "status": "COMPLETADO",
+                        "operator": { "username": "ECANGA", "assistants": [] }
+                    },
+                    {
+                        "idWorkingOrder": 3,
+                        "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
                             "jdeId": 17069,
-                            "serviceType": "ENCHAPE"
+                            "serviceType": { "code": "ETA", "description1": "ENCHAPE" }
                         },
-                        "quantity": 4,
+                        "jdeServiceType": "ENCHAPE",
+                        "quantityRequested": 4,
                         "quantityCompleted": 3,
                         "status": "PARADO",
                         "pauseReason": { "code": "DAÑO_MAQ", "description1": "DAÑO DE MAQUINARIA", "hardCoded": "S" },
-                        "operator": { "username": "PGUTIERREZ", "assistants": [] },
+                        "operator": { "username": "AGUTIERREZ", "assistants": [] },
                         "storeTransferedFrom": {
-                            "mcu": "2CM00101",
-                            "name": "BODEGA FISICA MATRIZ QUITO",
-                            "jdeCode": "124",
-                            "address1": "AV. DE LOS GRANADOS E12-70               di2",
+                            "mcu": "2CM00301",
+                            "name": "BODEGA FISICA SAN RAFAEL      ",
+                            "jdeCode": "204",
+                            "address1": "FARINA S/N Y TERCERA TRANSVERSAL   ",
                             "businessUnit": {
                                 "code": "BD",
                                 "description1": "Bodega"
@@ -135,10 +151,6 @@
                     }
                 ]
             }
-
-
-
-            
         ]
     }
 }

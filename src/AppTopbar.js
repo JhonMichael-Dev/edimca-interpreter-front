@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import { useDataStore } from "./data/DataStoreContext";
+import { observer } from "mobx-react";
 
-export const AppTopbar = (props) => {
+export const AppTopbar = observer((props) => {
     /*
     Store
     */
@@ -13,10 +14,10 @@ export const AppTopbar = (props) => {
     Init
     */
     useEffect(() => {
-        //console.log("AppTopbar", dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store : null);
-    }, [dataStore]);
+        //console.log("AppTopbar", dataStore.authPrincipalUser ? dataStore.authPrincipalUser : null);
+    }, [dataStore.authPrincipalUser]);
 
-    const storeNameComp = dataStore.authPrincipalUser ? <i>{dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store.name : ""}</i> : "";
+    let storeNameComp = dataStore.authPrincipalUser ? <i>{dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store.name : ""}</i> : "";
 
     return (
         <div className="layout-topbar">
@@ -55,4 +56,4 @@ export const AppTopbar = (props) => {
             </ul>
         </div>
     );
-};
+});

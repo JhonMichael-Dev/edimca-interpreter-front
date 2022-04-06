@@ -8,15 +8,18 @@ import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
 
 //Componet
+import PrimeReact from "primereact/api";
 import { Dashboard } from "./components/Dashboard";
 import { LoginPrincipalComp } from "./components/login/LoginPrincipalComp";
 import { ProductionControlPage } from "./pages/ProductionControlPage";
+import { ProductionControlComp } from "./components/ProductionControlComp";
 import { TransfersPage } from "./pages/TransfersPage";
 import { ServiceInProcessPage } from "./pages/ServiceInProcessPage";
+
 // Store
 import { Provider } from "mobx-react";
 import { create } from "mobx-persist";
-import PrimeReact from "primereact/api";
+import { observer } from "mobx-react";
 
 //CSS
 import "primereact/resources/primereact.min.css";
@@ -32,9 +35,17 @@ import "./App.css";
 Theme
 */
 import "primereact/resources/themes/fluent-light/theme.css";
-import { DataProvider, useDataStore } from "./data/DataStoreContext";
+import { useDataStore } from "./data/DataStoreContext";
 import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
+import MachineListPage from "./pages/MachineListPage";
+import VlPage from "./pages/VlPage";
+import OtherOrdersPage from "./pages/OtherOrdersPage";
+import HumanTalentPage from "./pages/HumanTalentPage";
+import OccupationalDoctorPage from "./pages/OccupationalDoctorPage";
+import { Badge } from "primereact/badge";
+
 const App = () => {
+    //const App = observer((props) => {
     // Variables
     const [selPrincipalUser, setSelPrincipalUser] = useState(null);
     // React variables
@@ -72,7 +83,7 @@ const App = () => {
         } else {
             removeClass(document.body, "body-overflow-hidden");
         }
-    }, [mobileMenuActive]);
+    }, [mobileMenuActive, dataStore]);
 
     const validatePrincipalUserLogedIn = () => {
         if (!dataStore.authPrincipalUser) {
@@ -176,14 +187,53 @@ const App = () => {
                     to: "/productionControl",
                 },
                 {
-                    label: "Transferencias",
+                    label: "Redireccionamiento",
                     icon: "pi pi-fw pi-sort-alt",
                     to: "/transfers",
+                    badge: dataStore.countIncomingTransfers ? <Badge value={dataStore.countIncomingTransfers} /> : "",
                 },
                 {
                     label: "Ordenes en proceso",
                     icon: "pi pi-fw pi-angle-double-right",
                     to: "/serviceInProcess",
+                },
+                {
+                    label: "Lista de maquinas",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    to: "/machineList",
+                },
+                {
+                    label: "Registro manual",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    items: [
+                        {
+                            label: "VL",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/vl",
+                        },
+                        {
+                            label: "Otras Ordenes",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/otherOrders",
+                        },
+                    ],
+                },
+
+                {
+                    label: "Gestion operarios",
+                    icon: "pi pi-fw pi-angle-double-right",
+                    items: [
+                        {
+                            label: "Talento humano",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/talentoHumano",
+                        },
+                        {
+                            label: "Médico ocupacional",
+                            icon: "pi pi-fw pi-angle-double-right",
+                            to: "/medicoOcupacional",
+                        },
+                    ],
                 },
             ],
         },
@@ -225,7 +275,12 @@ const App = () => {
                     <Route path="/" exact component={Dashboard} />
                     <Route path="/productionControl" exact component={ProductionControlPage} />
                     <Route path="/transfers" exact component={TransfersPage} />
+                    <Route path="/machineList" exact component={MachineListPage} />
                     <Route path="/serviceInProcess" exact component={ServiceInProcessPage} />
+                    <Route path="/vl" exact component={VlPage} />
+                    <Route path="/otherOrders" exact component={OtherOrdersPage} />
+                    <Route path="/talentoHumano" exact component={HumanTalentPage} />
+                    <Route path="/medicoOcupacional" exact component={OccupationalDoctorPage} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
@@ -240,5 +295,6 @@ const App = () => {
         </div>
     );
 };
+//});
 
 export default App;

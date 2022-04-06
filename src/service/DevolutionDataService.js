@@ -1,6 +1,6 @@
 import MasterService from "./MasterService";
 import { conf } from "../Config.js";
-const ORDER_API_URL = conf.url.API_URL + "/api/v1/devolution";
+const ORDER_API_URL = conf.url.PC_URL + "/api/v1/devolution";
 
 class DevolutionDataService {
     queryOrderResponsePlusDevolutions(payload) {

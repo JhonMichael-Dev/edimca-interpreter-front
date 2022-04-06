@@ -1,0 +1,77 @@
+{
+    "data": {
+        "success": true,
+        "log": null,
+        "obj": [           
+            {
+                "store": {
+                    "mcu": "2CM00101"    
+                },
+                "jdeOrderId": 12345,
+                "jdeOrderType": { "code": "VL" },
+                "numeroDoc":"18181828",
+                "client": {
+                    "jdeAn8": 2004,
+                    "identification": "1717463150",
+                    "firstName": "David Patricio",
+                    "lastName": "Paredes F."
+                },       
+                "fecha":"15/10/2022",
+                "service": "corte,preforado,ect",
+                "status":"Enviado a produccion"
+            },
+            {
+                "store": {
+                    "mcu": "2CM00101"    
+                },
+                "jdeOrderId": 12346,
+                "jdeOrderType": { "code": "VL" },
+                "numeroDoc":"1818185544",
+                "client": {
+                    "jdeAn8": 2005,
+                    "identification": "1717463134",
+                    "firstName": "Zapata Patricio Pato",
+                    "lastName": "Paredes F."
+                },       
+                "fecha":"11/10/2022",
+                "service": "corte,preforado,ect",
+                "status":"Enviado a produccion"
+            },
+            {
+                "store": {
+                    "mcu": "2CM00101"    
+                },
+                "jdeOrderId": 12347,
+                "jdeOrderType": { "code": "VL" },
+                "numeroDoc":"18181887",
+                "client": {
+                    "jdeAn8": 2006,
+                    "identification": "1717463149",
+                    "firstName": " Marcia Flor Peralt",
+                    "lastName": "Paredes F."
+                },       
+                "fecha":"12/10/2022",
+                "service": "corte,Ruteado,ect",
+                "status":"Enviado a produccion"
+            },
+            {
+                "store": {
+                    "mcu": "2CM00101"    
+                },
+                "jdeOrderId": 12348,
+                "jdeOrderType": { "code": "VL" },
+                "numeroDoc":"18181000",
+                "client": {
+                    "jdeAn8": 2007,
+                    "identification": "1717463440",
+                    "firstName": "Martha Ana Donoso ",
+                    "lastName": "Paredes F."
+                },       
+                "fecha":"15/10/2022",
+                "service": "Enchape,preforado,ect",
+                "status":"Enviado a produccion"
+            }
+            
+        ]
+    }
+}

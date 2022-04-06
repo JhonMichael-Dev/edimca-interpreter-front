@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import classNames from "classnames";
 import { Ripple } from "primereact/ripple";
+import { observer } from "mobx-react";
+import { useDataStore } from "./data/DataStoreContext";
 
-const AppSubmenu = (props) => {
+//const AppSubmenu = (props) => {
+const AppSubmenu = observer((props) => {
     const [activeIndex, setActiveIndex] = useState(null);
+
+    /*
+    Store
+    */
+    const dataStore = useDataStore();
+
+    /*
+    Init
+    */
+    useEffect(() => {
+        //console.log("AppMenu.countIncomingTransfers", dataStore.countIncomingTransfers);
+    }, [dataStore.countIncomingTransfers]);
 
     const onMenuItemClick = (event, item, index) => {
         //avoid processing disabled items
@@ -93,12 +108,15 @@ const AppSubmenu = (props) => {
         });
 
     return items ? <ul className={props.className}>{items}</ul> : null;
-};
+    //};
+});
 
-export const AppMenu = (props) => {
+//export const AppMenu = (props) => {
+export const AppMenu = observer((props) => {
     return (
         <div className="layout-menu-container">
             <AppSubmenu items={props.model} className="layout-menu" onMenuItemClick={props.onMenuItemClick} root={true} />
         </div>
     );
-};
+    //};
+});
