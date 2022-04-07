@@ -15,6 +15,7 @@ import { OperatorServiceIconComp } from "./OperatorServiceIconComp";
 import { MachineryFaultsComp } from "../machinery/MachineryFaultsComp";
 
 import OrderDataService from "../../service/OrderDataService";
+import ProductDataService from "../../service/ProductDataService";
 
 export const OperatorActionsComp = observer((props) => {
     /*
@@ -25,6 +26,7 @@ export const OperatorActionsComp = observer((props) => {
     const [damageControl, setDamageControl] = useState(null);
     const [lstOrders, setLstOrders] = useState([]);
     const [orderInfo, setOrderInfo] = useState(null);
+    const [productInfo, setProductInfo] = useState(null);
     const [pauseDisabled, setPauseDisabled] = useState(null);
 
     const categories = [
@@ -43,10 +45,12 @@ export const OperatorActionsComp = observer((props) => {
     const [selectedDamages, setSelectedDamages] = useState([]);
 
     const [sliderValue, setSliderValue] = useState(0);
+
     /*
     Init
     */
     useEffect(() => {
+        console.log("useEffect", props.rowData);
         loadAvailables();
     }, []);
 
@@ -62,7 +66,8 @@ export const OperatorActionsComp = observer((props) => {
     Methods
     */
     const loadAvailables = () => {
-        handleQueryOrders();
+        setSliderValue(props.rowData.quantityShipped);
+        //handleQueryOrders();
     };
 
     const handleQueryOrders = () => {
@@ -72,6 +77,34 @@ export const OperatorActionsComp = observer((props) => {
             }
         });
         setPauseDisabled(props.action === "Pausa" ? false : false);
+    };
+
+    const handleQueryOrderHeaderAndProductInfo = () => {
+        handleQueryOrderHeaderInfo();
+        handleQueryProductInfo();
+    };
+
+    const handleQueryOrderHeaderInfo = async () => {
+        //let _payload = { idWorkingOrder: props.selOrder.idWorkingOrder };
+        let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        OrderDataService.queryOrderHeaderByWorkingOrderId(_payload).then((valid) => {
+            console.log("handleQueryOrderHeaderInfo", valid);
+            if (valid && valid.data.success) {
+                setOrderInfo(valid.data.obj);
+                setDamageControl(true);
+            }
+        });
+    };
+
+    const handleQueryProductInfo = async () => {
+        //let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        ProductDataService.queryProductByCode(props.rowData.jdeProductCode).then((valid) => {
+            console.log("handleQueryProductInfo", valid);
+            if (valid && valid.data.success) {
+                setProductInfo(valid.data.obj);
+                setDamageControl(true);
+            }
+        });
     };
 
     const onLoadingClick = (selAction) => {
@@ -87,9 +120,10 @@ export const OperatorActionsComp = observer((props) => {
                     setPauseControl(true);
                     break;
                 case "Daño":
-                    setDamageControl(true);
-                    let lstFiltered = lstOrders.filter((orderX) => orderX.jdeOrderId === props.selOrder.jdeOrderId);
-                    setOrderInfo(lstFiltered[0]);
+                    //let lstFiltered = lstOrders.filter((orderX) => orderX.jdeOrderId === props.selOrder.jdeOrderId);
+                    //setOrderInfo(lstFiltered[0]);
+                    //setDamageControl(true);
+                    handleQueryOrderHeaderAndProductInfo();
                     break;
                 case "Fin":
                     break;
@@ -200,78 +234,81 @@ export const OperatorActionsComp = observer((props) => {
         </div>
     );
 
-    let damageOptions = (
-        <React.Fragment>
-            <div className="grid">
-                <div className="col-4" style={{ textAlign: "center" }}>
-                    <div style={{ display: "inline-block" }}>
-                        <OperatorServiceIconComp serviceType={props.rowData.jdeServiceType} badgeNumber={null} />
+    let damageOptions =
+        damageControl && orderInfo && productInfo ? (
+            <React.Fragment>
+                <div className="grid">
+                    <div className="col-4" style={{ textAlign: "center" }}>
+                        <div style={{ display: "inline-block" }}>
+                            <OperatorServiceIconComp serviceType={props.rowData.jdeServiceType} badgeNumber={null} />
+                        </div>
+                    </div>
+                    <div className="col-4">
+                        <div className="col-12 lg:col-12 xl:col-12">
+                            <b>MAQUINARIA:</b>
+                            {props.rowData.machine}
+                        </div>
+                        <div className="col-12 lg:col-12 xl:col-12">
+                            <b>ID ORDEN TRABAJO:</b>
+                            {props.rowData.idWorkingOrder}
+                        </div>
+                    </div>
+                    <div className="col-4">
+                        <div className="col-12 lg:col-12 xl:col-12">
+                            <b>JEFE DE SUCURSAL:</b>
+                        </div>
+                        <div className="col-12 lg:col-12 xl:col-12">Pilar Gutierrez</div>
                     </div>
                 </div>
-                <div className="col-4">
-                    <div className="col-12 lg:col-12 xl:col-12">
-                        <b>MAQUINARIA:</b>
-                        {props.rowData.machine}
-                    </div>
-                    <div className="col-12 lg:col-12 xl:col-12">
-                        <b>ID ORDEN TRABAJO:</b>
-                        {props.rowData.productDto.jdeId}
+                <div className="grid">
+                    <div className="col-2 col-offset-1">
+                        <b>Motivo:</b>
                     </div>
                 </div>
-                <div className="col-4">
-                    <div className="col-12 lg:col-12 xl:col-12">
-                        <b>JEFE DE SUCURSAL:</b>
-                    </div>
-                    <div className="col-12 lg:col-12 xl:col-12">Pilar Gutierrez</div>
-                </div>
-            </div>
-            <div className="grid">
-                <div className="col-2 col-offset-1">
-                    <b>Motivo:</b>
-                </div>
-            </div>
 
-            <MachineryFaultsComp />
+                <MachineryFaultsComp />
 
-            <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
-                <div className="col-3 col-offset-1">
-                    <b>Order N°:</b>
-                    <InputText value={orderInfo ? orderInfo.jdeOrderId : ""} style={{ border: "none", width: "60%", fontSize: "14px" }} disabled />
+                <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
+                    <div className="col-3">
+                        <b>Tipo de Orden:</b>
+                        <InputText value={orderInfo ? orderInfo.jdeOrderTypeCode : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
+                    </div>
+                    <div className="col-3 col-offset-1">
+                        <b>Order N°:</b>
+                        <InputText value={orderInfo ? orderInfo.jdeOrderId : ""} style={{ border: "none", width: "60%", fontSize: "14px" }} disabled />
+                    </div>
+                    <div className="col-4">
+                        <b>Cliente:</b>
+                        <InputText value={orderInfo ? orderInfo.client.firstName + " " + orderInfo.client.lastName : ""} style={{ border: "none", width: "77%", fontSize: "14px" }} disabled />
+                    </div>
                 </div>
-                <div className="col-4">
-                    <b>Cliente:</b>
-                    <InputText value={orderInfo ? orderInfo.client.firstName + " " + orderInfo.client.lastName : ""} style={{ border: "none", width: "77%", fontSize: "14px" }} disabled />
-                </div>
-                <div className="col-3">
-                    <b>Tipo de Orden:</b>
-                    <InputText value={orderInfo ? orderInfo.jdeOrderTypeCode : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
-                </div>
-            </div>
 
-            <div className="grid" style={{ marginBottom: "3%", marginTop: "1%" }}>
-                <div className="col-6 col-offset-1">
-                    <b>Avance de Orden:</b>
+                <div className="grid" style={{ marginBottom: "3%", marginTop: "1%" }}>
+                    <div className="col-6 col-offset-1">
+                        <b>Avance de Orden: {sliderValue + " [" + productInfo.unitOfMeasure.code + "]"}</b>
+                    </div>
                 </div>
-            </div>
-            <div className="grid">
-                <div className="col-3" style={{ textAlign: "right" }}>
-                    {0}
+                <div className="grid">
+                    <div className="col-3" style={{ textAlign: "right" }}>
+                        {0}
+                    </div>
+                    <div className="col-6">
+                        <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${productInfo.unitOfMeasure.code}`} position="top" event="focus" />
+                        <Slider className="slider" max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value < props.rowData.quantityShipped ? sliderValue : e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
+                    </div>
+                    <div className="col-3">{`${props.rowData.quantityRequested} ${productInfo.unitOfMeasure.description1}`}</div>
                 </div>
-                <div className="col-6">
-                    <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${props.rowData.productDto.unitOfMeasure.code}`} position="top" event="focus" />
-                    <Slider className="slider" max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
+                <div className="grid" style={{ marginTop: "3%", marginRight: "5%" }}>
+                    <div className="col-12" style={{ textAlign: "right" }}>
+                        <Button className={"p-button p-button-primary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Aceptar"></Button>
+                        &nbsp;
+                        <Button className={"p-button p-button-secondary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Cancelar"></Button>
+                    </div>
                 </div>
-                <div className="col-3">{`${props.rowData.quantityRequested} ${props.rowData.productDto.unitOfMeasure.description1}`}</div>
-            </div>
-            <div className="grid" style={{ marginTop: "3%", marginRight: "5%" }}>
-                <div className="col-12" style={{ textAlign: "right" }}>
-                    <Button className={"p-button p-button-primary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Aceptar"></Button>
-                    &nbsp;
-                    <Button className={"p-button p-button-secondary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Cancelar"></Button>
-                </div>
-            </div>
-        </React.Fragment>
-    );
+            </React.Fragment>
+        ) : (
+            ""
+        );
     /*
     Return
     */
@@ -315,20 +352,24 @@ export const OperatorActionsComp = observer((props) => {
             >
                 {pauseOptions}
             </Dialog>
-            <Dialog
-                header={"Registro de Daño"}
-                visible={damageControl !== null}
-                onHide={() => setDamageControl(null)}
-                style={{
-                    width: "45%",
-                }}
-                modal
-                closable
-                draggable={false}
-                resizable={false}
-            >
-                {damageOptions}
-            </Dialog>
+            {damageControl ? (
+                <Dialog
+                    header={"Registro de Daño"}
+                    visible={damageControl !== null}
+                    onHide={() => setDamageControl(null)}
+                    style={{
+                        width: "45%",
+                    }}
+                    modal
+                    closable
+                    draggable={false}
+                    resizable={false}
+                >
+                    {damageOptions}
+                </Dialog>
+            ) : (
+                ""
+            )}
         </React.Fragment>
     );
 });

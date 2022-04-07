@@ -98,43 +98,6 @@ export const OrderLstDetailComp = observer((props) => {
     let productComp = (rowData) => {
         //console.log("rowData", rowData);
         return <ProductInfoComp jdeProductCode={rowData.jdeProductCode} code description1 />;
-        /*
-        ProductDataService.queryProductByCode(rowData.jdeProductCode).then((valid) => {
-            //console.log("handleQueryProductByJdeCode", valid);
-            if (valid && valid.data.success) {
-                let _product = valid.data.obj;
-                //console.log("valid.data.objj", rowData.jdeProductCode, _product);
-                //return valid.data.obj;
-                if (_product) {
-                    //console.log("returned");
-                    // TODO: component does not get drawed
-                    //return _product.code + " " + _product.description1;
-                    return (
-                        <div>
-                            <div className="col-12 lg:col-12 xl:col-12">
-                                <b>{_product.code}</b>
-                            </div>
-                            <div className="col-12 lg:col-12 xl:col-12">{" " + _product.description1}</div>
-                        </div>
-                    );
-                }
-            }
-        });
-        */
-        /*
-        handleQueryProductByJdeCode(rowData.jdeProductCode).then((_product) => {
-            //console.log("_productDto1", rowData.jdeProductCode, _product); // TODO: returned object is null =????
-            if (_product)
-                return (
-                    <div>
-                        <div className="col-12 lg:col-12 xl:col-12">
-                            <b>{_product.code}</b>
-                        </div>
-                        <div className="col-12 lg:col-12 xl:col-12">{" " + _product.description1}</div>
-                    </div>
-                );
-        });
-        */
     };
 
     let statusComp = (rowData) => {

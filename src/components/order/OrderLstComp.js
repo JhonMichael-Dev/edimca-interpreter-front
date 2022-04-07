@@ -94,7 +94,7 @@ export const OrderLstComp = observer((props) => {
             assistants: ev.operator.assistants,
         };
         console.log("_payload", _payload);
-        /* // TODO: borrar
+
         OrderDataService.startWorkingOrder(_payload).then((valid) => {
             //console.log("startWorkingOrder.valid", valid);
             if (valid && valid.data.success) {
@@ -103,7 +103,7 @@ export const OrderLstComp = observer((props) => {
                 handleQueryOrders(onlyPendingOrders);
             }
         });
-        */
+
         setSelOrder(null);
         props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
     };
