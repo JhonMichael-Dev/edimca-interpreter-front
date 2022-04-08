@@ -50,7 +50,7 @@ export const OperatorActionsComp = observer((props) => {
     Init
     */
     useEffect(() => {
-        console.log("useEffect", props.rowData);
+        //console.log("useEffect", props.rowData);
         loadAvailables();
     }, []);
 
@@ -88,7 +88,7 @@ export const OperatorActionsComp = observer((props) => {
         //let _payload = { idWorkingOrder: props.selOrder.idWorkingOrder };
         let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
         OrderDataService.queryOrderHeaderByWorkingOrderId(_payload).then((valid) => {
-            console.log("handleQueryOrderHeaderInfo", valid);
+            //console.log("handleQueryOrderHeaderInfo", valid);
             if (valid && valid.data.success) {
                 setOrderInfo(valid.data.obj);
                 setDamageControl(true);
@@ -99,7 +99,7 @@ export const OperatorActionsComp = observer((props) => {
     const handleQueryProductInfo = async () => {
         //let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
         ProductDataService.queryProductByCode(props.rowData.jdeProductCode).then((valid) => {
-            console.log("handleQueryProductInfo", valid);
+            //console.log("handleQueryProductInfo", valid);
             if (valid && valid.data.success) {
                 setProductInfo(valid.data.obj);
                 setDamageControl(true);
@@ -294,7 +294,7 @@ export const OperatorActionsComp = observer((props) => {
                     </div>
                     <div className="col-6">
                         <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${productInfo.unitOfMeasure.code}`} position="top" event="focus" />
-                        <Slider className="slider" max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value < props.rowData.quantityShipped ? sliderValue : e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
+                        <Slider className="slider" min={0.0} max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value < props.rowData.quantityShipped ? sliderValue : e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
                     </div>
                     <div className="col-3">{`${props.rowData.quantityRequested} ${productInfo.unitOfMeasure.description1}`}</div>
                 </div>

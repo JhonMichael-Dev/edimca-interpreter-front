@@ -58,9 +58,9 @@ export const OperatorAndServiceLstComp = observer((props) => {
         let _payload = {
             mcu: props.storeMcu,
         };
-        console.log("_payload", _payload);
+        //console.log("_payload", _payload);
         OrderDataService.queryOrdersOnProcessByStore(_payload).then((valid) => {
-            console.log("queryOrdersOnProcessByStore", valid);
+            //console.log("queryOrdersOnProcessByStore", valid);
             if (valid.data && valid.data.success) {
                 setLstOperators(valid.data.obj);
             }
@@ -96,7 +96,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     };
 
     let operatorIconComp = (rowData) => {
-        console.log("operatorIconComp", rowData);
+        //console.log("operatorIconComp", rowData);
         //return <OperatorIconComp operatorUsername={selOperator.operator.username} />;
         return <OperatorIconComp2 operator={rowData.operator} />;
         //return <OperatorIconComp operatorUsername={rowData.operator.username} />; // TODO: borrar
@@ -111,7 +111,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
         return <OperatorTurnComp status={rowData.status} pauseReason={rowData.pauseReason} />;
     };
 
-    let passwordComp = <PasswordOperationComp handleLogin={() => handleLogin()} onHide={() => setSelOperator(null)} />;
+    let passwordComp = selOperator ? <PasswordOperationComp operatorUsername={selOperator.username} handleLogin={() => handleLogin()} onHide={() => setSelOperator(null)} /> : "";
 
     let operatorActionsComp = (rowData) => {
         //const statusValidation = currentServices.lstCurrentService.filter((service) => service.operator.username === selOperator.operator.username && service.productDto.jdeId === rowData.productDto.jdeId);

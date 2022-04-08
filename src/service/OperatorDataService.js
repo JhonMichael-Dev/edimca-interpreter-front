@@ -30,6 +30,26 @@ class OperatorDataService {
         var CURRENT_FILE_URL = `${PC_URL}/getOperatorImageFile/` + fileName;
         return CURRENT_FILE_URL;
     }
+
+    operatorHasPin(payload) {
+        var CURRENT_API_URL = `${PC_URL}/operatorHasPin/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    updateOperatorPin(payload) {
+        var CURRENT_API_URL = `${PC_URL}/updateOperatorPin/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    validateLast4DigitsFromIdentificationNumber(payload) {
+        var CURRENT_API_URL = `${PC_URL}/validateLast4DigitsFromIdentificationNumber/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    loginOperator(payload) {
+        var CURRENT_API_URL = `${PC_URL}/loginOperator/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
 }
 
 export default new OperatorDataService();

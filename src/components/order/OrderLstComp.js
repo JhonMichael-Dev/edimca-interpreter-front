@@ -93,7 +93,7 @@ export const OrderLstComp = observer((props) => {
             operatorUsername: ev.operator.username,
             assistants: ev.operator.assistants,
         };
-        console.log("_payload", _payload);
+        //console.log("_payload", _payload);
 
         OrderDataService.startWorkingOrder(_payload).then((valid) => {
             //console.log("startWorkingOrder.valid", valid);
@@ -105,7 +105,7 @@ export const OrderLstComp = observer((props) => {
         });
 
         setSelOrder(null);
-        props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
+        //props.showMessage({ severity: "info", summary: "Aviso", message: "Servicio en proceso" });
     };
 
     const onRowSelect = (event) => {

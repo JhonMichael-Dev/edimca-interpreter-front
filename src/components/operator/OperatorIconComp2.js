@@ -29,7 +29,7 @@ Formats
 Methods
 */
     const loadAvailables = () => {
-        console.log("props.operator", props.operator);
+        //console.log("props.operator", props.operator);
         //console.log(OperatorDataService.getAccountStateFilePath(props.operator.filename));
     };
 

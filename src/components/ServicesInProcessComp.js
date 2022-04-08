@@ -34,7 +34,7 @@ export const ServicesInProcessComp = observer((props) => {
     return (
         <div className="p-fluid p-grid">
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            <OperatorAndServiceLstComp storeMcu={dataStore.authPrincipalUser.store.mcu} />
+            {dataStore.authPrincipalUser ? <OperatorAndServiceLstComp storeMcu={dataStore.authPrincipalUser.store.mcu} /> : ""}
         </div>
     );
 });
