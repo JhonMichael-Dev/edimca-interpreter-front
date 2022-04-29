@@ -198,7 +198,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         </div>
     );
 
-    let passwordComp = showPasswordDialog ? <PasswordOperationComp handleLogin={() => handleLogin()} onHide={() => setShowPasswordDialog(false)} aceptLabel="Play" icon="pi pi-check" /> : "";
+    let passwordComp = showPasswordDialog ? <PasswordOperationComp operatorUsername={selOperatorObj.username} handleLogin={() => handleLogin()} onHide={() => setShowPasswordDialog(false)} aceptLabel="Play" icon="pi pi-check" /> : "";
 
     /*
   Return

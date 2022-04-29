@@ -34,10 +34,14 @@ class MasterService {
                 },
             })
             .then((response) => {
+                if (response.data && !response.data.success) {
+                    console.error("Error:", uri, ", log:", response.data.log);
+                }
                 return response;
             })
             .catch((err) => {
                 //console.log(err);
+                console.error("Error:", uri, ", log: ", err);
                 if (args[2] !== undefined) {
                     args[2](err);
                 }

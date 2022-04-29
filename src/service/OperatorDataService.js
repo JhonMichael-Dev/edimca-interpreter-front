@@ -1,15 +1,12 @@
 import axios from "axios";
 import { conf } from "../Config.js";
-const OPERATOR_API_URL = conf.url.PC_URL + "/api/v1/operator";
+import MasterService from "./MasterService";
+const PC_URL = conf.url.PC_URL + "/api/v1/operator";
 
 class OperatorDataService {
     queryOperatorByStore(mcu) {
         //return axios.get("assets/demo/data/storeJson.json").then((res) => res.data.data);
         return axios.get("assets/demo/data/operatorsJson.json").then((res) => res.data);
-    }
-
-    queryServicesByOperator(mcu) {
-        return axios.get("assets/demo/data/servicesByOperator.json").then((res) => res.data);
     }
 
     queryCurrentServiceByOperator(mcu) {
@@ -30,8 +27,28 @@ class OperatorDataService {
     }
 
     getAccountStateFilePath(fileName) {
-        var CURRENT_FILE_URL = `${OPERATOR_API_URL}/getOperatorImageFile/` + fileName;
+        var CURRENT_FILE_URL = `${PC_URL}/getOperatorImageFile/` + fileName;
         return CURRENT_FILE_URL;
+    }
+
+    operatorHasPin(payload) {
+        var CURRENT_API_URL = `${PC_URL}/operatorHasPin/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    updateOperatorPin(payload) {
+        var CURRENT_API_URL = `${PC_URL}/updateOperatorPin/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    validateLast4DigitsFromIdentificationNumber(payload) {
+        var CURRENT_API_URL = `${PC_URL}/validateLast4DigitsFromIdentificationNumber/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    loginOperator(payload) {
+        var CURRENT_API_URL = `${PC_URL}/loginOperator/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 }
 
