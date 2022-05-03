@@ -64,6 +64,7 @@ export const OrderLstComp = observer((props) => {
             //console.log("onlyPendingOrders", onlyPendingOrders);
             if (onlyPendingOrders) {
                 OrderDataService.queryPendingOrdersByStore(props.selStore).then((valid) => {
+                    //console.log("queryPendingOrdersByStore", valid);
                     if (valid.data && valid.data.success) {
                         setLstOrders(valid.data.obj);
                     }
@@ -71,6 +72,7 @@ export const OrderLstComp = observer((props) => {
                 });
             } else {
                 OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
+                    //console.log("queryOrdersByStore", valid);
                     if (valid.data && valid.data.success) {
                         setLstOrders(valid.data.obj);
                     }

@@ -183,7 +183,7 @@ export const PasswordOperationComp = observer((props) => {
   */
     return (
         <div>
-            <Dialog header="Clave" visible={true} modal={true} style={{ width: "40vw" }} draggable={false} onHide={() => onHide()}>
+            <Dialog header="Clave" visible={true} modal={true} style={{ width: "60vw" }} draggable={false} onHide={() => onHide()}>
                 <div className="grid">
                     <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
                     <div className="col-12 lg:col-12 xl:col-12">{props.operatorUsername ? props.operatorUsername : "operatorUsername not send as props"} </div>

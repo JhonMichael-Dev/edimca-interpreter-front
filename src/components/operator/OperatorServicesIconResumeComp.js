@@ -33,7 +33,8 @@ export const OperatorServicesIconResumeComp = observer((props) => {
     };
 
     const handleResumeServices = (services) => {
-        setLstServices(props.services);
+        //setLstServices(props.services);
+        setLstServices(services);
         if (services) {
             let mapServicesAux = new Map();
             services.map((servi) => {

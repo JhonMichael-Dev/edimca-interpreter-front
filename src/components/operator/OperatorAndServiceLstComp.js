@@ -18,6 +18,7 @@ import OrderDataService from "../../service/OrderDataService";
 import OperatorDataService from "../../service/OperatorDataService";
 import { ProductInfoComp } from "../product/ProductInfoComp";
 import { OrderServicesIconComp } from "../order/OrderServicesIconComp";
+import { ServicesInProcessByOperatorComp } from "./ServicesInProcessByOperatorComp";
 
 export const OperatorAndServiceLstComp = observer((props) => {
     /*
@@ -27,7 +28,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     const [lstOperators, setLstOperators] = useState(null);
     const [selOperator, setSelOperator] = useState(null);
     const [currentServices, setCurrentServices] = useState(null);
-    const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+    const [showPasswordDialog, setShowPasswordDialog] = useState(true);
     const dt = useRef(null);
 
     /*
@@ -77,29 +78,25 @@ export const OperatorAndServiceLstComp = observer((props) => {
     };
 
     const handleLogin = () => {
-        setShowPasswordDialog(true);
+        setShowPasswordDialog(false);
         //props.handleProcess(selOperatorObj.username);
     };
 
     const handleHideDialog = () => {
         setSelOperator(null);
-        setShowPasswordDialog(false);
+        setShowPasswordDialog(true);
     };
 
     /*
     Inner Components
     */
 
-    let operatorIconComp2 = (rowData) => {
-        //return <OperatorIconComp operatorUsername={rowData.operator.username} />;
-        return <OperatorIconComp2 operator={rowData.operator} />;
-    };
-
     let operatorIconComp = (rowData) => {
         //console.log("operatorIconComp", rowData);
         //return <OperatorIconComp operatorUsername={selOperator.operator.username} />;
-        return <OperatorIconComp2 operator={rowData.operator} />;
+        // -- return <OperatorIconComp2 operator={rowData.operator} />;
         //return <OperatorIconComp operatorUsername={rowData.operator.username} />; // TODO: borrar
+        return <OperatorIconComp2 username={rowData.username} />;
     };
 
     let operatorTurnComp = (rowData) => {
@@ -111,7 +108,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
         return <OperatorTurnComp status={rowData.status} pauseReason={rowData.pauseReason} />;
     };
 
-    let passwordComp = selOperator ? <PasswordOperationComp operatorUsername={selOperator.username} handleLogin={() => handleLogin()} onHide={() => setSelOperator(null)} /> : "";
+    let passwordComp = selOperator ? <PasswordOperationComp operatorUsername={selOperator.username} handleLogin={(ev) => handleLogin(ev)} onHide={() => setSelOperator(null)} /> : "";
 
     let operatorActionsComp = (rowData) => {
         //const statusValidation = currentServices.lstCurrentService.filter((service) => service.operator.username === selOperator.operator.username && service.productDto.jdeId === rowData.productDto.jdeId);
@@ -195,31 +192,8 @@ export const OperatorAndServiceLstComp = observer((props) => {
         </DataTable>
     );
 
-    let operatorServiceComp = (selOperator) => {
-        //console.log("operatorServiceComp", selOperator);
-        return (
-            <Dialog
-                header="Servicios en Proceso"
-                visible={true}
-                onHide={(ev) => handleHideDialog()}
-                style={{
-                    width: "80%",
-                    textAlign: "center",
-                }}
-                className="col-12 lg:col-8 xl:col-8"
-                closable
-                resizable={false}
-                draggable={false}
-            >
-                <DataTable value={selOperator.lstWorkingOrderDto.filter((serviceX) => serviceX.status != "PENDIENTE")} selectionMode="single" responsiveLayout="scroll" scrollable scrollHeight="700px" virtualScrollerOptions={{ itemSize: 46 }}>
-                    <Column header="Operador" body={operatorIconComp} style={{ width: "15%", textAlign: "center", alignContent: "center" }} sortable sortField="username"></Column>
-                    <Column header="Estado" body={operatorStatusComp} style={{ width: "10%", textAlign: "center", alignContent: "center", justifyContent: "center" }} sortable sortField="Estado"></Column>
-                    <Column header="Producto" body={serviceComp} style={{ width: "15%" }}></Column>
-                    <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "10%" }}></Column>
-                    <Column header="Seleccionar" body={operatorActionsComp} style={{ width: "30%", textAlign: "center", alignContent: "center", justifyContent: "center" }}></Column>
-                </DataTable>
-            </Dialog>
-        );
+    let servicesInProcessByOperatorComp = (selOperator) => {
+        return <ServicesInProcessByOperatorComp storeMcu={props.storeMcu} username={selOperator.username} handleHideDialog={(ev) => handleHideDialog()}></ServicesInProcessByOperatorComp>;
     };
 
     return (
@@ -228,7 +202,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
                 <div className="col-12 lg:col-4 xl:col-4" style={{ textAlign: "left" }}>
                     <b>Lista de órdenes en proceso</b>
                 </div>
-                {selOperator === null ? operatorTableComp : showPasswordDialog ? operatorServiceComp(selOperator) : passwordComp}
+                {selOperator === null ? operatorTableComp : showPasswordDialog ? passwordComp : servicesInProcessByOperatorComp(selOperator)}
             </div>
         </div>
     );
