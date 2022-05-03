@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
-
+import UserProductionControlDataService from "../../service/UserProductionControlDataService";
 /*
 Own Components
 */
@@ -40,24 +40,24 @@ export const LoginPrincipalComp = observer((props) => {
         setUsername(props.username ? props.username : null);
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (validateLoginData()) {
-            let payload = {
-                userpos: { username: username, password },
-                store: {
-                    mcu: "2CM00101",
-                    name: "BODEGA FISICA MATRIZ QUITO",
-                    jdeCode: "124",
-                    address1: "AV. DE LOS GRANADOS E12-70               di2",
-                    businessUnit: {
-                        code: "BD",
-                        description1: "Bodega",
-                    },
-                },
+            let obj0 = {
+                username: username.trim(),
+                password: password.trim(),
             };
-            toast.current.show({ severity: "success", summary: "Bienvenido!", detail: "Ha ingresado a " + payload.store.name, life: 3000 });
-            props.setSelPrincipalUser(payload);
-            setDialogVisible(false);
+            await UserProductionControlDataService.login(obj0, () => toast.current.show({ severity: "warn", summary: "", detail: "Error del servicio", life: 3000 })).then((response) => {
+                console.log("LoginUserCP", response);
+                if (response && !response.data.logged) {
+                    // this.showError(response.data.message);
+                    toast.current.show({ severity: "warn", summary: "", detail: response.data.message, life: 3000 });
+                } else if (response && response.data.logged) {
+                    //this.props.PosStore.setHistory(this.props.history);
+                    toast.current.show({ severity: "success", summary: "Bienvenido!", detail: "Ha ingresado a " + response.data.store.name, life: 3000 });
+                    props.setSelPrincipalUser(response.data);
+                    setDialogVisible(false);
+                }
+            });
         }
     };
 

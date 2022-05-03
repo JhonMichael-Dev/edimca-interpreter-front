@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 //import { computed } from "mobx";
 // Prime components
+import { Toast } from "primereact/toast";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
@@ -21,10 +22,13 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import "./ButtonDemo.css";
+import { useDataStore } from "../../data/DataStoreContext";
+import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     /*
   Variables
   */
+    const [selLstMachineryStatusInitial, setLstMachineryStatusInitial] = useState(null);
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const [lstMachinery, setLstMachinery] = useState([]);
     const [selMachinery, setSelMachinery] = useState({ code: null, description: null });
@@ -57,12 +61,20 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         { name: "Falla rascacolas", key: "A" },
     ];
     const [selectedDamages, setSelectedDamages] = useState([]);
+    const toast = useRef(null);
+    /*
+    Store
+    */
+    const dataStore = useDataStore();
+
     /*
   Init
   */
     useEffect(() => {
-        handleQueryMachineryByWhMan();
-    }, []);
+        if (selLstMachineryStatusInitial) {
+            handleQueryMachineryByWhMan();
+        }
+    }, [selLstMachineryStatusInitial]);
 
     /*
   Context  
@@ -80,7 +92,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         MachineryDataService.queryMachineryByWhMan(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstMachineryFilteredByMcuMan = valid.data.obj.filter((machineryObjX) => true || machineryObjX.store.mcu === props.storeMcu)[0];
-                //console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
+                console.log("lstMachineryFilteredByServiceType", lstMachineryFilteredByMcuMan.machineryMaintenaceList);
                 setLstMachinery(lstMachineryFilteredByMcuMan.machineryMaintenaceList);
             }
         });
@@ -214,14 +226,38 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         setSelectedDamages(_selectedDamages);
     };
 
-    let machineryIconComp = (rowData) => {
-        //console.log("tbl... ", rowData);
-        return <MachineryIconComp machineryData={rowData} />;
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setLstMachineryStatusInitial(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
+        });
     };
 
     /*
   Inner Components
   */
+
+    let machineryIconComp = (rowData) => {
+        //console.log("tbl... ", rowData);
+        return <MachineryIconComp machineryData={rowData} />;
+    };
+
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstMachineryStatusInitial ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
 
     const actionBodyTemplate = (rowData) => {
         return (
@@ -363,7 +399,8 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
   */
     return (
         <>
-            {" "}
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {loginPrincipalComp}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">

@@ -9,6 +9,7 @@ export function createDataStore() {
         // Principal user (chief of warehouse "bodeguero")
         authPrincipalUser: null,
         setAuthPrincipalUser(principalUser) {
+            console.log(principalUser);
             this.authPrincipalUser = principalUser;
         },
         removeAuthPrincipalUser() {
