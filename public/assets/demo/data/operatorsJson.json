@@ -13,7 +13,7 @@
 
                     { "username": "GPACHACAMA", "skills": ["PERFORADO"], "turno": "DIURNO" },
                     { "username": "AWILCATOMA", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
-                    { "username": "EPEREZ", "skills": ["CORTE", "ENCHAPE"], "turno": "DIURNO" },
+                    { "username": "EPEREZ", "skills": ["CORTE", "ENCHAPE"], "impairments": ["ENCHAPE"], "turno": "DIURNO" },
                     { "username": "DLOPEZ", "skills": ["CORTE", "RUTEADO"], "turno": "NOCTURNO" },
                     { "username": "YWANG", "skills": ["CORTE", "RUTEADO"], "turno": "DIURNO" },
                     { "username": "MFLOR", "skills": ["CORTE", "PERFORADO"], "turno": "NOCTURNO" },

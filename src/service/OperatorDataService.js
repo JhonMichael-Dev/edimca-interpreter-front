@@ -50,6 +50,11 @@ class OperatorDataService {
         var CURRENT_API_URL = `${PC_URL}/loginOperator/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
+
+    queryUserposDtoByUsername(payload) {
+        var CURRENT_API_URL = `${PC_URL}/queryUserposDtoByUsername/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
 }
 
 export default new OperatorDataService();

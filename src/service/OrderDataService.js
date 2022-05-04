@@ -22,6 +22,11 @@ class OrderDataService {
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 
+    queryWorkingOrdersOnProcessByStoreAndOperator(payload) {
+        var CURRENT_API_URL = `${PC_URL}/queryWorkingOrdersOnProcessByStoreAndOperator/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
     queryOrderHeaderByWorkingOrderId(payload) {
         var CURRENT_API_URL = `${PC_URL}/queryOrderHeaderByWorkingOrderId/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
