@@ -144,6 +144,7 @@ export const OcupationalDoctorListComp = observer((props) => {
                                     //key={skill.key}
                                     checked={!rowData.skills.some((item) => item.skill === skill.skill)}
                                 />
+                                &nbsp; 
                                 <label htmlFor={skill.idSkill}>{skill.skill}</label>
 
                             </div>
