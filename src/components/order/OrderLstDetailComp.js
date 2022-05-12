@@ -110,6 +110,18 @@ export const OrderLstDetailComp = observer((props) => {
         );
     }
 
+    const totalServiceByGroup = (rowData) => {
+        return (
+            <h6 style={{ display: 'inline' }}> {rowData.completeServices} de {rowData.lstWorkingOrderDetail.length} completadas</h6>
+        )
+    }
+
+    const headerGroup = (rowData) => {
+        return (
+            <h6 style={{ display: 'inline' }}> Grupo {rowData.group}</h6>
+        )
+    }
+
     /*
   Inner Components
   */
@@ -166,26 +178,19 @@ export const OrderLstDetailComp = observer((props) => {
         });
         const uniqueArr = [...new Set(groups)];
         let lstWorkingOrder = [];
-        uniqueArr.map((u) =>{
-            let lstWorkingOrderDetail = lstTemp.filter(f => f.productionGroup == u)
-            let g = {
-                group: u,
+        uniqueArr.map((uniqueGroup) => {
+            let lstWorkingOrderDetail = lstTemp.filter(f => f.productionGroup == uniqueGroup)
+            let object = {
+                group: uniqueGroup,
                 completeServices: lstWorkingOrderDetail.filter(service => service.status === 'COMPLETADO').length,
                 lstWorkingOrderDetail: lstWorkingOrderDetail
             };
-            lstWorkingOrder.push(g);
+            lstWorkingOrder.push(object);
         });
-        return(
+        return (
             <DataTable
                 value={lstWorkingOrder}
-                /*
-                selectionMode="single"
-                selection={selOrderDetail}
-                onSelectionChange={(e) => setSelOrderDetail(e.value)}
-                onRowSelect={onRowSelect}
-                onRowUnselect={onRowUnselect}
-                */
-                expandedRows={expandedRows} 
+                expandedRows={expandedRows}
                 onRowToggle={(e) => setExpandedRows(e.data)}
                 rowExpansionTemplate={rowExpansionTemplate}
                 dataKey="group"
@@ -196,9 +201,15 @@ export const OrderLstDetailComp = observer((props) => {
                 virtualScrollerOptions={{ itemSize: 46 }}
                 lazy
             >
-                <Column expander style={{ width: '3em'}} />
-                <Column field="group" header="Grupos de Ordenes" />
-                <Column field="completeServices" header="Ordenes completadas"> </Column>
+                <Column expander style={{ width: '3em' }} />
+                <Column field="group" header="GRUPO ORDEN" body={headerGroup}/>
+                <Column 
+                    field="completeServices" 
+                    header={`${lstTemp.filter(service => service.status === 'COMPLETADO').length} DE ${lstTemp.length} ORDENES COMPLETADAS`}
+                    body={totalServiceByGroup}
+                />
+                <Column />
+                <Column />                
 
             </DataTable>
         );
