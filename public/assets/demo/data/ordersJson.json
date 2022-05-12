@@ -30,6 +30,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -45,6 +46,7 @@
                     },
                     {
                         "idWorkingOrder": 2,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
@@ -60,6 +62,7 @@
                     },
                     {
                         "idWorkingOrder": 3,
+                        "productionGroup": 2,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -76,6 +79,7 @@
                     },
                     {
                         "idWorkingOrder": 4,
+                        "productionGroup": 3,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -117,6 +121,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -131,6 +136,7 @@
                     },
                     {
                         "idWorkingOrder": 6,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -145,6 +151,7 @@
                     },
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -186,6 +193,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 7,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -200,6 +208,7 @@
                     },
                     {
                         "idWorkingOrder": 8,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -241,6 +250,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -282,6 +292,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -296,6 +307,7 @@
                     },
                     {
                         "idWorkingOrder": 22,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
@@ -310,6 +322,7 @@
                     },
                     {
                         "idWorkingOrder": 3,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -352,6 +365,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -364,6 +378,7 @@
                     },
                     {
                         "idWorkingOrder": 6,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -377,6 +392,7 @@
                     },
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -417,6 +433,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 7,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -430,6 +447,7 @@
                     },
                     {
                         "idWorkingOrder": 8,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -470,6 +488,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -510,6 +529,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -523,6 +543,7 @@
                     },
                     {
                         "idWorkingOrder": 222,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
@@ -536,6 +557,7 @@
                     },
                     {
                         "idWorkingOrder": 3,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -550,6 +572,7 @@
                     },
                     {
                         "idWorkingOrder": 4,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -590,6 +613,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -603,6 +627,7 @@
                     },
                     {
                         "idWorkingOrder": 6,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -616,6 +641,7 @@
                     },
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -656,6 +682,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 7,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -669,6 +696,7 @@
                     },
                     {
                         "idWorkingOrder": 8,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -707,6 +735,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -747,6 +776,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 1,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -760,6 +790,7 @@
                     },
                     {
                         "idWorkingOrder": 2,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0023",
                             "description1": "SERV.RUTEADO SOPORTE BALDA PAR",
@@ -773,6 +804,7 @@
                     },
                     {
                         "idWorkingOrder": 4,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -813,6 +845,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -826,6 +859,7 @@
                     },
                     {
                         "idWorkingOrder": 6,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0004",
                             "description1": "SERV.ENCHAPE PROM.PVC RECTO ML",
@@ -839,6 +873,7 @@
                     },
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
@@ -877,6 +912,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 7,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERECTS0008",
                             "description1": "SERV ENCHAPADO PUR ML",
@@ -890,6 +926,7 @@
                     },
                     {
                         "idWorkingOrder": 8,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERPRFS0002",
                             "description1": "SERV.PERFORADO SIST.32 UN",
@@ -928,6 +965,7 @@
                 "lstWorkingOrder": [
                     {
                         "idWorkingOrder": 5,
+                        "productionGroup": 1,
                         "productDto": {
                             "code": "SERRUTS0020",
                             "description1": "SERVICIO CORTE A 45 ML (CANTO)",
