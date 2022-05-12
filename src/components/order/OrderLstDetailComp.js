@@ -160,12 +160,11 @@ export const OrderLstDetailComp = observer((props) => {
 
     const transformador = () => {
         let lstTemp = [...props.selOrder.lstWorkingOrder];
-        let grupos = [];
+        let groups = [];
         lstTemp.map((x) => {
-            grupos.push(x.productionGroup);
+            groups.push(x.productionGroup);
         });
-        const uniqueArr = [...new Set(grupos)];
-        //console.log("grupos: " + uniqueArr)
+        const uniqueArr = [...new Set(groups)];
         let lstWorkingOrder = [];
         uniqueArr.map((u) =>{
             let lstWorkingOrderDetail = lstTemp.filter(f => f.productionGroup == u)
@@ -176,8 +175,6 @@ export const OrderLstDetailComp = observer((props) => {
             };
             lstWorkingOrder.push(g);
         });
-
-        //console.log(lstWorkingOrder2.lstWorkingOrder);
         return(
             <DataTable
                 value={lstWorkingOrder}
