@@ -9,51 +9,43 @@ import { Column } from "primereact/column";
 // Prime components
 import { OperatorIconComp2 } from "../operator/OperatorIconComp2";
 import { FileUploadComp } from "../base/FileUploadComp";
-import { Toast } from "primereact/toast";
+
 // Services
 import OperatorDataService from "../../service/OperatorDataService";
 import StoreDataService from "../../service/StoreDataService";
-import { useDataStore } from "../../data/DataStoreContext";
-import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+import MachineryDataService from "../../service/MachineryDataService";
+
 export const HumanTalentListComp = observer((props) => {
     /*
   Variables
   */
-    const [selLstHumanTalent, setSelLstHumanTalent] = useState(null);
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
-    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
-    const [selectedSkill, setSelectedSkilles] = useState([]);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [lstStores, setLstStores] = useState([]);
     const [selectedStore, setSelectedStore] = useState(null);
-    const [selOperator, setSelOperator] = useState(null);
-    const toast = useRef(null);
-    /*
-    Store
-    */
-    const dataStore = useDataStore();
+    const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
+    const [machineryTypes, setMachineryType] = useState([]);
+
     /*
     Init
     */
     useEffect(() => {
-        if (selLstHumanTalent) {
-            loadAvailables();
-        }
-    }, [selLstHumanTalent]);
-    /*
-  Formats
-  */
+        loadAvailables();
+    }, []);
+        /*
+    Formats
+    */
 
-    /*
-  Methods
-  */
+        /*
+    Methods
+    */
     const loadAvailables = () => {
-        OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
-            if (valid.data && valid.data.obj[0].operators) {
-                setLstOperator(valid.data.obj[0].operators);
-                //console.log(valid.data.obj[0].operators);
-            }
+
+        MachineryDataService.getServiceType().then((valid) => {
+            //console.log("MachineryDataService: " + valid.data);
+            setMachineryType(valid.data);
+
         });
 
         StoreDataService.queryStores().then((valid) => {
@@ -61,42 +53,62 @@ export const HumanTalentListComp = observer((props) => {
                 setLstStores(valid.data.obj);
             }
         });
-        setLstOperatorFilter(lstOperator);
+
     };
 
-    const onSkill = (e) => {
-        let _selectedDamages = [...selectedSkill];
-
-        if (e.checked) {
-            _selectedDamages.push(e.value);
-        } else {
-            for (let i = 0; i < _selectedDamages.length; i++) {
-                const objTest = _selectedDamages[i];
-
-                if (objTest.key === e.value.key) {
-                    _selectedDamages.splice(i, 1);
-                    break;
-                }
+    const onSkill = (rowData,e) => {
+        let idSkill = "";
+        rowData.skills.map((skill) => {
+            if(skill.skill === e.value.skill){
+                idSkill = skill.idSkill;
             }
+        });
+        
+        let UserposSkills = {
+            idSkill: idSkill,
+            userpos: rowData.id,
+            skill: e.value.skill
+        };
+
+        let _operators = [...lstOperator];
+        if (e.checked) {
+            OperatorDataService.setHumanTalentOperator(UserposSkills).then((valid) => {
+                _operators.map((operator) => {
+                    if (operator.id === rowData.id) {
+                        operator.skills = valid.data.obj
+                    }
+                });
+                setLstOperator(_operators);
+            });
+        } else {
+            //console.log("unchecked");
+            OperatorDataService.removeHumanTalentOperator(UserposSkills).then((valid) => {
+                _operators.map((operator) => {
+                    if (operator.id === rowData.id) {
+                        operator.skills = valid.data.obj
+                    }
+                });
+                setLstOperator(_operators);
+            });
         }
-        setSelectedSkilles(_selectedDamages);
     };
 
     const templTHSkill = (rowData) => {
+        //console.log(rowData.skills);
         return (
             <div className="grid" style={{ display: "inline-flex" }}>
-                {rowData.skills.map((skill) => {
+                {machineryTypes.map((skill) => {
                     return (
-                        <div key={skill.id} className="field-checkbox">
+                        <div key={skill.idSkill} className="field-checkbox">
                             <Checkbox
-                                inputId={skill.id}
+                                inputId={skill.idSkill}
                                 name="skill"
                                 value={skill}
-                                onChange={onSkill}
+                                onChange={(e) => onSkill(rowData,e)}
                                 //key={skill.key}
-                                checked={selectedSkill.some((item) => item.key === skill.key)}
+                                checked={rowData.skills.some((item) => item.skill === skill.skill)}
                             />
-                            <label htmlFor={skill.id}>{skill.name}</label>
+                            <label htmlFor={skill.idSkill}>{skill.skill}</label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     );
@@ -105,14 +117,15 @@ export const HumanTalentListComp = observer((props) => {
         );
     };
 
-    const onChangeStore = async (e) => {
-        setSelectedStore(e.value.mcu);
-
-        /*  setLstOperator(
-            await lstOperator.filter((ob) => {
-                return ob.mcu === e.value.mcu;
-            })
-        );*/
+    const onChangeStore = (e) => {
+        setSelectedStore(e.value);
+        let searchDto = {
+            mcu: e.value.mcu
+        };
+        OperatorDataService.getHumanTalentOperatorByStore(searchDto).then((valid) =>{
+            //console.log("valid: " + valid.data.obj[0].id);
+            setLstOperator(valid.data.obj);
+        });
     };
 
     const renderHeader1 = () => {
@@ -122,7 +135,7 @@ export const HumanTalentListComp = observer((props) => {
                     <div className="p-d-flex p-ai-center p-flex-wrap">
                         <span className="p-input-icon-left">
                             <i className="pi pi-search" />
-                            <InputText style={{ width: "60%" }} type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
+                            <InputText style={{ width: "60%" }} type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar" />
                         </span>
                     </div>
                 </div>
@@ -143,41 +156,18 @@ export const HumanTalentListComp = observer((props) => {
     };
 
     const operatorIconComp2 = (rowData) => {
-        //console.log("asdasdasd",rowData.filename);
+        //console.log("rowData",rowData.filename);
         return rowData.filename ? <OperatorIconComp2 operator={rowData} /> : <FileUploadComp operator={rowData} onUpdate={handleReloadTable} />;
     };
-
-    const handleSelectUser = (ev) => {
-        dataStore.setAuthPrincipalUser(ev);
-        setSelLstHumanTalent(ev);
-    };
-
-    const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
-        dataStore.setLoading(ev);
-    };
-
-    function timeout(delay) {
-        return new Promise((res) => setTimeout(res, delay));
-    }
-    const showMessage = (ev) => {
-        toast.current.show({
-            severity: ev.severity,
-            summary: ev.summary,
-            detail: ev.message,
-            life: (ev.message.length / 10) * 1000,
-        });
-    };
-
     /*
     Inner Components
     */
     let tblLisTH = (
         <DataTable
-            value={lstOperator}
+            value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
             selectionMode="single"
-            onRowSelect={(e) => setSelOperator(e.data)}
-            dataKey="id"
+            key={lstOperator.id}
+            dataKey={lstOperator.id}
             ref={dt}
             responsiveLayout="scroll"
             scrollable
@@ -231,25 +221,19 @@ export const HumanTalentListComp = observer((props) => {
         </DataTable>
     );
 
-    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstHumanTalent ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
-
     /*
   Return
   */
     return (
-        <>
-            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            {loginPrincipalComp}
-            <div className="p-fluid p-grid">
-                <div className="col-12 xl:col-12">
-                    <div className="card">
-                        <h5>
-                            <b>Lista Operadores Talento Humano</b>
-                        </h5>
-                        <div className="col-12 xl:col-12">{tblLisTH}</div>
-                    </div>
+        <div className="p-fluid p-grid">
+            <div className="col-12 xl:col-12">
+                <div className="card">
+                    <h5>
+                        <b>Lista Operadores Talento Humano</b>
+                    </h5>
+                    <div className="col-12 xl:col-12">{tblLisTH}</div>
                 </div>
             </div>
-        </>
+        </div>
     );
 });
