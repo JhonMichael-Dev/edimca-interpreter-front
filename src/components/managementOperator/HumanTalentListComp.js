@@ -9,15 +9,17 @@ import { Column } from "primereact/column";
 // Prime components
 import { OperatorIconComp2 } from "../operator/OperatorIconComp2";
 import { FileUploadComp } from "../base/FileUploadComp";
-
+import { Toast } from "primereact/toast";
 // Services
 import OperatorDataService from "../../service/OperatorDataService";
 import StoreDataService from "../../service/StoreDataService";
-
+import { useDataStore } from "../../data/DataStoreContext";
+import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 export const HumanTalentListComp = observer((props) => {
     /*
   Variables
   */
+    const [selLstHumanTalent, setSelLstHumanTalent] = useState(null);
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
     const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
@@ -26,13 +28,19 @@ export const HumanTalentListComp = observer((props) => {
     const [lstStores, setLstStores] = useState([]);
     const [selectedStore, setSelectedStore] = useState(null);
     const [selOperator, setSelOperator] = useState(null);
-
+    const toast = useRef(null);
+    /*
+    Store
+    */
+    const dataStore = useDataStore();
     /*
     Init
     */
     useEffect(() => {
-        loadAvailables();
-    }, []);
+        if (selLstHumanTalent) {
+            loadAvailables();
+        }
+    }, [selLstHumanTalent]);
     /*
   Formats
   */
@@ -138,6 +146,29 @@ export const HumanTalentListComp = observer((props) => {
         //console.log("asdasdasd",rowData.filename);
         return rowData.filename ? <OperatorIconComp2 operator={rowData} /> : <FileUploadComp operator={rowData} onUpdate={handleReloadTable} />;
     };
+
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setSelLstHumanTalent(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
+        });
+    };
+
     /*
     Inner Components
     */
@@ -200,11 +231,15 @@ export const HumanTalentListComp = observer((props) => {
         </DataTable>
     );
 
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstHumanTalent ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
+
     /*
   Return
   */
     return (
         <>
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {loginPrincipalComp}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 //import { computed } from "mobx";
 // Prime components
+import { Toast } from "primereact/toast";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
@@ -19,10 +20,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { useDataStore } from "../../data/DataStoreContext";
+import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 export const OrderLstVLComp = observer((props) => {
     /*
   Variables
   */
+    const [selLstOrdersVL, setSelLstOrdersV] = useState(null);
     const dt = useRef(null);
     const [lstOrders, setLstOrders] = useState([]);
     const [dialogVL, setDialogVL] = useState(false);
@@ -31,13 +35,20 @@ export const OrderLstVLComp = observer((props) => {
     const [value2, setValue2] = useState("");
     const [value3, setValue3] = useState("");
     const [service, setService] = useState([]);
+    const toast = useRef(null);
+    /*
+    Store
+    */
+    const dataStore = useDataStore();
 
     /*
-Init
-*/
+    Init
+    */
     useEffect(() => {
-        loadAvailables();
-    }, []);
+        if (selLstOrdersVL) {
+            loadAvailables();
+        }
+    }, [selLstOrdersVL]);
     /*
   Formats
   */
@@ -100,6 +111,28 @@ Init
                 </div>
             </React.Fragment>
         );
+    };
+
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setSelLstOrdersV(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
+        });
     };
 
     /*
@@ -175,12 +208,15 @@ Inner Components
         </DataTable>
     );
 
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstOrdersVL ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
+
     /*
   Return
   */
     return (
         <>
-            {" "}
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {loginPrincipalComp}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">

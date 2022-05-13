@@ -78,6 +78,7 @@ export const MachinerySelectionLstComp = observer((props) => {
     /*
   Inner Components
   */
+
     const showProcessConfirmDialog = () => {
         confirmDialog({
             message: "Seguro desea procesar, operario principal: " + selMachinery.username + (selMachinery.assistants.length !== 0 ? ", ayudantes: " + selMachinery.assistants : "") + "?",

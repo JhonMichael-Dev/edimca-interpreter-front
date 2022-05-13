@@ -22,10 +22,13 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { render } from "preact/compat";
+import { useDataStore } from "../../data/DataStoreContext";
+import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 export const OrderLstOther = observer((props) => {
     /*
   Variables
   */
+    const [selLstOtherOrders, setSelLstOtherOrders] = useState(null);
     const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
     const dt = useRef(null);
     const toast = useRef(null);
@@ -70,12 +73,19 @@ export const OrderLstOther = observer((props) => {
     const [numOrder, setNumOrder] = useState("");
 
     /*
+    Store
+    */
+    const dataStore = useDataStore();
+
+    /*
     Init
     */
     useEffect(() => {
-        loadAvailables();
-        //console.log(new Date().getTime());
-    }, []);
+        if (selLstOtherOrders) {
+            loadAvailables();
+            //console.log(new Date().getTime());
+        }
+    }, [selLstOtherOrders]);
     /*
   Formats
   */
@@ -345,9 +355,23 @@ export const OrderLstOther = observer((props) => {
         setDialogServDetalle(false);
     };
 
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setSelLstOtherOrders(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+
     /*
-Inner Components
-*/
+    Inner Components
+    */
     let tblLisOrderVL = (
         <DataTable
             value={lstOrders}
@@ -468,6 +492,7 @@ Inner Components
             life: (ev.message.length / 10) * 1500,
         });
     };
+
     let operadorOperation = (ev) => {
         setVperariosA(localStorage.getItem("setOperatios"));
         setVmaquina(localStorage.getItem("selMachinery"));
@@ -489,13 +514,15 @@ Inner Components
         ""
     );
 
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstOtherOrders ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
+
     /*
   Return
   */
     return (
         <>
-            {" "}
             <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {loginPrincipalComp}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">

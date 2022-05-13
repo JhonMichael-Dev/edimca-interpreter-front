@@ -17,7 +17,7 @@ export const AppTopbar = observer((props) => {
         //console.log("AppTopbar", dataStore.authPrincipalUser ? dataStore.authPrincipalUser : null);
     }, [dataStore.authPrincipalUser]);
 
-    let storeNameComp = dataStore.authPrincipalUser ? <i>{dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store.name : ""}</i> : "";
+    let storeNameComp = dataStore.authPrincipalUser ? <i>{dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store.name.trim() : ""}</i> : "";
 
     return (
         <div className="layout-topbar">

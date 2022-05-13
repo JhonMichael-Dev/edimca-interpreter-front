@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 //import { computed } from "mobx";
 // Prime components
+import { Toast } from "primereact/toast";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { ToggleButton } from "primereact/togglebutton";
@@ -20,10 +21,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { useDataStore } from "../../data/DataStoreContext";
+import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 export const OcupationalDoctorListComp = observer((props) => {
     /*
-  Variables
-  */
+    Variables
+    */
+    const [selLstOcupationalDoctor, setSelLstOcupationalDoctor] = useState(null);
     const dt = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
     const [lstOperatorSkill, setLstOperatorSkill] = useState([]);
@@ -32,19 +36,27 @@ export const OcupationalDoctorListComp = observer((props) => {
     const [selectedStore, setSelectedStore] = useState(null);
     const [lstStores, setLstStores] = useState([]);
     const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
+    const toast = useRef(null);
     /*
-Init
-*/
+    Store
+    */
+    const dataStore = useDataStore();
+    /*
+    Init
+    */
     useEffect(() => {
-        loadAvailables();
-    }, []);
-    /*
-Formats
-*/
+        if (selLstOcupationalDoctor) {
+            loadAvailables();
+        }
+    }, [selLstOcupationalDoctor]);
 
     /*
-Methods
-*/
+    Formats
+    */
+
+    /*
+    Methods
+    */
     const loadAvailables = () => {
         OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
             if (valid.data && valid.data.obj[0].operators) {
@@ -121,9 +133,32 @@ Methods
         //console.log(lstOperatorFilter);
     };
     const header1 = renderHeader1();
+
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setSelLstOcupationalDoctor(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
+        });
+    };
+
     /*
-Inner Components
-*/
+    Inner Components
+    */
     let tblLisTH = (
         <DataTable
             value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
@@ -180,12 +215,15 @@ Inner Components
         </DataTable>
     );
 
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstOcupationalDoctor ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
+
     /*
-Return
-*/
+    Return
+    */
     return (
         <>
-            {" "}
+            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
+            {loginPrincipalComp}
             <div className="p-fluid p-grid">
                 <div className="col-12 xl:col-12">
                     <div className="card">

@@ -94,7 +94,6 @@ export const TransfersComp = observer((props) => {
 
     const setLoader = async (ev) => {
         if (!ev) await timeout(400);
-
         dataStore.setLoading(ev);
     };
 
@@ -119,7 +118,7 @@ export const TransfersComp = observer((props) => {
     /*
   Inner components
   */
-    let loginPrincipalComp = !dataStore.authPrincipalUser || !selTransferUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.userpos.username : null} /> : "";
+    let loginPrincipalComp = !dataStore.authPrincipalUser || !selTransferUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
 
     let lstOrderComp =
         lstStoppedOrders && lstStoppedOrders.length > 0 && dataStore.authPrincipalUser ? (
