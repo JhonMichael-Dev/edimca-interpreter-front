@@ -36,6 +36,8 @@ export const OrderLstDetailComp = observer((props) => {
     const dt = useRef(null);
     const toast = useRef(null);
 
+    const [expandedRows, setExpandedRows] = useState(null);
+
     /*
   Init
   */
@@ -92,6 +94,34 @@ export const OrderLstDetailComp = observer((props) => {
         });
     };
 
+    const rowExpansionTemplate = (data) => {
+        return (
+            <div className="datatable-rowexpansion-demo">
+                <h6>Ordenes para el grupo {data.group}</h6>
+                <DataTable value={data.lstWorkingOrderDetail} responsiveLayout="scroll">
+                    <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
+                    <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
+                    <Column header="Cantidad" field="quantityRequested" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityRequested"></Column>
+                    <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="productDto.description1"></Column>
+                    <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType.description1"></Column>
+                    <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
+                </DataTable>
+            </div>
+        );
+    }
+
+    const totalServiceByGroup = (rowData) => {
+        return (
+            <h6 style={{ display: 'inline' }}> {rowData.completeServices} de {rowData.lstWorkingOrderDetail.length} completadas</h6>
+        )
+    }
+
+    const headerGroup = (rowData) => {
+        return (
+            <h6 style={{ display: 'inline' }}> Grupo {rowData.group}</h6>
+        )
+    }
+
     /*
   Inner Components
   */
@@ -140,35 +170,53 @@ export const OrderLstDetailComp = observer((props) => {
         );
     };
 
-    let orderDetailTableComp =
-        props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? (
+    const transformador = () => {
+        let lstTemp = [...props.selOrder.lstWorkingOrder];
+        let groups = [];
+        lstTemp.map((x) => {
+            groups.push(x.productionGroup);
+        });
+        const uniqueArr = [...new Set(groups)];
+        let lstWorkingOrder = [];
+        uniqueArr.map((uniqueGroup) => {
+            let lstWorkingOrderDetail = lstTemp.filter(f => f.productionGroup == uniqueGroup)
+            let object = {
+                group: uniqueGroup,
+                completeServices: lstWorkingOrderDetail.filter(service => service.status === 'COMPLETADO').length,
+                lstWorkingOrderDetail: lstWorkingOrderDetail
+            };
+            lstWorkingOrder.push(object);
+        });
+        return (
             <DataTable
-                value={props.selOrder.lstWorkingOrder}
-                /*
-                selectionMode="single"
-                selection={selOrderDetail}
-                onSelectionChange={(e) => setSelOrderDetail(e.value)}
-                onRowSelect={onRowSelect}
-                onRowUnselect={onRowUnselect}
-                */
-                dataKey="idWorkingOrder"
+                value={lstWorkingOrder}
+                expandedRows={expandedRows}
+                onRowToggle={(e) => setExpandedRows(e.data)}
+                rowExpansionTemplate={rowExpansionTemplate}
+                dataKey="group"
                 ref={dt}
-                header={""}
-                footer={""}
                 responsiveLayout="scroll"
                 scrollable
                 scrollHeight="480px"
                 virtualScrollerOptions={{ itemSize: 46 }}
                 lazy
             >
-                <Column header="Operador" body={operatorIconComp} style={{ width: "130px", textAlign: "center", alignContent: "center" }} sortable sortField="operator.username"></Column>
-                <Column header="Estado" body={statusComp} style={{ width: "160px", textAlign: "center", alignContent: "center" }} sortable sortField="status"></Column>
-                <Column header="Cantidad" field="quantityRequested" style={{ width: "20%", textAlign: "center" }} sortable sortField="quantityRequested"></Column>
-                <Column header="Producto" body={productComp} style={{ width: "30%" }} sortable sortField="productDto.description1"></Column>
-                <Column header="Tipo servicio" body={serviceTypeIconComp} style={{ width: "25%" }} sortable sortField="product.serviceType.description1"></Column>
-                <Column header="Seleccionar" body={selectionComp} style={{ width: "20%" }}></Column>
+                <Column expander style={{ width: '3em' }} />
+                <Column field="group" header="GRUPO ORDEN" body={headerGroup}/>
+                <Column 
+                    field="completeServices" 
+                    header={`${lstTemp.filter(service => service.status === 'COMPLETADO').length} DE ${lstTemp.length} ORDENES COMPLETADAS`}
+                    body={totalServiceByGroup}
+                />
+                <Column />
+                <Column />                
+
             </DataTable>
-        ) : (
+        );
+    }
+
+    let orderDetailTableComp =
+        props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? transformador() : (
             <></>
         );
 
