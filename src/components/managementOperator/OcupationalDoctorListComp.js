@@ -1,105 +1,160 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
-//import { computed } from "mobx";
 // Prime components
-import { Toast } from "primereact/toast";
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { ToggleButton } from "primereact/togglebutton";
 import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
-import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
-import { addLocale } from "primereact/api";
 import { InputText } from "primereact/inputtext";
-import { Badge } from "primereact/badge";
-import OperatorDataService from "../../service/OperatorDataService";
-import StoreDataService from "../../service/StoreDataService";
-import { InputMask } from "primereact/inputmask";
-// Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
-import { useDataStore } from "../../data/DataStoreContext";
-import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+import { Toast } from 'primereact/toast';
+import { ConfirmPopup } from 'primereact/confirmpopup';
+import { InputSwitch } from 'primereact/inputswitch';
+// Services
+import OperatorDataService from "../../service/OperatorDataService";
+import StoreDataService from "../../service/StoreDataService";
+import MachineryDataService from "../../service/MachineryDataService";
+
 export const OcupationalDoctorListComp = observer((props) => {
     /*
     Variables
     */
-    const [selLstOcupationalDoctor, setSelLstOcupationalDoctor] = useState(null);
     const dt = useRef(null);
+    const toast = useRef(null);
     const [lstOperator, setLstOperator] = useState([]);
-    const [lstOperatorSkill, setLstOperatorSkill] = useState([]);
-    const [selectedSkill, setSelectedSkilles] = useState([]);
+    const [visible, setVisible] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [selectedStore, setSelectedStore] = useState(null);
     const [lstStores, setLstStores] = useState([]);
     const [lstOperatorFilter, setLstOperatorFilter] = useState([]);
-    const toast = useRef(null);
-    /*
-    Store
-    */
-    const dataStore = useDataStore();
+    const [machineryTypes, setMachineryType] = useState([]);
+    const [serviceSelected, setServiceSelected] = useState(null);
+    const [impairmentUpdate, setImpairmentUpdate] = useState([]);
+    const [idCheck, setIdCheck] = useState(" ");
+    
     /*
     Init
     */
     useEffect(() => {
-        if (selLstOcupationalDoctor) {
-            loadAvailables();
-        }
-    }, [selLstOcupationalDoctor]);
-
-    /*
-    Formats
-    */
+        loadAvailables();
+    }, []);
 
     /*
     Methods
     */
     const loadAvailables = () => {
-        OperatorDataService.queryServicesByListOperatorTH().then((valid) => {
-            if (valid.data && valid.data.obj[0].operators) {
-                setLstOperator(valid.data.obj[0].operators);
-                valid.data.obj[0].operators.map((o) => setLstOperatorSkill(o.skills));
-            }
-        });
 
+        MachineryDataService.getServiceType().then((valid) => {
+            //console.log("MachineryDataService: " + valid.data);
+            setMachineryType(valid.data);
+
+        });
+        
         StoreDataService.queryStores().then((valid) => {
             if (valid.data && valid.data.success) {
                 setLstStores(valid.data.obj);
             }
         });
-        setLstOperatorFilter(lstOperator);
+        
     };
 
-    const onSkill = (e) => {
-        let _selectedDamages = [...selectedSkill];
-
-        if (!e.checked) {
-            _selectedDamages.push(e.value);
-        } else {
-            for (let i = 0; i < _selectedDamages.length; i++) {
-                let objTest = _selectedDamages[i];
-
-                if (objTest.key === e.value.key) {
-                    _selectedDamages.splice(i, 1);
-                    break;
+    const accept = () => {
+        //console.log("e: " + impairmentUpdate.id);
+        //console.log("e: " + impairmentUpdate.username);
+        //console.log("e: " + serviceSelected.impairment);
+        //console.log("e: " + serviceSelected.userpos);
+        let UserposImpairments = {
+            idImpairment: "",
+            userpos: serviceSelected.userpos,
+            impairment: serviceSelected.impairment,
+            assistant: true
+        };
+        
+        let _operators = [...lstOperator];
+        OperatorDataService.updateImpairmentOperator(UserposImpairments).then((valid) => {
+            _operators.map((operator) => {
+                if (operator.id === impairmentUpdate.id) {
+                    operator.skills = valid.data.obj
                 }
+            });
+            setLstOperator(_operators);
+        });
+        toast.current.show({ severity: 'info', summary: 'Confirmed', detail: `${impairmentUpdate.username} actualizado`, life: 3000 });
+    };
+
+    const reject = () => {
+        toast.current.show({ severity: 'warn', summary: 'Rejected', detail: `${impairmentUpdate.username} actualizado`, life: 3000 });
+    };
+
+    const onSkill = (rowData,e) => {
+        setIdCheck(rowData.id + e.value.idSkill);
+        let idSkill = "";
+        rowData.skills.map((skill) => {
+            if(skill.skill === e.value.skill){
+                idSkill = skill.idSkill;
             }
+        });
+
+        let UserposImpairments = {
+            idImpairment: idSkill,
+            userpos: rowData.id,
+            impairment: e.value.skill,
+            assistant: false
+        };
+
+        setServiceSelected(UserposImpairments);
+        setImpairmentUpdate(rowData);
+
+        let _operators = [...lstOperator];
+        if (e.checked) {
+            OperatorDataService.removeImpairmentOperator(UserposImpairments).then((valid) => {
+                _operators.map((operator) => {
+                    if (operator.id === rowData.id) {
+                        operator.skills = valid.data.obj
+                    }
+                });
+                setLstOperator(_operators);
+            });
+        } else {
+            OperatorDataService.setImpairmentOperator(UserposImpairments).then((valid) => {
+                _operators.map((operator) => {
+                    if (operator.id === rowData.id) {
+                        operator.skills = valid.data.obj
+                    }
+                });
+                setLstOperator(_operators);
+            });
         }
-        setSelectedSkilles(_selectedDamages);
+        UserposImpairments.idImpairment === "" ? setVisible(true) : setVisible(false);
+
     };
 
     const templTHSkill = (rowData) => {
         return (
-            <div className="grid">
-                {rowData.skills.map((skill) => {
+            <div className="grid" style={{ display: "inline-flex" }}>
+                {machineryTypes.map((skill) => {
                     return (
-                        <div key={skill.id} className="field-checkbox">
-                            <Checkbox inputId={skill.id} name="skill" value={skill} onChange={onSkill} checked={!selectedSkill.some((item) => item.key === skill.key)} />
-                            <label htmlFor={skill.id}>{skill.name}</label>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div key={skill.idSkill} className="grid" style={{ width: '100%' }}>
+                            <div className="col-4" style={{textAlign: 'left' }}>
+                                <Checkbox
+                                    id={rowData.id + skill.idSkill}
+                                    inputId={skill.idSkill}
+                                    name="skill"
+                                    value={skill}
+                                    onChange={(e) => onSkill(rowData, e)}
+                                    //key={skill.key}
+                                    checked={!rowData.skills.some((item) => item.skill === skill.skill)}
+                                />
+                                &nbsp; 
+                                <label htmlFor={skill.idSkill}>{skill.skill}</label>
+
+                            </div>
+                            <div className="col-3">
+                                <InputSwitch
+                                    disabled
+                                    checked={rowData.skills.some((item) => (item.skill === skill.skill & item.assistant === true))}
+                                />
+                            </div>
+
                         </div>
                     );
                 })}
@@ -129,48 +184,31 @@ export const OcupationalDoctorListComp = observer((props) => {
 
     const onChangeStore = (e) => {
         setSelectedStore(e.value);
-        setLstOperatorFilter(lstOperator.filter((ob) => ob.mcu === e.value.mcu));
-        //console.log(lstOperatorFilter);
-    };
-    const header1 = renderHeader1();
-
-    const handleSelectUser = (ev) => {
-        dataStore.setAuthPrincipalUser(ev);
-        setSelLstOcupationalDoctor(ev);
-    };
-
-    const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
-        dataStore.setLoading(ev);
-    };
-
-    function timeout(delay) {
-        return new Promise((res) => setTimeout(res, delay));
-    }
-    const showMessage = (ev) => {
-        toast.current.show({
-            severity: ev.severity,
-            summary: ev.summary,
-            detail: ev.message,
-            life: (ev.message.length / 10) * 1000,
+        let searchDto = {
+            mcu: e.value.mcu
+        };
+        OperatorDataService.getImpairmentsOperatorsByStore(searchDto).then((valid) =>{
+            setLstOperator(valid.data.obj);
         });
     };
-
+    const header1 = renderHeader1();
     /*
     Inner Components
     */
     let tblLisTH = (
         <DataTable
             value={lstOperatorFilter.length > 0 ? lstOperatorFilter : lstOperator}
-            dataKey="id"
+            selectionMode="single"
+            key={lstOperator.id}
+            dataKey={lstOperator.id}
             ref={dt}
-            responsiveLayout="stack"
+            responsiveLayout="scroll"
             scrollable
-            scrollHeight="380px"
             style={{ width: "auto" }}
             virtualScrollerOptions={{ itemSize: 46 }}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
+            emptyMessage="No customers found."
             globalFilter={globalFilter}
             header={header1}
         >
@@ -178,9 +216,9 @@ export const OcupationalDoctorListComp = observer((props) => {
                 header="Cod."
                 field="jdeAn8"
                 style={{
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "7%",
-                    fontSize: "10px",
+                    fontSize: "14px",
                     minWidth: "12rem",
                 }}
             ></Column>
@@ -188,9 +226,9 @@ export const OcupationalDoctorListComp = observer((props) => {
                 header="Usuario"
                 field="username"
                 style={{
-                    textAlign: "left",
-                    width: "10%",
-                    fontSize: "10px",
+                    textAlign: "center",
+                    width: "20%",
+                    fontSize: "14px",
                     minWidth: "14rem",
                 }}
             ></Column>
@@ -198,43 +236,47 @@ export const OcupationalDoctorListComp = observer((props) => {
                 header="Nombre "
                 field="fullname"
                 style={{
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "20%",
-                    fontSize: "12px",
+                    fontSize: "14px",
+                    minWidth: "14rem",
                 }}
             ></Column>
             <Column
                 header="Skills"
                 body={templTHSkill}
                 style={{
-                    textAlign: "left",
+                    textAlign: "center",
                     width: "50%",
-                    fontSize: "12px",
+                    fontSize: "14px",
                 }}
             ></Column>
         </DataTable>
     );
 
-    let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstOcupationalDoctor ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
-
     /*
     Return
     */
     return (
-        <>
-            <Toast ref={toast} style={{ alignItems: "left", alignContent: "left", top: "60px" }} />
-            {loginPrincipalComp}
-            <div className="p-fluid p-grid">
-                <div className="col-12 xl:col-12">
-                    <div className="card">
-                        <h5>
-                            <b>Lista Operadores Medico Ocupacional</b>
-                        </h5>{" "}
-                        <br></br>
-                        <div className="col-12 xl:col-12">{tblLisTH}</div>
-                    </div>
+        <div className="p-fluid p-grid">
+            <Toast ref={toast} />
+            <ConfirmPopup
+                target={document.getElementById(idCheck)}
+                visible={visible}
+                onHide={() => setVisible(false)}
+                message="¿Puede ser ayudante?"
+                icon="pi pi-exclamation-triangle"
+                accept={() => accept(serviceSelected)}
+                reject={() => reject(serviceSelected)}
+            />
+            <div className="col-12 xl:col-12">
+                <div className="card">
+                    <h5>
+                        <b>Lista Operadores Medico Ocupacional</b>
+                    </h5>
+                    <div className="col-12 xl:col-12">{tblLisTH}</div>
                 </div>
             </div>
-        </>
+        </div>
     );
 });
