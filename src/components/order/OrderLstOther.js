@@ -103,7 +103,8 @@ export const OrderLstOther = observer((props) => {
 
     const loadAvailables = () => {
         let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
-        OrderDataService.queryOrdersByStore(props.selStore).then((valid) => {
+        let tes = { mcu: dataStore.authPrincipalUser.store.mcu };
+        OrderDataService.queryOrdersByStore(tes).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
                 //console.log(lstFiltered);
