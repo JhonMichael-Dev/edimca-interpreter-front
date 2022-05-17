@@ -1,40 +1,34 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
-//import { computed } from "mobx";
 // Prime components
 import { Toast } from "primereact/toast";
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { ToggleButton } from "primereact/togglebutton";
-import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
-import { Calendar } from "primereact/calendar";
-import { Dropdown } from "primereact/dropdown";
-import { addLocale } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { Badge } from "primereact/badge";
-import OrderDataService from "../../service/OrderDataService";
-import { InputMask } from "primereact/inputmask";
-// Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { Calendar } from "primereact/calendar";
+import { Badge } from "primereact/badge";
+import { InputMask } from "primereact/inputmask";
+import { Checkbox } from "primereact/checkbox";
+// Services
+import OrderDataService from "../../service/OrderDataService";
 import { useDataStore } from "../../data/DataStoreContext";
+import MachineryDataService from "../../service/MachineryDataService";
+// Components
 import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+
 export const OrderLstVLComp = observer((props) => {
     /*
-  Variables
-  */
+    Variables
+    */
     const [selLstOrdersVL, setSelLstOrdersV] = useState(null);
     const dt = useRef(null);
     const [lstOrders, setLstOrders] = useState([]);
     const [dialogVL, setDialogVL] = useState(false);
     const [date1, setDate1] = useState(null);
     const [val1, setVal1] = useState("");
-    const [value2, setValue2] = useState("");
-    const [value3, setValue3] = useState("");
     const [service, setService] = useState([]);
+    const [machineryTypes, setMachineryType] = useState([]);
     const toast = useRef(null);
     /*
     Store
@@ -50,13 +44,19 @@ export const OrderLstVLComp = observer((props) => {
         }
     }, [selLstOrdersVL]);
     /*
-  Formats
-  */
+    Formats
+    */
 
     /*
-  Methods
-  */
+    Methods
+    */
     const loadAvailables = () => {
+
+        MachineryDataService.getServiceType().then((valid) => {
+            setMachineryType(valid.data);
+
+        });
+
         OrderDataService.queryIncomingOrdersByStoreVL(props.storeMcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstOrderVL = valid.data.obj.filter((OrObjX) => true || OrObjX.store.mcu === props.storeMcu)[0];
@@ -97,10 +97,11 @@ export const OrderLstVLComp = observer((props) => {
     };
 
     const onServiceChange = (e) => {
-        let selectedService = [...service];
+        console.log("holi")
+        /*let selectedService = [...service];
         if (e.checked) selectedService.push(e.value);
         else selectedService.splice(selectedService.indexOf(e.value), 1);
-        setService(selectedService);
+        setService(selectedService);*/
     };
 
     const statusProducciom = (rowData) => {
@@ -136,8 +137,8 @@ export const OrderLstVLComp = observer((props) => {
     };
 
     /*
-Inner Components
-*/
+    Inner Components
+    */
     let tblLisOrderVL = (
         <DataTable
             value={lstOrders}
@@ -250,23 +251,16 @@ Inner Components
 
                 <hr></hr>
                 <div className="grid">
-                    <div className="col-6 lg:col-6 xl:col-6">
-                        <Checkbox inputId="service1" name="service" value="Corte" onChange={onServiceChange} checked={service.indexOf("Corte") !== -1} />
-                        &nbsp; <label htmlFor="service1">Corte</label>
-                    </div>
-                    <div className="col-6 lg:col-6 xl:col-6">
-                        <Checkbox inputId="service2" name="service" value="Ruteado" onChange={onServiceChange} checked={service.indexOf("Ruteado") !== -1} />
-                        &nbsp; <label htmlFor="service2">Ruteado</label>
-                    </div>
-
-                    <div className="col-6 lg:col-6 xl:col-6">
-                        <Checkbox inputId="service3" name="service" value="Enchapado" onChange={onServiceChange} checked={service.indexOf("Enchapado") !== -1} />
-                        &nbsp; <label htmlFor="service3">Enchapado</label>
-                    </div>
-                    <div className="col-6 lg:col-6 xl:col-6">
-                        <Checkbox inputId="service3" name="service" value="Perforado" onChange={onServiceChange} checked={service.indexOf("Perforado") !== -1} />
-                        &nbsp; <label htmlFor="service3">Perforado</label>
-                    </div>
+                    {
+                        machineryTypes.map((x) => {
+                            return (
+                                <div className="col-6 lg:col-6 xl:col-6">
+                                    <Checkbox name="service" value={x.skill} onChange={onServiceChange} />
+                                    &nbsp; <label>{x.skill}</label>
+                                </div>
+                            );
+                        })
+                    }
                 </div>
 
                 <div className="field">
