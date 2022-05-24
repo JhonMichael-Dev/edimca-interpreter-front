@@ -1,7 +1,7 @@
 import MasterService from "./MasterService";
 import axios from "axios";
 import { conf } from "../Config.js";
-const USERCP_API_URL = conf.url.API_URL + "/api/v1/user";
+const USERCP_API_URL = conf.url.PC_URL + "/api/v1/operator";
 
 class UserProductionControlDataService {
     login(payload, error) {

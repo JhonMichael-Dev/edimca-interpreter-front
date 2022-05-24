@@ -8,8 +8,7 @@ import { ServicesInProcessComp } from "../components/ServicesInProcessComp";
 export class ServiceInProcessPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
     /*
   Methods

@@ -54,9 +54,9 @@ export const ServicesInProcessByOperatorComp = observer((props) => {
         //console.log("queryWoDtoByOperator", selOperator);
         // TODO: query wo in process by operator
         let _payload = { mcu: props.storeMcu, user: props.username };
-        //console.log("_payload", _payload);
+        console.log("_payload", _payload);
         OrderDataService.queryWorkingOrdersOnProcessByStoreAndOperator(_payload).then((valid) => {
-            //console.log("valid", valid);
+            console.log("valid", valid);
             if (valid.data && valid.data.success) {
                 setLstWoDtoByOperator(valid.data.obj);
             }
@@ -86,13 +86,13 @@ export const ServicesInProcessByOperatorComp = observer((props) => {
                     <OperatorActionsComp action={"Play"} icon={"play"} color={"warning"} rowData={rowData} selOrder={selOperator} />
                 </div>
                 <div className="col-3">
-                    <OperatorActionsComp action={"Pausa"} icon={"pause"} color={"info"} rowData={rowData} selOrder={selOperator} />
+                    <OperatorActionsComp action={"Pausa"} icon={"pause"} color={"info"} rowData={rowData} selOrder={selOperator} handleHideDialog={(ev) => handleHideDialog()} />
                 </div>
                 <div className="col-3">
-                    <OperatorActionsComp action={"Daño"} icon={"exclamation-triangle"} color={"danger"} rowData={rowData} selOrder={selOperator} />
+                    <OperatorActionsComp action={"Daño"} icon={"exclamation-triangle"} color={"danger"} rowData={rowData} selOrder={selOperator} handleHideDialog={(ev) => handleHideDialog()} />
                 </div>
                 <div className="col-3">
-                    <OperatorActionsComp action={"Fin"} icon={"shopping-cart"} color={"success"} rowData={rowData} selOrder={selOperator} />
+                    <OperatorActionsComp action={"Fin"} icon={"shopping-cart"} color={"success"} rowData={rowData} selOrder={selOperator} handleHideDialog={(ev) => handleHideDialog()} />
                 </div>
             </div>
         );
@@ -115,7 +115,7 @@ export const ServicesInProcessByOperatorComp = observer((props) => {
         <div className="grid card">
             <div className="grid col-12 lg:col-12 xl:col-12">
                 <div className="col-12 lg:col-4 xl:col-4" style={{ textAlign: "left" }}>
-                    <b>Lista de órdenes en proceso</b>
+                    <b>Lista de órdenes en proceso....</b>
                 </div>
                 <Dialog
                     header="Servicios en Proceso"

@@ -106,6 +106,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         setShowPasswordDialog(false);
         //props.handleProcess(selOperatorObj.username);
         //SelOperatorObj // david
+        //console.log("selOperatorObj", selOperatorObj);
         props.handleProcess(selOperatorObj);
     };
 

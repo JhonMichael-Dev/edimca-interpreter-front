@@ -73,7 +73,7 @@ export const OrderLstDetailComp = observer((props) => {
     };
 
     const handleSelectOperators = (ev) => {
-        //console.log("handleSelectOperators", ev.username);
+        console.log("handleSelectOperators", ev.username);
         setSelOrderDetail(null);
         //showMessage({ message: "Servicio en proceso para el usuario " + ev, severity: "info" });
         let payload = {
@@ -81,6 +81,7 @@ export const OrderLstDetailComp = observer((props) => {
             machinery: selMachinery,
             operator: ev,
         };
+        console.log("handleSelectOperators", payload);
         props.handleProcess(payload);
     };
 
@@ -108,19 +109,20 @@ export const OrderLstDetailComp = observer((props) => {
                 </DataTable>
             </div>
         );
-    }
+    };
 
     const totalServiceByGroup = (rowData) => {
         return (
-            <h6 style={{ display: 'inline' }}> {rowData.completeServices} de {rowData.lstWorkingOrderDetail.length} completadas</h6>
-        )
-    }
+            <h6 style={{ display: "inline" }}>
+                {" "}
+                {rowData.completeServices} de {rowData.lstWorkingOrderDetail.length} completadas
+            </h6>
+        );
+    };
 
     const headerGroup = (rowData) => {
-        return (
-            <h6 style={{ display: 'inline' }}> Grupo {rowData.group}</h6>
-        )
-    }
+        return <h6 style={{ display: "inline" }}> Grupo {rowData.group}</h6>;
+    };
 
     /*
   Inner Components
@@ -179,46 +181,26 @@ export const OrderLstDetailComp = observer((props) => {
         const uniqueArr = [...new Set(groups)];
         let lstWorkingOrder = [];
         uniqueArr.map((uniqueGroup) => {
-            let lstWorkingOrderDetail = lstTemp.filter(f => f.productionGroup == uniqueGroup)
+            let lstWorkingOrderDetail = lstTemp.filter((f) => f.productionGroup == uniqueGroup);
             let object = {
                 group: uniqueGroup,
-                completeServices: lstWorkingOrderDetail.filter(service => service.status === 'COMPLETADO').length,
-                lstWorkingOrderDetail: lstWorkingOrderDetail
+                completeServices: lstWorkingOrderDetail.filter((service) => service.status === "COMPLETADO").length,
+                lstWorkingOrderDetail: lstWorkingOrderDetail,
             };
             lstWorkingOrder.push(object);
         });
         return (
-            <DataTable
-                value={lstWorkingOrder}
-                expandedRows={expandedRows}
-                onRowToggle={(e) => setExpandedRows(e.data)}
-                rowExpansionTemplate={rowExpansionTemplate}
-                dataKey="group"
-                ref={dt}
-                responsiveLayout="scroll"
-                scrollable
-                scrollHeight="480px"
-                virtualScrollerOptions={{ itemSize: 46 }}
-                lazy
-            >
-                <Column expander style={{ width: '3em' }} />
-                <Column field="group" header="GRUPO ORDEN" body={headerGroup}/>
-                <Column 
-                    field="completeServices" 
-                    header={`${lstTemp.filter(service => service.status === 'COMPLETADO').length} DE ${lstTemp.length} ORDENES COMPLETADAS`}
-                    body={totalServiceByGroup}
-                />
+            <DataTable value={lstWorkingOrder} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)} rowExpansionTemplate={rowExpansionTemplate} dataKey="group" ref={dt} responsiveLayout="scroll" scrollable scrollHeight="480px" virtualScrollerOptions={{ itemSize: 46 }} lazy>
+                <Column expander style={{ width: "3em" }} />
+                <Column field="group" header="GRUPO ORDEN" body={headerGroup} />
+                <Column field="completeServices" header={`${lstTemp.filter((service) => service.status === "COMPLETADO").length} DE ${lstTemp.length} ORDENES COMPLETADAS`} body={totalServiceByGroup} />
                 <Column />
-                <Column />                
-
+                <Column />
             </DataTable>
         );
-    }
+    };
 
-    let orderDetailTableComp =
-        props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? transformador() : (
-            <></>
-        );
+    let orderDetailTableComp = props.selOrder && props.selOrder.lstWorkingOrder && props.selOrder.lstWorkingOrder.length > 0 ? transformador() : <></>;
 
     let machinerySelectionLstComp = selOrderDetail ? (
         <MachinerySelectionLstComp

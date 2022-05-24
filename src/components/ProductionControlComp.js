@@ -83,8 +83,8 @@ export const ProductionControlComp = observer((props) => {
     };
 
     const handleSelectPrincipalUser = (ev) => {
-        //console.log("..........handle..... ", ev);
         //setSelStore(ev);
+        //console.log("..........handle..... ", ev);
         dataStore.setAuthPrincipalUser(ev);
     };
 
