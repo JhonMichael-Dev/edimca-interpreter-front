@@ -2,6 +2,7 @@ import axios from "axios";
 import { conf } from "../Config.js";
 import MasterService from "./MasterService";
 const PC_URL = conf.url.PC_URL + "/api/v1/workingOrder";
+const PC_ORDER_URL = conf.url.PC_URL + "/api/v1/order";
 
 class OrderDataService {
     queryPendingOrdersByStore(payload) {
@@ -48,6 +49,18 @@ class OrderDataService {
     }
     queryIncomingOrdersByStoreVL(payload) {
         return axios.get("assets/demo/data/orderVLJson.json").then((res) => res.data);
+    }
+
+    //ORDER
+
+    createOrder(payload) {
+        var CURRENT_API_URL = `${PC_ORDER_URL}/createOrder`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    queryOrdersByMcuAndType(payload){
+        var CURRENT_API_URL = `${PC_ORDER_URL}/queryOrdersByMcuAndType`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 }
 

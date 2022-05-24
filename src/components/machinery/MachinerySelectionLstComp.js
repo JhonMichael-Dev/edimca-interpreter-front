@@ -95,7 +95,7 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let machineryIconComp = (rowData) => {
         //console.log("machineryIconComp", rowData);
-        return <MachineryIconComp machineryData={rowData} />;
+        return <MachineryIconComp machineryData={rowData} type={"machine"}/>;
     };
 
     let selectionComp = (rowData) => {

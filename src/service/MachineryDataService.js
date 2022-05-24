@@ -23,6 +23,11 @@ class MachineryDataService {
         var CURRENT_FILE_URL = `${MACHINE_API_URL}/getServiceType`;
         return MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL);
     }
+
+    productsByServiceType(payload){
+        var CURRENT_API_URL = `${MACHINE_API_URL}/productsByServiceType`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
 }
 
 export default new MachineryDataService();
