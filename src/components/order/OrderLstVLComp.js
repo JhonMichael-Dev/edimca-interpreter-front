@@ -107,7 +107,8 @@ export const OrderLstVLComp = observer((props) => {
         let lstWorkingOrder = [];
         products.map((product) => {
             let workingOrder = {
-                jdeServiceType: product.product,
+                jdeProductCode: product.product,
+                jdeServiceType: product.serviceType,
                 status: "CREADO",
                 jdeStoreMcu: "2CM015",
                 quantityRequested: product.quantityRequest
@@ -125,7 +126,6 @@ export const OrderLstVLComp = observer((props) => {
             jdeInvoiceNumber: documentNumber,
             lstWorkingOrder: lstWorkingOrder
         }
-        //console.log(order.lstWorkingOrder);
         OrderDataService.createOrder(order).then((valid) => {
             //Actualizar lista de VLs
             loadAvailables();
@@ -157,6 +157,7 @@ export const OrderLstVLComp = observer((props) => {
         if (!exist) {
             let product = {
                 product: selectedProduct.code,
+                serviceType: selectedProduct.serviceType.description1,
                 quantityRequest: quantityRequest
             }
             _products.push(product);
