@@ -158,7 +158,7 @@ export const Dashboard = () => {
     */
 
     let machineryIconComp = (rowData) => {
-        return <MachineryIconComp machineryData={rowData} />;
+        return <MachineryIconComp machineryData={rowData} type={"machine"} />;
     };
 
     let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => dataStore.setAuthPrincipalUser(ev)} /> : "";
