@@ -31,53 +31,49 @@ export const AppTopbar = observer((props) => {
     }, [dataStore.authPrincipalUser]);
 
     const loadAvailables = () => {
-
         MachineryDataService.getServiceType().then((valid) => {
             //console.log("MachineryDataService: " + valid.data);
             setMachineryType(valid.data);
-
         });
 
         let searchDto = {
             //mcu: this.props.PosStore.user.store.mcu
-            mcu: "2CM015"
+            mcu: "2CM015",
         };
 
         NotificationDataService.queryNextMaintenance(searchDto).then((valid) => {
-            if(valid.data){
+            if (valid.data) {
                 setLstNextMaintenance(valid.data.obj);
             }
         });
-
     };
 
     /*
     Methods
     */
     const onClickNotification = (service) => {
-
         console.log(lstNextMaintenance.filter((x) => x.serviceType === service.skill));
         setLstNextMaintenanceFiltered(lstNextMaintenance.filter((x) => x.serviceType === service.skill));
         setDialogVisible(true);
     };
 
-    const onHide = () =>{
+    const onHide = () => {
         setDialogVisible(false);
         setLstNextMaintenanceFiltered(lstNextMaintenance);
-    }
+    };
 
     /*
     Inner Components
     */
-    let serviceIcon = (rowData) =>{
+    let serviceIcon = (rowData) => {
         return (
             <React.Fragment>
                 <img src={"/assets/images/serviceType_" + rowData.serviceType + ".png"} className="pos-edimca-button-noLabel" style={{ width: "20px", height: "20px" }} />
                 <div style={{ fontSize: 8 }}> {rowData.serviceType}</div>
             </React.Fragment>
-        )
-    }
-    
+        );
+    };
+
     let storeNameComp = dataStore.authPrincipalUser ? <i>{dataStore.authPrincipalUser ? dataStore.authPrincipalUser.store.name : ""}</i> : "";
 
     return (
@@ -96,12 +92,7 @@ export const AppTopbar = observer((props) => {
                 <i className="pi pi-ellipsis-v" />
             </button>
 
-            <Dialog
-                visible={dialogVisible}
-                style={{ width: "60%" }}
-                header="Próximos mantenimientos"
-                modal className="p-fluid"
-                onHide={onHide}>
+            <Dialog visible={dialogVisible} style={{ width: "60%" }} header="Próximos mantenimientos" modal className="p-fluid" onHide={onHide}>
                 <DataTable
                     //header="Registro de actividades"
                     value={lstNextMaintenanceFiltered}
@@ -178,11 +169,9 @@ export const AppTopbar = observer((props) => {
                                         <MachineryNotificationsComp serviceType={service.skill} badgeNumber={0} />
                                     </button>
                                 </div>
-                            )
+                            );
                         })}
-                        
                     </div>
-
                 </li>
                 <li>
                     <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>

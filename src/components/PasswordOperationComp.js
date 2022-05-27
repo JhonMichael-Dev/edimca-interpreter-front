@@ -122,6 +122,7 @@ export const PasswordOperationComp = observer((props) => {
                     if (valid && valid.data.success) {
                         //showMessage({ message: "Clave ingresada correctamente", severity: "success" });
                         props.handleLogin();
+                        //console.log("props.handleLogin()", valid.data);
                     } else if (valid && valid.data) {
                         showMessage({ message: valid.data.log, severity: "warn" });
                         setPassword("");

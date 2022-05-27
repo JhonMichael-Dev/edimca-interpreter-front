@@ -39,6 +39,20 @@ class OrderDataService {
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 
+    pauseWorkingOrder(payload) {
+        var CURRENT_API_URL = `${PC_URL}/pauseWorkingOrder/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+    stopWorkingOrder(payload) {
+        var CURRENT_API_URL = `${PC_URL}/stopWorkingOrder/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
+    finishWorkingOrder(payload) {
+        var CURRENT_API_URL = `${PC_URL}/finishWorkingOrder/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
     queryStoppedOrdersByStore(payload) {
         return axios.get("assets/demo/data/ordersStoppedJson.json").then((res) => res.data);
     }

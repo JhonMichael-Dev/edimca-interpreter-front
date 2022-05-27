@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
 
 // Prime components
@@ -9,13 +9,17 @@ import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import { Tooltip } from "primereact/tooltip";
 import { Slider } from "primereact/slider";
+import { Toast } from "primereact/toast";
 
 import { OperatorPauseButtonComp } from "./OperatorPauseButtonComp";
 import { OperatorServiceIconComp } from "./OperatorServiceIconComp";
 import { MachineryFaultsComp } from "../machinery/MachineryFaultsComp";
+import { OrderAdvanceComp } from "../order/OrderAdvanceComp";
+import { OrderLstComp } from "../order/OrderLstComp";
 
 import OrderDataService from "../../service/OrderDataService";
 import ProductDataService from "../../service/ProductDataService";
+import { useDataStore } from "../../data/DataStoreContext";
 
 export const OperatorActionsComp = observer((props) => {
     /*
@@ -23,29 +27,18 @@ export const OperatorActionsComp = observer((props) => {
    */
     const [loading, setLoading] = useState(false);
     const [pauseControl, setPauseControl] = useState(null);
+    const [dataPostPauseWorkingOrder, setDataPostPauseWorkingOrder] = useState(null);
     const [damageControl, setDamageControl] = useState(null);
+    const [dataPostFinishedWorkingOrder, setDataPostFinishedWorkingOrder] = useState(null);
+
     const [lstOrders, setLstOrders] = useState([]);
     const [orderInfo, setOrderInfo] = useState(null);
     const [productInfo, setProductInfo] = useState(null);
     const [pauseDisabled, setPauseDisabled] = useState(null);
-
-    const categories = [
-        { name: "Daño mecánico", key: "M" },
-        { name: "Daño neumático", key: "N" },
-        { name: "Daño eléctrico", key: "E" },
-    ];
-    const [selectedCategory, setSelectedCategory] = useState([]);
-
-    const damage = [
-        { name: "Falla guillotina", key: "G" },
-        { name: "Falla Calderin", key: "C" },
-        { name: "Falla retestador", key: "RE" },
-        { name: "Falla rascacolas", key: "A" },
-    ];
+    const [stopReason, setStopReason] = useState(null);
     const [selectedDamages, setSelectedDamages] = useState([]);
-
     const [sliderValue, setSliderValue] = useState(0);
-
+    const toast = useRef(null);
     /*
     Init
     */
@@ -57,7 +50,7 @@ export const OperatorActionsComp = observer((props) => {
     /*
     Context  
     */
-
+    const dataOrderInProcess = useDataStore();
     /*
     Formats
     */
@@ -107,6 +100,62 @@ export const OperatorActionsComp = observer((props) => {
         });
     };
 
+    const handleQueryOrderHeaderAndProductInfoPause = () => {
+        handleQueryOrderHeaderInfoPause();
+        handleQueryProductInfoPause();
+    };
+
+    const handleQueryOrderHeaderInfoPause = async () => {
+        //let _payload = { idWorkingOrder: props.selOrder.idWorkingOrder };
+        let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        OrderDataService.queryOrderHeaderByWorkingOrderId(_payload).then((valid) => {
+            //console.log("handleQueryOrderHeaderInfo", valid);
+            if (valid && valid.data.success) {
+                setOrderInfo(valid.data.obj);
+                setDataPostPauseWorkingOrder(true);
+            }
+        });
+    };
+
+    const handleQueryProductInfoPause = async () => {
+        //let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        ProductDataService.queryProductByCode(props.rowData.jdeProductCode).then((valid) => {
+            //console.log("handleQueryProductInfo", valid);
+            if (valid && valid.data.success) {
+                setProductInfo(valid.data.obj);
+                setDataPostPauseWorkingOrder(true);
+            }
+        });
+    };
+
+    const handleQueryOrderHeaderAndProductInfoFinished = () => {
+        handleQueryOrderHeaderInfoFinished();
+        handleQueryProductInfoFinished();
+    };
+
+    const handleQueryOrderHeaderInfoFinished = async () => {
+        //let _payload = { idWorkingOrder: props.selOrder.idWorkingOrder };
+        let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        OrderDataService.queryOrderHeaderByWorkingOrderId(_payload).then((valid) => {
+            //console.log("handleQueryOrderHeaderInfo", valid);
+            if (valid && valid.data.success) {
+                setOrderInfo(valid.data.obj);
+                setDataPostFinishedWorkingOrder(true);
+            }
+        });
+    };
+
+    const handleQueryProductInfoFinished = async () => {
+        //let _payload = { idWorkingOrder: props.rowData.idWorkingOrder };
+        ProductDataService.queryProductByCode(props.rowData.jdeProductCode).then((valid) => {
+            //console.log("handleQueryProductInfo", valid);
+            if (valid && valid.data.success) {
+                setProductInfo(valid.data.obj);
+                setDataPostFinishedWorkingOrder(true);
+            }
+        });
+    };
+
     const onLoadingClick = (selAction) => {
         setLoading(true);
 
@@ -126,6 +175,7 @@ export const OperatorActionsComp = observer((props) => {
                     handleQueryOrderHeaderAndProductInfo();
                     break;
                 case "Fin":
+                    handleQueryOrderHeaderAndProductInfoFinished();
                     break;
                 default:
                     break;
@@ -153,8 +203,76 @@ export const OperatorActionsComp = observer((props) => {
     };
 
     const onPauseReasonClick = (selAction) => {
-        //console.log(selAction.target.textContent);
-        setPauseControl(null);
+        // console.log(selAction.target.textContent);
+        setStopReason(selAction.target.textContent);
+        handleQueryOrderHeaderAndProductInfoPause();
+        //setPauseControl(null);
+    };
+
+    //cerrar dialogos
+
+    const onCloseDialogDamageControl = (value) => {
+        setDamageControl(value);
+    };
+
+    const onCloseDialogPostPauseWorkingOrder = (value) => {
+        setDataPostPauseWorkingOrder(value);
+    };
+    const onCloseDialogPostFinishedWorkingOrder = (value) => {
+        setDataPostPauseWorkingOrder(value);
+    };
+
+    //envio de data a los servicios WS de wrokingOrder
+
+    const onPosDataWorkingOrderWsPause = () => {
+        props.rowData.quantityShipped = sliderValue;
+        //props.rowData.stopReason = stopReason;
+        props.rowData.stopReason = "REAB";
+        let _payloadWorkingOrderWsPause = props.rowData;
+        //console.log("_payload.....", _payload);
+        OrderDataService.pauseWorkingOrder(_payloadWorkingOrderWsPause).then((valid) => {
+            console.log("pauseWorkingOrder.valid", valid);
+            if (valid && valid.data.success) {
+                toast.current.show({ severity: "info", summary: "Aviso", detail: "Servicio en pause" });
+                setDataPostPauseWorkingOrder(false);
+                setPauseControl(null);
+                props.handleHideDialog();
+            }
+        });
+    };
+
+    const onPosDataWorkingOrderWsDamage = () => {
+        console.log("....", props.rowData.idWorkingOrder);
+        let _playWorkingOrderTracking = {
+            idWorkingOrder: props.rowData.idWorkingOrder,
+            stopReason: "MD",
+            quantityShipped: sliderValue,
+        };
+        OrderDataService.stopWorkingOrder(_playWorkingOrderTracking).then((valid) => {
+            console.log("stopWorkingOrder.valid", valid);
+            if (valid && valid.data.success) {
+                toast.current.show({ severity: "error", summary: "Aviso", detail: "Servicio fue detenido" });
+                setDamageControl(false);
+                props.handleHideDialog();
+            }
+        });
+    };
+    const onPosDataWorkingOrderWsFinished = () => {
+        props.rowData.quantityShipped = sliderValue;
+        let _payloadWorkingOrderWsFinished = props.rowData;
+        //console.log("_payloadWorkingOrderWsPause.....", _payloadWorkingOrderWsFinished);
+        OrderDataService.finishWorkingOrder(_payloadWorkingOrderWsFinished).then((valid) => {
+            //console.log("pauseWorkingOrder.valid", valid);
+            if (valid && valid.data.success) {
+                toast.current.show({ severity: "success", summary: "Aviso", detail: "Servicio en finalizado" });
+                setDataPostPauseWorkingOrder(false);
+                props.handleHideDialog();
+            }
+        });
+    };
+
+    const onChangeSlider = (value) => {
+        setSliderValue(value);
     };
 
     /*
@@ -265,111 +383,131 @@ export const OperatorActionsComp = observer((props) => {
                         <b>Motivo:</b>
                     </div>
                 </div>
-
                 <MachineryFaultsComp />
-
-                <div className="grid" style={{ fontSize: "14px", marginTop: "1%" }}>
-                    <div className="col-3">
-                        <b>Tipo de Orden:</b>
-                        <InputText value={orderInfo ? orderInfo.jdeOrderTypeCode : ""} style={{ border: "none", width: "40%", fontSize: "14px" }} disabled />
-                    </div>
-                    <div className="col-3 col-offset-1">
-                        <b>Order N°:</b>
-                        <InputText value={orderInfo ? orderInfo.jdeOrderId : ""} style={{ border: "none", width: "60%", fontSize: "14px" }} disabled />
-                    </div>
-                    <div className="col-4">
-                        <b>Cliente:</b>
-                        <InputText value={orderInfo ? orderInfo.client.firstName + " " + orderInfo.client.lastName : ""} style={{ border: "none", width: "77%", fontSize: "14px" }} disabled />
-                    </div>
-                </div>
-
-                <div className="grid" style={{ marginBottom: "3%", marginTop: "1%" }}>
-                    <div className="col-6 col-offset-1">
-                        <b>Avance de Orden: {sliderValue + " [" + productInfo.unitOfMeasure.code + "]"}</b>
-                    </div>
-                </div>
-                <div className="grid">
-                    <div className="col-3" style={{ textAlign: "right" }}>
-                        {0}
-                    </div>
-                    <div className="col-6">
-                        <Tooltip target=".slider>.p-slider-handle" content={`${sliderValue} ${productInfo.unitOfMeasure.code}`} position="top" event="focus" />
-                        <Slider className="slider" min={0.0} max={props.rowData.quantityRequested} step={0.1} value={sliderValue} onChange={(e) => setSliderValue(e.value < props.rowData.quantityShipped ? sliderValue : e.value)} style={{ width: "100%", height: "10px", marginTop: "1%" }} />
-                    </div>
-                    <div className="col-3">{`${props.rowData.quantityRequested} ${productInfo.unitOfMeasure.description1}`}</div>
-                </div>
-                <div className="grid" style={{ marginTop: "3%", marginRight: "5%" }}>
-                    <div className="col-12" style={{ textAlign: "right" }}>
-                        <Button className={"p-button p-button-primary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Aceptar"></Button>
-                        &nbsp;
-                        <Button className={"p-button p-button-secondary"} style={{ display: "inline-block", borderRadius: "10%" }} onClick={() => setDamageControl(null)} label="Cancelar"></Button>
-                    </div>
-                </div>
+                <OrderAdvanceComp action={onPosDataWorkingOrderWsDamage} closeDialog={onCloseDialogDamageControl} orderInfo={orderInfo} productInfo={productInfo} sliderValue={onChangeSlider} rowData={props.rowData} stopReason={stopReason} />
             </React.Fragment>
         ) : (
             ""
         );
+
+    let postPauseWorkingOrder =
+        dataPostPauseWorkingOrder && orderInfo && productInfo ? (
+            <React.Fragment>
+                {" "}
+                <OrderAdvanceComp action={onPosDataWorkingOrderWsPause} closeDialog={onCloseDialogPostPauseWorkingOrder} orderInfo={orderInfo} productInfo={productInfo} sliderValue={onChangeSlider} rowData={props.rowData} stopReason={stopReason} />
+            </React.Fragment>
+        ) : (
+            ""
+        );
+
+    let postFinishedWorkingOrder =
+        dataPostFinishedWorkingOrder && orderInfo && productInfo ? (
+            <React.Fragment>
+                {" "}
+                <OrderAdvanceComp action={onPosDataWorkingOrderWsFinished} closeDialog={onCloseDialogPostFinishedWorkingOrder} orderInfo={orderInfo} productInfo={productInfo} sliderValue={onChangeSlider} rowData={props.rowData} stopReason={stopReason} />
+            </React.Fragment>
+        ) : (
+            ""
+        );
+
     /*
     Return
     */
     return (
-        <React.Fragment>
-            <Button
-                className={"p-button-rounded p-button-" + props.color}
-                style={{ fontSize: 15, justifyContent: "center", width: "100%" }}
-                loading={loading}
-                onClick={() => onLoadingClick(props.action)}
-                disabled={
-                    props.rowData.status === "PAUSADO"
-                        ? props.action === "Pausa"
-                            ? true
+        <>
+            <Toast ref={toast} />
+            <React.Fragment>
+                <Button
+                    className={"p-button-rounded p-button-" + props.color}
+                    style={{ fontSize: 15, justifyContent: "center", width: "100%" }}
+                    loading={loading}
+                    onClick={() => onLoadingClick(props.action)}
+                    disabled={
+                        props.rowData.status === "PAUSADO"
+                            ? props.action === "Pausa"
+                                ? true
+                                : false
+                            : props.rowData.status === "EN_PROCESO"
+                            ? props.action === "Play"
+                                ? true
+                                : false
+                            : props.rowData.status === "COMPLETADO"
+                            ? props.action === "Play" || props.action === "Pausa" || props.action === "Daño"
+                                ? true
+                                : false
                             : false
-                        : props.rowData.status === "EN_PROCESO"
-                        ? props.action === "Play"
-                            ? true
-                            : false
-                        : props.rowData.status === "COMPLETADO"
-                        ? props.action === "Play" || props.action === "Pausa" || props.action === "Daño"
-                            ? true
-                            : false
-                        : false
-                }
-                label={props.action}
-                icon={"pi pi-" + props.icon}
-            ></Button>
-            <Dialog
-                header={"Motivos Pausa"}
-                visible={pauseControl !== null}
-                onHide={() => setPauseControl(null)}
-                style={{
-                    width: "50%",
-                    textAlign: "center",
-                }}
-                modal
-                closable
-                draggable={false}
-                resizable={false}
-            >
-                {pauseOptions}
-            </Dialog>
-            {damageControl ? (
+                    }
+                    label={props.action}
+                    icon={"pi pi-" + props.icon}
+                ></Button>
                 <Dialog
-                    header={"Registro de Daño"}
-                    visible={damageControl !== null}
-                    onHide={() => setDamageControl(null)}
+                    header={"Motivos Pausa"}
+                    visible={pauseControl !== null}
+                    onHide={() => setPauseControl(null)}
                     style={{
-                        width: "45%",
+                        width: "50%",
+                        textAlign: "center",
                     }}
                     modal
                     closable
                     draggable={false}
                     resizable={false}
                 >
-                    {damageOptions}
+                    {pauseOptions}
                 </Dialog>
-            ) : (
-                ""
-            )}
-        </React.Fragment>
+                {damageControl ? (
+                    <Dialog
+                        header={"Registro de Daño"}
+                        visible={damageControl !== null}
+                        onHide={() => setDamageControl(null)}
+                        style={{
+                            width: "45%",
+                        }}
+                        modal
+                        closable
+                        draggable={false}
+                        resizable={false}
+                    >
+                        {damageOptions}
+                    </Dialog>
+                ) : (
+                    ""
+                )}
+                {dataPostPauseWorkingOrder ? (
+                    <Dialog
+                        visible={dataPostPauseWorkingOrder !== null}
+                        onHide={() => setDataPostPauseWorkingOrder(false)}
+                        style={{
+                            width: "45%",
+                        }}
+                        modal
+                        closable
+                        draggable={false}
+                        resizable={false}
+                    >
+                        {postPauseWorkingOrder}
+                    </Dialog>
+                ) : (
+                    ""
+                )}
+                {dataPostFinishedWorkingOrder ? (
+                    <Dialog
+                        visible={dataPostFinishedWorkingOrder !== null}
+                        onHide={() => setDataPostFinishedWorkingOrder(false)}
+                        style={{
+                            width: "45%",
+                        }}
+                        modal
+                        closable
+                        draggable={false}
+                        resizable={false}
+                    >
+                        {postFinishedWorkingOrder}
+                    </Dialog>
+                ) : (
+                    ""
+                )}
+            </React.Fragment>
+        </>
     );
 });

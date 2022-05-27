@@ -31,7 +31,7 @@ export const OperatorCountComp = observer((props) => {
         handleCountServices(props.services);
     };
     const handleCountServices = (services) => {
-        //console.log(services);
+        console.log(services);
 
         /*let count = 0;
         services.map( key =>{

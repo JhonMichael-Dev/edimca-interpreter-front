@@ -61,7 +61,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
         };
         //console.log("_payload", _payload);
         OrderDataService.queryOrdersOnProcessByStore(_payload).then((valid) => {
-            //console.log("queryOrdersOnProcessByStore", valid);
+            console.log("queryOrdersOnProcessByStore", valid);
             if (valid.data && valid.data.success) {
                 setLstOperators(valid.data.obj);
             }

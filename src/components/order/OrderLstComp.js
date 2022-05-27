@@ -20,6 +20,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { OrderLstDetailComp } from "./OrderLstDetailComp";
 import { OrderStatusComp } from "./OrderStatusComp";
+import { useDataStore } from "../../data/DataStoreContext";
 
 export const OrderLstComp = observer((props) => {
     /*
@@ -42,7 +43,7 @@ export const OrderLstComp = observer((props) => {
     /*
   Context  
   */
-
+    const dataOrderPendienteToProcess = useDataStore();
     /*
   Formats
   */
@@ -95,8 +96,7 @@ export const OrderLstComp = observer((props) => {
             operatorUsername: ev.operator.username,
             assistants: ev.operator.assistants,
         };
-        //console.log("_payload", _payload);
-
+        // console.log("_payload", _payload);
         OrderDataService.startWorkingOrder(_payload).then((valid) => {
             //console.log("startWorkingOrder.valid", valid);
             if (valid && valid.data.success) {
@@ -155,6 +155,7 @@ export const OrderLstComp = observer((props) => {
             : "";
 
     let orderServicesIconResumeComp = (rowData) => {
+        //console.log(rowData);
         return (
             <div
                 key={rowData.jdeOrderId}
