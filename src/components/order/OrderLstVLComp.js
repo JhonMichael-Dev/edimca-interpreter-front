@@ -68,13 +68,12 @@ export const OrderLstVLComp = observer((props) => {
         });
 
         let payload = {
-            mcu: "2CM015",
+            mcu: dataStore.authPrincipalUser.store.mcu,
             type: "VL"
         }
         
         OrderDataService.queryOrdersByMcuAndType(payload).then((valid) => {
             //console.log("valid: " + valid.data.obj.length);
-            //Cargar lstOrders con la respuesta
             setLstOrders(valid.data.obj);
         });
     };
@@ -110,7 +109,7 @@ export const OrderLstVLComp = observer((props) => {
                 jdeProductCode: product.product,
                 jdeServiceType: product.serviceType,
                 status: "CREADO",
-                jdeStoreMcu: "2CM015",
+                jdeStoreMcu: dataStore.authPrincipalUser.store.mcu,
                 quantityRequested: product.quantityRequest
             }
             lstWorkingOrder.push(workingOrder);
@@ -120,14 +119,14 @@ export const OrderLstVLComp = observer((props) => {
             status: "PENDIENTE",
             priority: "NORMAL",
             jdeOrderTypeCode: "VL",
-            userposUsername: "TEST_POS1",
-            jdeStoreMcu: "2CM015",
+            userposUsername: dataStore.authPrincipalUser.username,
+            jdeStoreMcu: dataStore.authPrincipalUser.store.mcu,
             transactionDate: date,
             jdeInvoiceNumber: documentNumber,
             lstWorkingOrder: lstWorkingOrder
         }
         OrderDataService.createOrder(order).then((valid) => {
-            //Actualizar lista de VLs
+            //Actualización lista de VLs por mcu
             loadAvailables();
         });
         setDefault();
@@ -169,7 +168,6 @@ export const OrderLstVLComp = observer((props) => {
     }
 
     const onClickService = (service) => {
-        //console.log(service.skill);
         let searchDto = {
             originalType: service.skill
         };
