@@ -16,6 +16,7 @@ import { Message } from 'primereact/message';
 import OrderDataService from "../../service/OrderDataService";
 import { useDataStore } from "../../data/DataStoreContext";
 import MachineryDataService from "../../service/MachineryDataService";
+import ProductDataService from "../../service/ProductDataService"; 
 // Components
 import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
 import { MachineryIconComp } from "../machinery/MachineryIconComp";
@@ -172,7 +173,7 @@ export const OrderLstVLComp = observer((props) => {
             originalType: service.skill
         };
 
-        MachineryDataService.productsByServiceType(searchDto).then((valid) => {
+        ProductDataService.productsByServiceType(searchDto).then((valid) => {
             //console.log("products: " + valid.data.obj.products);
             setLstProducts(valid.data.obj.products);
         });
