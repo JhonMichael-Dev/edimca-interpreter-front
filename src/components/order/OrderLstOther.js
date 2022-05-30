@@ -24,6 +24,7 @@ import { Dialog } from "primereact/dialog";
 import { render } from "preact/compat";
 import { useDataStore } from "../../data/DataStoreContext";
 import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+import { OrderStatusComp } from "./OrderStatusComp";
 export const OrderLstOther = observer((props) => {
     /*
   Variables
@@ -35,7 +36,8 @@ export const OrderLstOther = observer((props) => {
     const [lstOrders, setLstOrders] = useState([]);
     const [dialogServ, setDialogServ] = useState(false);
     const [dialogOther, setDialogOther] = useState(false);
-    const [date1, setDate1] = useState(null);
+    const [timedateIn, setTimedateIn] = useState(null);
+    const [timedateFn, setTimedateFn] = useState(null);
     const [date9, setDate9] = useState(null);
     const [date10, setDate10] = useState(null);
     const [clienteNombre, setClienteNombre] = useState("");
@@ -102,13 +104,15 @@ export const OrderLstOther = observer((props) => {
     };
 
     const loadAvailables = () => {
-        let lstPendingStatus = ["PENDIENTE", "EN_PROCESO"];
-        let tes = { mcu: dataStore.authPrincipalUser.store.mcu };
-        OrderDataService.queryOrdersByStore(tes).then((valid) => {
+        dataStore.setLoading(true);
+        let lstPendingStatus = ["PENDIENTE"];
+        let mcu = { mcu: dataStore.authPrincipalUser.store.mcu };
+        OrderDataService.queryPendingOrdersByStore(mcu).then((valid) => {
             if (valid.data && valid.data.success) {
                 let lstFiltered = valid.data.obj.filter((orderX) => !onlyPendingOrders || lstPendingStatus.includes(orderX.status));
-                //console.log(lstFiltered);
+                console.log("lstFiltered.. ", lstFiltered);
                 setLstOrders(lstFiltered);
+                dataStore.setLoading(false);
             }
         });
 
@@ -133,10 +137,32 @@ export const OrderLstOther = observer((props) => {
         });
     };
 
-    const tmpCliente = (rowData) => {
+    const tmpStatusOrder = (rowData) => {
         return (
             <React.Fragment>
                 <div className="field">
+                    <br></br>
+                    {rowData.priority}
+                    <br></br>
+                    <br></br>
+                    <b>Estado Orden:</b>&nbsp; {statusComp(rowData)}
+                </div>
+            </React.Fragment>
+        );
+    };
+
+    let statusComp = (rowData) => {
+        return (
+            <Button className={"p-button-rounded p-button-" + (rowData.status === "PENDIENTE" ? "secondary" : rowData.status === "EN_PROCESO" ? "warning" : "success")} style={{ fontWeight: "bold", fontSize: 9, justifyContent: "center" }}>
+                {rowData.status}
+            </Button>
+        );
+    };
+
+    const tmpCliente = (rowData) => {
+        return (
+            <React.Fragment>
+                <div className="field ">
                     <b>An8: </b>&nbsp; {rowData.client.jdeAn8}
                     <br></br>
                     <b>Nombre:</b>&nbsp; {rowData.client.firstName}
@@ -248,12 +274,13 @@ export const OrderLstOther = observer((props) => {
         setClienteNombre(rowData.client.firstName);
         setAn8(rowData.client.jdeAn8);
         setIndentificacion(rowData.client.identification);
-        setAsesor(rowData.asesor);
+        setAsesor(rowData.userposUsername);
         setNumOrdern(rowData.jdeOrderId);
         setTypeOrdern(rowData.jdeOrderTypeCode);
         //setDialogOther(true);
         lstOrders.filter((objSer) => {
             if (objSer.jdeOrderId === rowData.jdeOrderId) {
+                console.log("...objSer", objSer);
                 setLstOrdersFilter(objSer.lstWorkingOrder);
                 setNumOrder(rowData.jdeOrderId);
             }
@@ -281,9 +308,12 @@ export const OrderLstOther = observer((props) => {
                                 <br></br>
                                 <b>Asesor:</b>&nbsp; {asesor}
                                 <br></br>
+                                <br></br>
+                                {console.log("serveicios", serveicios)}
                                 <Button
                                     label="Asignar Maquinas y Operarios"
-                                    className="p-button-rounded p-button-info mr-2"
+                                    className="p-button p-button-info mr-2"
+                                    style={{ fontSize: 13, justifyContent: "letf", marginRight: "60px" }}
                                     onClick={() => {
                                         //  machinerySelectionLstComp(serveicios);
                                         setSelOrderDetail(serveicios);
@@ -361,14 +391,14 @@ export const OrderLstOther = observer((props) => {
         setSelLstOtherOrders(ev);
     };
 
-    const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
-        dataStore.setLoading(ev);
-    };
+    // const setLoader = async (ev) => {
+    //     if (!ev) await timeout(400);
+    //     dataStore.setLoading(ev);
+    // };
 
-    function timeout(delay) {
-        return new Promise((res) => setTimeout(res, delay));
-    }
+    // function timeout(delay) {
+    //     return new Promise((res) => setTimeout(res, delay));
+    // }
 
     /*
     Inner Components
@@ -387,9 +417,8 @@ export const OrderLstOther = observer((props) => {
             currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
         >
             <Column
-                header="Priodidad"
-                field="priority"
-                //field="priority.code"
+                header="Prioridad"
+                body={tmpStatusOrder}
                 style={{
                     textAlign: "center",
                     width: "9%",
@@ -398,7 +427,7 @@ export const OrderLstOther = observer((props) => {
             ></Column>
             <Column
                 header="Tipo"
-                field="jdeOrderType.code"
+                field="jdeOrderTypeCode"
                 style={{
                     textAlign: "center",
                     width: "5%",
@@ -425,7 +454,7 @@ export const OrderLstOther = observer((props) => {
             ></Column>
 
             <Column
-                header="Estado"
+                header="Asignada"
                 body={tmpStatus}
                 style={{
                     textAlign: "center",
@@ -447,7 +476,6 @@ export const OrderLstOther = observer((props) => {
     );
 
     let serviceTypeIconComp = (data) => {
-        console.log(data);
         return (
             <div key={data}>
                 <div className="card" style={{ width: "100%", textAlign: "center", wordWrap: "break-word" }} title={data.toUpperCase()}>
@@ -535,10 +563,10 @@ export const OrderLstOther = observer((props) => {
                     </div>
                 </div>
             </div>
-            <Dialog visible={dialogServ} style={{ width: "500px" }} header="Servicio de la orden" modal className="p-fluid" onHide={hideDlgServicio}>
+            <Dialog visible={dialogServ} style={{ width: "auto" }} header="Servicio de la orden" modal className="p-fluid" onHide={hideDlgServicio}>
                 <div className="grid">{lstOrdersFilter.map((orderX) => serviceTypeIconComp(orderX.productDto.serviceType.description1))}</div>
             </Dialog>
-            <Dialog visible={dialogOther} style={{ width: "50%" }} header={dialogoOrder(serveicios)} modal className="p-fluid" onHide={hideDlgServicioOtherOrder} footer={accionesBtnSaveOrder(serveicios)}>
+            <Dialog visible={dialogOther} style={{ width: "60%" }} header={dialogoOrder(serveicios)} modal className="p-fluid" onHide={hideDlgServicioOtherOrder} footer={accionesBtnSaveOrder(serveicios)}>
                 <di>
                     <div className="field">
                         <div className="grid">
@@ -563,11 +591,11 @@ export const OrderLstOther = observer((props) => {
                     <br></br>
                     <br></br>
                     <div className="field">
-                        <b>Fecha/Hora Inicio:</b>&nbsp; <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
+                        <b>Fecha/Hora Inicio:</b>&nbsp; <Calendar id="basic" value={timedateIn} onChange={(e) => setTimedateIn(e.value)} touchUI showTime showSeconds showIcon />
                     </div>
                     <br></br>
                     <div className="field">
-                        <b>Fecha/Hora FIn:</b>&nbsp; <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
+                        <b>Fecha/Hora Fin:</b>&nbsp; <Calendar id="basic" value={timedateFn} onChange={(e) => setTimedateFn(e.value)} touchUI showTime showSeconds showIcon />
                     </div>
                     <hr></hr>
                 </di>

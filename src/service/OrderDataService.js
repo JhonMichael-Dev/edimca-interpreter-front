@@ -5,9 +5,10 @@ const PC_URL = conf.url.PC_URL + "/api/v1/workingOrder";
 
 class OrderDataService {
     queryPendingOrdersByStore(payload) {
-        //var CURRENT_API_URL = `${PC_URL}/queryPendingOrdersByStore/`;
-        //return MasterService.postDataService(CURRENT_API_URL, payload);
-        return axios.get("assets/demo/data/ordersJson.json").then((res) => res.data);
+        console.log("queryPendingOrdersByStore.. ", payload);
+        var CURRENT_API_URL = `${PC_URL}/queryPendingOrdersByStore/`;
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+        //return axios.get("assets/demo/data/ordersJson.json").then((res) => res.data);
     }
 
     queryOrdersByStore(payload) {
