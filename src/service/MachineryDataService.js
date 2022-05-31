@@ -23,6 +23,7 @@ class MachineryDataService {
         var CURRENT_FILE_URL = `${MACHINE_API_URL}/getServiceType`;
         return MasterService.getDataServiceJSONHeader(CURRENT_FILE_URL);
     }
+
 }
 
 export default new MachineryDataService();

@@ -254,7 +254,7 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
 
     let machineryIconComp = (rowData) => {
         //console.log("tbl... ", rowData);
-        return <MachineryIconComp machineryData={rowData} />;
+        return <MachineryIconComp machineryData={rowData} type={"machine"}/>;
     };
 
     let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstMachineryStatusInitial ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";

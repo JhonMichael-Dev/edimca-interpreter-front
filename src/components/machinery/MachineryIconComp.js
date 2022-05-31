@@ -15,8 +15,6 @@ export const MachineryIconComp = observer((props) => {
     /*
   Variables
   */
-    const [visible, setVisible] = useState(false);
-    const [lstOrders, setLstOrders] = useState([]);
 
     /*
   Init
@@ -44,27 +42,16 @@ export const MachineryIconComp = observer((props) => {
 
     //let imageName = "/assets/images/machinery_" + props.machineryData.jdeCode + ".png";
 
-    let imageName = "/assets/images/machinery_" + props.machineryData.jdeCode + ".png";
+    let imageName = "/assets/images/" + (props.type === "machine" ? "machinery_": "serviceType_") + (props.machineryData.jdeCode == undefined ? props.machineryData : props.machineryData.jdeCode) + ".png";
     /*
   Return
   */
 
-    // return (
-    // <div className="card" style={{ width: "150px", textAlign: "center", alignContent: "center", justifyContent: "center", display: "inline-block" }} title={props.machineryData.jdeCode}>
-    //  <i className="p-overlay-badge">
-    //<img src={imageName} alt={props.machineryData ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: "90px", height: "90px" }}></img>
-    //{/*props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""*/}
-    // <div style={{ fontSize: 10 }}> {/*props.machineryData.jdeCode*/}</div>
-    //</i>
-    //</div>
-    //);
-
     return (
         <div className="card" style={{ width: "150px", textAlign: "center", alignContent: "center", justifyContent: "center", display: "inline-block" }} title={props.machineryData.jdeCode}>
             <i className="p-overlay-badge">
-                <img src={imageName} alt={props.machineryData ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: "90px", height: "90px" }}></img>
-                {/*props.badgeNumber !== null ? <Badge value={props.badgeNumber ? props.badgeNumber : 0} severity={props.badgeNumber && props.badgeNumber > 0 ? "warning" : "success"}></Badge> : ""*/}
-                <div style={{ fontSize: 10 }}> {props.machineryData.jdeCode}</div>
+                <img src={imageName} alt={props.machineryData ? imageName : "-"} className="pos-edimca-button-noLabel" style={{ width: props.width ? props.width : "90px", height: props.height ? props.height : "90px" }}></img>
+                <div style={{ fontSize: 10 }}> {props.machineryData.jdeCode == undefined ? props.machineryData : props.machineryData.jdeCode}</div>
             </i>
         </div>
     );
