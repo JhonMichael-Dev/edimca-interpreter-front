@@ -242,14 +242,17 @@ export const OperatorActionsComp = observer((props) => {
     };
 
     const onPosDataWorkingOrderWsDamage = () => {
-        console.log("....", props.rowData.idWorkingOrder);
+        console.log("idWorkingOrder: ", props.rowData.idWorkingOrder);
         let _playWorkingOrderTracking = {
             idWorkingOrder: props.rowData.idWorkingOrder,
-            stopReason: "MD",
+            stopReason: stopReason, //TODO: imprimir consulta para saber si hay limite al seleccionar daños.
             quantityShipped: sliderValue,
         };
+        //console.log("_playWorkingOrderTracking: " + _playWorkingOrderTracking.idWorkingOrder);
+        //console.log("_playWorkingOrderTracking: " + _playWorkingOrderTracking.stopReason);
+        //console.log("_playWorkingOrderTracking: " + _playWorkingOrderTracking.quantityShipped);
         OrderDataService.stopWorkingOrder(_playWorkingOrderTracking).then((valid) => {
-            console.log("stopWorkingOrder.valid", valid);
+            //console.log("stopWorkingOrder.valid", valid);
             if (valid && valid.data.success) {
                 toast.current.show({ severity: "error", summary: "Aviso", detail: "Servicio fue detenido" });
                 setDamageControl(false);
@@ -257,6 +260,7 @@ export const OperatorActionsComp = observer((props) => {
             }
         });
     };
+
     const onPosDataWorkingOrderWsFinished = () => {
         props.rowData.quantityShipped = sliderValue;
         let _payloadWorkingOrderWsFinished = props.rowData;
@@ -274,6 +278,11 @@ export const OperatorActionsComp = observer((props) => {
     const onChangeSlider = (value) => {
         setSliderValue(value);
     };
+
+    const onMachineryFaultsSelect = (e) => {
+        setStopReason(e);
+        //console.log(e);
+    }
 
     /*
     Inner Components
@@ -383,8 +392,8 @@ export const OperatorActionsComp = observer((props) => {
                         <b>Motivo:</b>
                     </div>
                 </div>
-                <MachineryFaultsComp />
-                <OrderAdvanceComp action={onPosDataWorkingOrderWsDamage} closeDialog={onCloseDialogDamageControl} orderInfo={orderInfo} productInfo={productInfo} sliderValue={onChangeSlider} rowData={props.rowData} stopReason={stopReason} />
+                <MachineryFaultsComp action={(e) => onMachineryFaultsSelect(e)}/>
+                <OrderAdvanceComp action={onPosDataWorkingOrderWsDamage} closeDialog={onCloseDialogDamageControl} orderInfo={orderInfo} productInfo={productInfo} sliderValue={(e) => onChangeSlider(e)} rowData={props.rowData} stopReason={stopReason} />
             </React.Fragment>
         ) : (
             ""

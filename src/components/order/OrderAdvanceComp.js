@@ -46,7 +46,7 @@ export const OrderAdvanceComp = observer((props) => {
         props.closeDialog(false);
     };
 
-    const posDataWorkigOrder = (value) => {
+    const posDataWorkigOrder = () => {
         props.action();
     };
 
