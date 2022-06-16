@@ -25,5 +25,28 @@ export function createDataStore() {
         setCountIncomingTransfers(count) {
             this.countInputTransfers = count;
         },
+
+        // Operation , assistants , machinery (Other Order)
+        otherOrderOperation: null,
+        setOtherOrderOperation(operation) {
+            this.otherOrderOperation = operation;
+        },
+        removeOtherOrderOperation() {
+            this.otherOrderOperation = null;
+        },
+        otherOrderAssistants: null,
+        setOtherOrderAssistants(assistants) {
+            this.otherOrderAssistants = assistants;
+        },
+        removeOtherOrderAssistants() {
+            this.otherOrderAssistants = null;
+        },
+        otherOrderMachinery: null,
+        setOtherOrderMachinery(machinery) {
+            this.otherOrderMachinery = machinery;
+        },
+        removeOtherOrderMachinery() {
+            this.otherOrderMachinery = null;
+        },
     };
 }

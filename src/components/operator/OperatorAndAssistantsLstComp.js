@@ -21,6 +21,7 @@ import { Dialog } from "primereact/dialog";
 import { OperatorIconComp } from "./OperatorIconComp";
 import OperatorDataService from "../../service/OperatorDataService";
 import { PasswordOperationComp } from "../PasswordOperationComp";
+import { useDataStore } from "../../data/DataStoreContext";
 
 export const OperatorAndAssistantsLstComp = observer((props) => {
     /*
@@ -43,7 +44,7 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
     /*
   Context  
   */
-
+    const dataStore = useDataStore();
     /*
   Formats
   */
@@ -56,11 +57,12 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
     };
 
     const handleQueryOperatorsByStoreAndFilterBySkill = () => {
-        OperatorDataService.queryOperatorByStore(props.storeMcu).then((valid) => {
+        let mcu = { mcu: dataStore.authPrincipalUser.store.mcu };
+        OperatorDataService.queryOperatorByStoreSkill(mcu).then((valid) => {
             if (valid.data && valid.data.success) {
-                let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === props.storeMcu)[0];
-                let lstAssistantsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => assistantX.skills.includes(props.skill));
-                let lstAssitantsSkillsDiferentsFiltered = lstStoreOperatorFiltered.operators.filter((assistantX) => !assistantX.skills.includes(props.skill));
+                let lstStoreOperatorFiltered = valid.data.obj.filter((operatorObjX) => true || operatorObjX.store.mcu === mcu);
+                let lstAssistantsFiltered = lstStoreOperatorFiltered.filter((assistantX) => assistantX.skills.includes(props.skill));
+                let lstAssitantsSkillsDiferentsFiltered = lstStoreOperatorFiltered.filter((assistantX) => !assistantX.skills.includes(props.skill));
                 lstAssistantsFiltered.push.apply(lstAssistantsFiltered, lstAssitantsSkillsDiferentsFiltered);
                 //console.log(lstAssistantsFiltered);
                 setLstOperators(lstAssistantsFiltered);
@@ -73,11 +75,11 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
         // TODO: show password component
     };
 
-    const selectOperator = (username) => {
-        let assistantsOld = removeFromAssistants(selOperatorObj.assistants, username);
+    const selectOperator = (rowData) => {
+        let assistantsOld = removeFromAssistants(selOperatorObj.assistants, rowData.username);
 
         //let newObj = { ...selOperatorObj, username: username };
-        let newObj = { assistants: assistantsOld, username: username };
+        let newObj = { assistants: assistantsOld, username: rowData.username, operator: rowData.id };
         setSelOperatorObj(newObj);
     };
 
@@ -115,7 +117,10 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
   */
     const showProcessConfirmDialog = () => {
         if (props.flag === true) {
-            localStorage.setItem("setOperatios", selOperatorObj.username + "-" + selOperatorObj.assistants);
+            //localStorage.setItem("setOperatios", selOperatorObj.username + "-" + selOperatorObj.assistants); // TODO: Borrar
+            console.log("TEST_POS1", selOperatorObj);
+            dataStore.setOtherOrderOperation(selOperatorObj);
+            dataStore.setOtherOrderAssistants(selOperatorObj.assistants);
             props.operadorOperation();
             props.onHide();
         } else {
@@ -138,9 +143,10 @@ export const OperatorAndAssistantsLstComp = observer((props) => {
     };
 
     let selectionComp = (rowData) => {
+        //console.log("rowData", rowData);
         let alreadySelected = selOperatorObj.username === rowData.username;
         if (rowData.skills.includes(props.skill)) {
-            return <Button key={rowData.username} onClick={() => selectOperator(rowData.username)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
+            return <Button key={rowData.username} onClick={() => selectOperator(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
         } else {
             return <Button key={rowData.username} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={true} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
         }

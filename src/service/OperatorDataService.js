@@ -33,6 +33,12 @@ class OperatorDataService {
         return CURRENT_FILE_URL;
     }
 
+    queryOperatorByStoreSkill(payload) {
+        var CURRENT_API_URL = `${PC_URL}/queryOperatorByStoreSkill/`;
+        console.log("payload..... ", payload);
+        return MasterService.postDataService(CURRENT_API_URL, payload);
+    }
+
     operatorHasPin(payload) {
         var CURRENT_API_URL = `${PC_URL}/operatorHasPin/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
@@ -78,20 +84,20 @@ class OperatorDataService {
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 
-    setImpairmentOperator(payload){
+    setImpairmentOperator(payload) {
         var CURRENT_API_URL = `${PC_URL_USERPOSIMPAIRMENT}/createUserposImpairment/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 
-    updateImpairmentOperator(payload){
+    updateImpairmentOperator(payload) {
         var CURRENT_API_URL = `${PC_URL_USERPOSIMPAIRMENT}/updateUserImpairtment/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
 
-    removeImpairmentOperator(payload){
+    removeImpairmentOperator(payload) {
         var CURRENT_API_URL = `${PC_URL_USERPOSIMPAIRMENT}/deleteUserposImpairment/`;
         return MasterService.postDataService(CURRENT_API_URL, payload);
     }
-}   
+}
 
 export default new OperatorDataService();
