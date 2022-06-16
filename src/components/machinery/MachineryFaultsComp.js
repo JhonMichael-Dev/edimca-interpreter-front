@@ -51,7 +51,7 @@ export const MachineryFaultsComp = observer((props) => {
 
     const onFaultChange = (e) => {
         let _selectedDamages = [...selectedDamages];
-
+        let response = "";
         if (e.checked) {
             _selectedDamages.push(e.value);
         } else {
@@ -64,7 +64,10 @@ export const MachineryFaultsComp = observer((props) => {
                 }
             }
         }
-
+        _selectedDamages.map((damage) => {
+            response = response + damage.description1 + "-";
+        });
+        props.action(response);
         setSelectedDamages(_selectedDamages);
     };
 
@@ -92,7 +95,7 @@ export const MachineryFaultsComp = observer((props) => {
                 {Damage
                     ? Damage.map((damage) => {
                           return (
-                              <div key={damage.code} className="field-checkbox">
+                              <div key={damage.id} className="field-checkbox">
                                   <Checkbox name="damage" value={damage} onChange={onFaultChange} checked={selectedDamages.some((item) => item.code === damage.code)} />
                                   <label htmlFor={damage.code}>{damage.description1}</label>
                               </div>
