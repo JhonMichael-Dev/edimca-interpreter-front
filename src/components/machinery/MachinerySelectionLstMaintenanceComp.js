@@ -1,35 +1,33 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
+import "./ButtonDemo.css";
 //import { computed } from "mobx";
 // Prime components
 import { Toast } from "primereact/toast";
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { ToggleButton } from "primereact/togglebutton";
 import { RadioButton } from "primereact/radiobutton";
 import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
 import { Calendar } from "primereact/calendar";
-import { Dropdown } from "primereact/dropdown";
-import { addLocale } from "primereact/api";
 import { Badge } from "primereact/badge";
-import MachineryDataService from "../../service/MachineryDataService";
-import { OperatorServiceIconComp } from "../operator/OperatorServiceIconComp";
-import { MachineryIconComp } from "./MachineryIconComp";
-// Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import "./ButtonDemo.css";
-import { useDataStore } from "../../data/DataStoreContext";
+
+import { OperatorServiceIconComp } from "../operator/OperatorServiceIconComp";
+import { MachineryIconComp } from "./MachineryIconComp";
+import { MaintenanceOrderStatus } from "./MaintenanceOrderStatus"
 import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+
+// Services
+import { useDataStore } from "../../data/DataStoreContext";
+import MachineryDataService from "../../service/MachineryDataService";
+
 export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     /*
   Variables
   */
     const [selLstMachineryStatusInitial, setLstMachineryStatusInitial] = useState(null);
-    const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+    const [maintenanceOrders, setMaintenanceOrders] = useState(null);
     const [lstMachinery, setLstMachinery] = useState([]);
     const [selMachinery, setSelMachinery] = useState({ code: null, description: null });
     const dt = useRef(null);
@@ -44,8 +42,6 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     const [descManquina, setdescManquina] = useState("");
     const [categoMaquina, setcategoMaquina] = useState("");
 
-    const [d, setD] = useState("");
-    const [f, setF] = useState("");
 
     const categories = [
         { name: "Daño mecánico", key: "M" },
@@ -248,6 +244,10 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         });
     };
 
+    const onSearch = (e) =>{
+        console.log(e);
+        setMaintenanceOrders(e);
+    }
     /*
   Inner Components
   */
@@ -307,6 +307,14 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             </div>
         );
     };
+
+    const maintenanceOrderStatus = (rowData) => {
+        return(
+            <MaintenanceOrderStatus machinery={rowData} 
+                onSearch={(e) => onSearch(e)}
+            />
+        )
+    }
 
     let tblLisMachineryMauntenance = (
         <DataTable
@@ -372,6 +380,15 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             <Column
                 header="Est. Mantemiento"
                 body={statusMantenimiento}
+                style={{
+                    textAlign: "center",
+                    width: "18%",
+                    fontSize: "11px",
+                }}
+            ></Column>
+            <Column
+                header="Est. Mantemiento"
+                body={maintenanceOrderStatus}
                 style={{
                     textAlign: "center",
                     width: "18%",
@@ -513,6 +530,49 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 <div className="field">
                     <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogCorrec()} />
                 </div>
+            </Dialog>
+            <Dialog visible={maintenanceOrders == null ? false : true} style={{ width: "500px" }} header="Solicitudes de mantenimiento" modal className="p-fluid" onHide={() => setMaintenanceOrders(null)}>
+                <DataTable
+                    value={maintenanceOrders}
+                    //dataKey="orderNumber"
+                    responsiveLayout="stack"
+                    scrollable
+                    scrollHeight="400px"
+                    style={{ width: "auto" }}
+                    virtualScrollerOptions={{ itemSize: 46 }}
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
+                >
+                    <Column
+                        header="Usuario"
+                        //body={machineryIconComp}
+                        field="createUser"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                            alignContent: "center",
+                        }}
+                    ></Column>
+                    <Column
+                        header="Tipo"
+                        field="orderType"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                        }}
+                    ></Column>
+                    <Column
+                        header="Estado"
+                        field="statusOrder"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                        }}
+                    ></Column>
+                </DataTable>
             </Dialog>
         </>
     );

@@ -6,12 +6,12 @@
             {
                 "store": { "mcu": "2CM00101" },
                 "machineryMaintenaceList": [
-                    { "jdeCode": "COR01", "description": "Contadora recta 01", "useHour": "354", "machinetyType":  "Corte"  ,"status":"","statusMaintenace":"" },
-                    { "jdeCode": "COR01", "description": "Contadora recta 02", "useHour": "0", "machinetyType": "Corte"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Preventivo" },
-                    { "jdeCode": "RUT01", "description": "Ruteadora 01", "useHour": "900", "machinetyType": "Ruteado"  ,"status":"Habilitada","statusMaintenace":"" },
-                    { "jdeCode": "ENC01", "description": "Enchapadora 01", "useHour": "0", "machinetyType": "Enchape"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Correctivo" },
-                    { "jdeCode": "PER01", "description": "Perforadora 01", "useHour": "1198", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"" },
-                    { "jdeCode": "PER02", "description": "Perforadora 02","useHour": "8870", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"Man_Proximo" }
+                    { "jdeCode": 19, "description": "Contadora recta 01", "useHour": "354", "machinetyType":  "Corte"  ,"status":"","statusMaintenace":"" },
+                    { "jdeCode": 86, "description": "Contadora recta 02", "useHour": "0", "machinetyType": "Corte"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Preventivo" },
+                    { "jdeCode": 369, "description": "Ruteadora 01", "useHour": "900", "machinetyType": "Ruteado"  ,"status":"Habilitada","statusMaintenace":"" },
+                    { "jdeCode": 1668, "description": "Enchapadora 01", "useHour": "0", "machinetyType": "Enchape"  ,"status":"Des_Habilitada","statusMaintenace":"Man_Correctivo" },
+                    { "jdeCode": 7038, "description": "Perforadora 01", "useHour": "1198", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"" },
+                    { "jdeCode": 3158, "description": "Perforadora 02","useHour": "8870", "machinetyType": "PERFORADO"  ,"status":"Habilitada","statusMaintenace":"Man_Proximo" }
                 ]
             }
         ]
