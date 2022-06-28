@@ -219,7 +219,7 @@ export const OperatorActionsComp = observer((props) => {
         setDataPostPauseWorkingOrder(value);
     };
     const onCloseDialogPostFinishedWorkingOrder = (value) => {
-        setDataPostPauseWorkingOrder(value);
+        setDataPostFinishedWorkingOrder(value);
     };
 
     //envio de data a los servicios WS de wrokingOrder
@@ -264,7 +264,7 @@ export const OperatorActionsComp = observer((props) => {
     const onPosDataWorkingOrderWsFinished = () => {
         props.rowData.quantityShipped = sliderValue;
         let _payloadWorkingOrderWsFinished = props.rowData;
-        //console.log("_payloadWorkingOrderWsPause.....", _payloadWorkingOrderWsFinished);
+        console.log("_payloadWorkingOrderWsPause.....", _payloadWorkingOrderWsFinished);
         OrderDataService.finishWorkingOrder(_payloadWorkingOrderWsFinished).then((valid) => {
             //console.log("pauseWorkingOrder.valid", valid);
             if (valid && valid.data.success) {

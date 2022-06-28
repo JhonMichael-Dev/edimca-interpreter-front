@@ -1,35 +1,41 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
+import moment from "moment";
+import "./ButtonDemo.css";
 //import { computed } from "mobx";
 // Prime components
 import { Toast } from "primereact/toast";
-import { Card } from "primereact/card";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { ToggleButton } from "primereact/togglebutton";
 import { RadioButton } from "primereact/radiobutton";
 import { Checkbox } from "primereact/checkbox";
-import { SelectButton } from "primereact/selectbutton";
 import { Calendar } from "primereact/calendar";
-import { Dropdown } from "primereact/dropdown";
-import { addLocale } from "primereact/api";
 import { Badge } from "primereact/badge";
+import { InputTextarea } from "primereact/inputtextarea";
 import MachineryDataService from "../../service/MachineryDataService";
 import { OperatorServiceIconComp } from "../operator/OperatorServiceIconComp";
 import { MachineryIconComp } from "./MachineryIconComp";
+import { MachineryFaultsComp } from "../machinery/MachineryFaultsComp";
 // Services
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import "./ButtonDemo.css";
-import { useDataStore } from "../../data/DataStoreContext";
+
+//import { OperatorServiceIconComp } from "../operator/OperatorServiceIconComp";
+//import { MachineryIconComp } from "./MachineryIconComp";
+import { MaintenanceOrderStatus } from "./MaintenanceOrderStatus";
 import { LoginPrincipalComp } from "../login/LoginPrincipalComp";
+
+// Services
+import { useDataStore } from "../../data/DataStoreContext";
+//import MachineryDataService from "../../service/MachineryDataService";
+
 export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     /*
   Variables
   */
     const [selLstMachineryStatusInitial, setLstMachineryStatusInitial] = useState(null);
-    const [onlyPendingOrders, setOnlyPendingOrders] = useState(true);
+
+    const [maintenanceOrders, setMaintenanceOrders] = useState(null);
     const [lstMachinery, setLstMachinery] = useState([]);
     const [selMachinery, setSelMachinery] = useState({ code: null, description: null });
     const dt = useRef(null);
@@ -38,14 +44,15 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     const [dialogMantemimientoPrev, setDialogMantemimientoPrev] = useState(false);
     const [dialogMantemimientoProx, setDialogMantemimientoProx] = useState(false);
     const [dialogMantemimientoCorrec, setDialogMantemimientoCorrec] = useState(false);
-    const [date1, setDate1] = useState(null);
-    const [date2, setDate2] = useState(null);
+    const [timedateInPr, setTimedateInPr] = useState(null);
+    const [timedateFnPr, setTimedateFnPr] = useState(null);
+    const [timedateInCr, setTimedateInCr] = useState(null);
+    const [timedateFnCr, setTimedateFnCr] = useState(null);
     const [codigoMan, setcodigoMan] = useState("");
     const [descManquina, setdescManquina] = useState("");
     const [categoMaquina, setcategoMaquina] = useState("");
-
-    const [d, setD] = useState("");
-    const [f, setF] = useState("");
+    const [stopReason, setStopReason] = useState(null);
+    const [descriptionDamages, setDescriptionDamages] = useState("");
 
     const categories = [
         { name: "Daño mecánico", key: "M" },
@@ -54,12 +61,6 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
     ];
     const [selectedCategory, setSelectedCategory] = useState([]);
 
-    const damage = [
-        { name: "Falla guillotina", key: "G" },
-        { name: "Falla Calderin", key: "C" },
-        { name: "Falla retestador", key: "RE" },
-        { name: "Falla rascacolas", key: "A" },
-    ];
     const [selectedDamages, setSelectedDamages] = useState([]);
     const toast = useRef(null);
     /*
@@ -97,6 +98,53 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             }
         });
     };
+
+    const handleSelectUser = (ev) => {
+        dataStore.setAuthPrincipalUser(ev);
+        setLstMachineryStatusInitial(ev);
+    };
+
+    const setLoader = async (ev) => {
+        if (!ev) await timeout(400);
+        dataStore.setLoading(ev);
+    };
+
+    function timeout(delay) {
+        return new Promise((res) => setTimeout(res, delay));
+    }
+    const showMessage = (ev) => {
+        toast.current.show({
+            severity: ev.severity,
+            summary: ev.summary,
+            detail: ev.message,
+            life: (ev.message.length / 10) * 1000,
+        });
+    };
+
+    const postDataGeneratCLMaintenanceNext = () => {
+        //console.log("timedateInPr  ", moment(timedateInPr).format("YYYY-MM-DD hh:mm:ss"));
+        //console.log("timedateFnPr  ", moment(timedateFnPr).format("YYYY-MM-DD hh:mm:ss"));
+        setDialogMantemimientoProx(false);
+        setDialogMantemimiento(false);
+        setTimedateInPr(null);
+        setTimedateFnPr(null);
+        setDescriptionDamages(null);
+    };
+
+    const postDataGeneratCLMaintenanceCorrective = () => {
+        //console.log("timedateInCr  ", moment(timedateInCr).format("YYYY-MM-DD hh:mm:ss"));
+        //console.log("timedateFnCr  ", moment(timedateFnCr).format("YYYY-MM-DD hh:mm:ss"));
+        //console.log("stopReason", stopReason);
+        setDialogMantemimientoCorrec(false);
+        setDialogMantemimiento(false);
+        setTimedateInCr(null);
+        setTimedateFnCr(null);
+    };
+
+    /*
+  Inner Components
+  */
+
     const statusMantenimiento = (rowData) => {
         if (rowData.statusMaintenace === "Man_Preventivo") {
             return (
@@ -226,35 +274,16 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
         setSelectedDamages(_selectedDamages);
     };
 
-    const handleSelectUser = (ev) => {
-        dataStore.setAuthPrincipalUser(ev);
-        setLstMachineryStatusInitial(ev);
+    const onSearch = (e) => {
+        console.log(e);
+        setMaintenanceOrders(e);
     };
-
-    const setLoader = async (ev) => {
-        if (!ev) await timeout(400);
-        dataStore.setLoading(ev);
-    };
-
-    function timeout(delay) {
-        return new Promise((res) => setTimeout(res, delay));
-    }
-    const showMessage = (ev) => {
-        toast.current.show({
-            severity: ev.severity,
-            summary: ev.summary,
-            detail: ev.message,
-            life: (ev.message.length / 10) * 1000,
-        });
-    };
-
     /*
   Inner Components
   */
 
     let machineryIconComp = (rowData) => {
-        //console.log("tbl... ", rowData);
-        return <MachineryIconComp machineryData={rowData} type={"machine"}/>;
+        return <MachineryIconComp machineryData={rowData} type={"machine"} />;
     };
 
     let loginPrincipalComp = !dataStore.authPrincipalUser || !selLstMachineryStatusInitial ? <LoginPrincipalComp setSelPrincipalUser={(ev) => handleSelectUser(ev)} username={dataStore.authPrincipalUser ? dataStore.authPrincipalUser.username : null} /> : "";
@@ -292,12 +321,15 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
 
     const hideDialogProx = () => {
         setDialogMantemimientoProx(false);
-        setDialogMantemimiento(false);
+        setTimedateInPr(null);
+        setTimedateFnPr(null);
+        setDescriptionDamages(null);
     };
 
     const hideDialogCorrec = () => {
         setDialogMantemimientoCorrec(false);
-        setDialogMantemimiento(false);
+        setTimedateInCr(null);
+        setTimedateFnCr(null);
     };
 
     let serviceTypeIconComp = (rowData) => {
@@ -306,6 +338,14 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 <OperatorServiceIconComp serviceType={rowData.machinetyType.toUpperCase()} badgeNumber={null} />
             </div>
         );
+    };
+    const onMachineryFaultsSelect = (e) => {
+        setStopReason(e);
+        //console.log(e);
+    };
+
+    const maintenanceOrderStatus = (rowData) => {
+        return <MaintenanceOrderStatus machinery={rowData} onSearch={(e) => onSearch(e)} />;
     };
 
     let tblLisMachineryMauntenance = (
@@ -379,6 +419,15 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 }}
             ></Column>
             <Column
+                header="Est. Mantemiento"
+                body={maintenanceOrderStatus}
+                style={{
+                    textAlign: "center",
+                    width: "18%",
+                    fontSize: "11px",
+                }}
+            ></Column>
+            <Column
                 header="Acciones"
                 style={{
                     textAlign: "center",
@@ -415,18 +464,14 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
             <Dialog visible={dialogMantemimiento} style={{ width: "500px" }} header="Seleccione el tipo de mantenimiento" modal className="p-fluid" onHide={hideDialog}>
                 <div className="field">
                     {" "}
-                    <Button label="Man.Preventivo" className="p-button-rounded p-button-warning mr-2" onClick={() => setDialogMantemimientoPrev(true)} />
+                    <Button label="Mantenimiento Próximo " className="p-button-rounded p-button-info mr-2" onClick={() => setDialogMantemimientoProx(true)} />
                 </div>
                 <div className="field">
                     {" "}
-                    <Button label="Man.Proximo" className="p-button-rounded p-button-info mr-2" onClick={() => setDialogMantemimientoProx(true)} />
-                </div>
-                <div className="field">
-                    {" "}
-                    <Button label="Man.Correctivo" className="p-button-rounded p-button-danger mr-2" onClick={() => setDialogMantemimientoCorrec(true)} />
+                    <Button label="Mantenimiento Correctivo" className="p-button-rounded p-button-danger mr-2" onClick={() => setDialogMantemimientoCorrec(true)} />
                 </div>
             </Dialog>
-            <Dialog visible={dialogMantemimientoPrev} style={{ width: "500px" }} header="Mantenimiento Preventivo" modal className="p-fluid" onHide={hideDialogPrev}>
+            <Dialog visible={dialogMantemimientoProx} style={{ width: "500px" }} header="Mantenimiento Próximo" modal className="p-fluid" onHide={hideDialogProx}>
                 <div className="field">
                     <b>Codigo:</b>&nbsp; {codigoMan}
                 </div>
@@ -438,34 +483,17 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                     {categoMaquina}
                 </div>
                 <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
+                    <InputTextarea placeholder="Descripcion del daño" value={descriptionDamages} onChange={(e) => setDescriptionDamages(e.target.value)} rows={5} cols={30} autoResize />
+                </div>
+
+                <div className="field">
+                    Fecha/Hora Inicio: <Calendar id="basic1" value={timedateInPr} onChange={(e) => setTimedateInPr(e.value)} showTime dateFormat="dd/mm/yy" />
                 </div>
                 <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
+                    Fecha/Hora Fin: <Calendar id="basic2" value={timedateFnPr} onChange={(e) => setTimedateFnPr(e.value)} showTime dateFormat="dd/mm/yy" />
                 </div>
                 <div className="field">
-                    <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogPrev()} />
-                </div>
-            </Dialog>
-            <Dialog visible={dialogMantemimientoProx} style={{ width: "500px" }} header="Mantenimiento Proximo" modal className="p-fluid" onHide={hideDialogProx}>
-                <div className="field">
-                    <b>Codigo:</b>&nbsp; {codigoMan}
-                </div>
-                <div className="field">
-                    <b>Descripcion:</b>&nbsp; {descManquina}
-                </div>
-                <div className="field">
-                    <b>Categoria: </b>&nbsp;
-                    {categoMaquina}
-                </div>
-                <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
-                </div>
-                <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
-                </div>
-                <div className="field">
-                    <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogProx()} />
+                    <Button disabled={descriptionDamages != null && timedateInPr != null && timedateFnPr != null ? false : true} label="Generar CL" className="p-button-rounded p-button-info mr-2" onClick={() => postDataGeneratCLMaintenanceNext()} />
                 </div>
             </Dialog>
             <Dialog visible={dialogMantemimientoCorrec} style={{ width: "500px" }} header="Mantenimiento Correctivo" modal className="p-fluid" onHide={hideDialogCorrec}>
@@ -481,38 +509,60 @@ export const MachinerySelectionLstMaintenanceComp = observer((props) => {
                 </div>
                 <hr></hr>
 
-                <div className="grid">
-                    <div className="col-3 col-offset-1">
-                        {categories.map((category) => {
-                            return (
-                                <div key={category.key} className="field-radiobutton">
-                                    <RadioButton inputId={category.key} name="category" value={category} onChange={(e) => onchengeDano(e.value)} checked={selectedCategory.key === category.key} />
-                                    <label htmlFor={category.key}>{category.name}</label>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className="col-7 col-offset-1">
-                        {damage.map((damage) => {
-                            return (
-                                <div key={damage.key} className="field-checkbox">
-                                    <Checkbox inputId={damage.key} name="damage" value={damage} onChange={onDamageChange} checked={selectedDamages.some((item) => item.key === damage.key)} disabled={damage.key === "R"} />
-                                    <label htmlFor={damage.key}>{damage.name}</label>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+                <MachineryFaultsComp action={(e) => onMachineryFaultsSelect(e)} />
 
                 <div className="field">
-                    Fecha/Hora Inicio: <Calendar id="basic" value={date1} onChange={(e) => setDate1(e.value)} touchUI />
+                    Fecha/Hora Inicio: <Calendar id="basic1" value={timedateInCr} onChange={(e) => setTimedateInCr(e.value)} showTime dateFormat="dd/mm/yy" />
                 </div>
                 <div className="field">
-                    Fecha/Hora Fin: <Calendar id="basic" value={date2} onChange={(e) => setDate2(e.value)} touchUI />
+                    Fecha/Hora Fin: <Calendar id="basic2" value={timedateFnCr} onChange={(e) => setTimedateFnCr(e.value)} showTime dateFormat="dd/mm/yy" />
                 </div>
                 <div className="field">
-                    <Button label="Generar VL" className="p-button-rounded p-button-info mr-2" onClick={() => hideDialogCorrec()} />
+                    <Button disabled={stopReason != null && timedateInCr != null && timedateFnCr != null ? false : true} label="Generar CL" className="p-button-rounded p-button-info mr-2" onClick={() => postDataGeneratCLMaintenanceCorrective()} />
                 </div>
+            </Dialog>
+            <Dialog visible={maintenanceOrders == null ? false : true} style={{ width: "500px" }} header="Solicitudes de mantenimiento" modal className="p-fluid" onHide={() => setMaintenanceOrders(null)}>
+                <DataTable
+                    value={maintenanceOrders}
+                    //dataKey="orderNumber"
+                    responsiveLayout="stack"
+                    scrollable
+                    scrollHeight="400px"
+                    style={{ width: "auto" }}
+                    virtualScrollerOptions={{ itemSize: 46 }}
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    currentPageReportTemplate="Mostrando {first} a {last}, de {totalRecords}"
+                >
+                    <Column
+                        header="Usuario"
+                        //body={machineryIconComp}
+                        field="createUser"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                            alignContent: "center",
+                        }}
+                    ></Column>
+                    <Column
+                        header="Tipo"
+                        field="orderType"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                        }}
+                    ></Column>
+                    <Column
+                        header="Estado"
+                        field="statusOrder"
+                        style={{
+                            textAlign: "center",
+                            width: "20%",
+                            fontSize: "11px",
+                        }}
+                    ></Column>
+                </DataTable>
             </Dialog>
         </>
     );

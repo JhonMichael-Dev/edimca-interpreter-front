@@ -19,7 +19,7 @@ import OperatorDataService from "../../service/OperatorDataService";
 import { ProductInfoComp } from "../product/ProductInfoComp";
 import { OrderServicesIconComp } from "../order/OrderServicesIconComp";
 import { ServicesInProcessByOperatorComp } from "./ServicesInProcessByOperatorComp";
-
+import { useDataStore } from "../../data/DataStoreContext";
 export const OperatorAndServiceLstComp = observer((props) => {
     /*
     Variables
@@ -41,6 +41,7 @@ export const OperatorAndServiceLstComp = observer((props) => {
     /*
     Context  
     */
+    const dataStore = useDataStore();
 
     /*
     Formats
@@ -59,11 +60,13 @@ export const OperatorAndServiceLstComp = observer((props) => {
         let _payload = {
             mcu: props.storeMcu,
         };
+        dataStore.setLoading(true);
         //console.log("_payload", _payload);
         OrderDataService.queryOrdersOnProcessByStore(_payload).then((valid) => {
             console.log("queryOrdersOnProcessByStore", valid);
             if (valid.data && valid.data.success) {
                 setLstOperators(valid.data.obj);
+                dataStore.setLoading(false);
             }
         });
     };

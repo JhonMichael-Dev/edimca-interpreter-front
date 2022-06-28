@@ -16,7 +16,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import MachineryDataService from "../../service/MachineryDataService";
 import { MachineryIconComp } from "./MachineryIconComp";
-
+import { useDataStore } from "../../data/DataStoreContext";
 export const MachinerySelectionLstComp = observer((props) => {
     /*
   Variables
@@ -36,6 +36,7 @@ export const MachinerySelectionLstComp = observer((props) => {
     /*
   Context  
   */
+    const dataStore = useDataStore();
 
     /*
   Formats
@@ -95,13 +96,14 @@ export const MachinerySelectionLstComp = observer((props) => {
 
     let machineryIconComp = (rowData) => {
         //console.log("machineryIconComp", rowData);
-        return <MachineryIconComp machineryData={rowData} type={"machine"}/>;
+        return <MachineryIconComp machineryData={rowData} type={"machine"} />;
     };
 
     let selectionComp = (rowData) => {
         let alreadySelected = selMachinery.jdeCode === rowData.jdeCode;
-        //console.log(rowData.description);
-        localStorage.setItem("selMachinery", rowData.description);
+        console.log("selMachinery", rowData);
+        //localStorage.setItem("selMachinery", rowData.description);
+        dataStore.setOtherOrderMachinery(rowData);
         return <Button key={rowData.username} onClick={() => handleSelectMachinery(rowData)} icon="pi pi-check" className={"p-button-rounded p-button-secondary "} disabled={alreadySelected} style={{ fontWeight: "bold", fontSize: 13, height: "70px", width: "80px" }}></Button>;
     };
 

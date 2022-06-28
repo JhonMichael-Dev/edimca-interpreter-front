@@ -33,19 +33,17 @@ export const HumanTalentListComp = observer((props) => {
     useEffect(() => {
         loadAvailables();
     }, []);
-        /*
+    /*
     Formats
     */
 
-        /*
+    /*
     Methods
     */
     const loadAvailables = () => {
-
         MachineryDataService.getServiceType().then((valid) => {
             //console.log("MachineryDataService: " + valid.data);
             setMachineryType(valid.data);
-
         });
 
         StoreDataService.queryStores().then((valid) => {
@@ -53,21 +51,20 @@ export const HumanTalentListComp = observer((props) => {
                 setLstStores(valid.data.obj);
             }
         });
-
     };
 
-    const onSkill = (rowData,e) => {
+    const onSkill = (rowData, e) => {
         let idSkill = "";
         rowData.skills.map((skill) => {
-            if(skill.skill === e.value.skill){
+            if (skill.skill === e.value.skill) {
                 idSkill = skill.idSkill;
             }
         });
-        
+
         let UserposSkills = {
             idSkill: idSkill,
             userpos: rowData.id,
-            skill: e.value.skill
+            skill: e.value.skill,
         };
 
         let _operators = [...lstOperator];
@@ -75,7 +72,7 @@ export const HumanTalentListComp = observer((props) => {
             OperatorDataService.setHumanTalentOperator(UserposSkills).then((valid) => {
                 _operators.map((operator) => {
                     if (operator.id === rowData.id) {
-                        operator.skills = valid.data.obj
+                        operator.skills = valid.data.obj;
                     }
                 });
                 setLstOperator(_operators);
@@ -85,7 +82,7 @@ export const HumanTalentListComp = observer((props) => {
             OperatorDataService.removeHumanTalentOperator(UserposSkills).then((valid) => {
                 _operators.map((operator) => {
                     if (operator.id === rowData.id) {
-                        operator.skills = valid.data.obj
+                        operator.skills = valid.data.obj;
                     }
                 });
                 setLstOperator(_operators);
@@ -94,7 +91,7 @@ export const HumanTalentListComp = observer((props) => {
     };
 
     const templTHSkill = (rowData) => {
-        //console.log(rowData.skills);
+        console.log(rowData);
         return (
             <div className="grid" style={{ display: "inline-flex" }}>
                 {machineryTypes.map((skill) => {
@@ -104,7 +101,7 @@ export const HumanTalentListComp = observer((props) => {
                                 inputId={skill.idSkill}
                                 name="skill"
                                 value={skill}
-                                onChange={(e) => onSkill(rowData,e)}
+                                onChange={(e) => onSkill(rowData, e)}
                                 //key={skill.key}
                                 checked={rowData.skills.some((item) => item.skill === skill.skill)}
                             />
@@ -120,9 +117,9 @@ export const HumanTalentListComp = observer((props) => {
     const onChangeStore = (e) => {
         setSelectedStore(e.value);
         let searchDto = {
-            mcu: e.value.mcu
+            mcu: e.value.mcu,
         };
-        OperatorDataService.getHumanTalentOperatorByStore(searchDto).then((valid) =>{
+        OperatorDataService.getHumanTalentOperatorByStore(searchDto).then((valid) => {
             //console.log("valid: " + valid.data.obj[0].id);
             setLstOperator(valid.data.obj);
         });
