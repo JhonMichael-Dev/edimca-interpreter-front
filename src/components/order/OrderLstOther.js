@@ -270,12 +270,12 @@ export const OrderLstOther = observer((props) => {
     };
 
     const updateOrderAsignation = async (serveicios) => {
-        console.log("dataOtherOrderSelection ", dataOtherOrderSelection);
+        /*      console.log("dataOtherOrderSelection ", dataOtherOrderSelection);
         console.log("dataStore.otherOrderOperation ", dataStore.otherOrderOperation);
         console.log("dataStore.otherOrderMachinery ", dataStore.otherOrderMachinery);
         console.log("props.username", dataStore.otherOrderOperation.username);
         console.log("timedateIn  ", moment(timedateIn).format("YYYY-MM-DD hh:mm:ss"));
-        console.log("timedateFn  ", moment(timedateFn).format("YYYY-MM-DD hh:mm:ss"));
+        console.log("timedateFn  ", moment(timedateFn).format("YYYY-MM-DD hh:mm:ss")); */
 
         let _operatorDataService = null;
         dataOtherOrderSelection.quantityShipped = sliderValue;
