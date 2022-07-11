@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { AppTopbar } from "./AppTopbar";
 import { AppFooter } from "./AppFooter";
@@ -9,17 +9,6 @@ import { AppConfig } from "./AppConfig";
 
 //Componet
 import PrimeReact from "primereact/api";
-import { Dashboard } from "./components/Dashboard";
-import { LoginPrincipalComp } from "./components/login/LoginPrincipalComp";
-import { ProductionControlPage } from "./pages/ProductionControlPage";
-import { ProductionControlComp } from "./components/ProductionControlComp";
-import { TransfersPage } from "./pages/TransfersPage";
-import { ServiceInProcessPage } from "./pages/ServiceInProcessPage";
-
-// Store
-import { Provider } from "mobx-react";
-import { create } from "mobx-persist";
-import { observer } from "mobx-react";
 
 //CSS
 import "primereact/resources/primereact.min.css";
@@ -34,19 +23,9 @@ import "./App.css";
 Theme
 */
 import "primereact/resources/themes/fluent-light/theme.css";
-import { useDataStore } from "./data/DataStoreContext";
-import { LoadingDialogComp } from "./components/base/LoadingDialogComp";
-import MachineListPage from "./pages/MachineListPage";
-import VlPage from "./pages/VlPage";
-import OtherOrdersPage from "./pages/OtherOrdersPage";
-import HumanTalentPage from "./pages/HumanTalentPage";
-import OccupationalDoctorPage from "./pages/OccupationalDoctorPage";
-import { Badge } from "primereact/badge";
+import { Dashboard } from "./components/Dashboard";
 
 const App = () => {
-    //const App = observer((props) => {
-    // Variables
-    const [selPrincipalUser, setSelPrincipalUser] = useState(null);
     // React variables
     const [layoutMode, setLayoutMode] = useState("static");
     const [layoutColorMode, setLayoutColorMode] = useState("light");
@@ -56,19 +35,6 @@ const App = () => {
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
     const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
-    const history = useHistory();
-
-    /*
-    Store
-    */
-    const dataStore = useDataStore();
-
-    const hydrate = create({
-        storage: localStorage, // or AsyncStorage in react-native.
-        // default: localStorage
-        jsonify: true, // if you use AsyncStorage, here shoud be true
-        // default: true
-    });
 
     PrimeReact.ripple = true;
 
@@ -76,21 +42,12 @@ const App = () => {
     let mobileTopbarMenuClick = false;
 
     useEffect(() => {
-        validatePrincipalUserLogedIn();
         if (mobileMenuActive) {
             addClass(document.body, "body-overflow-hidden");
         } else {
             removeClass(document.body, "body-overflow-hidden");
         }
-    }, [mobileMenuActive, dataStore]);
-
-    const validatePrincipalUserLogedIn = () => {
-        if (!dataStore.authPrincipalUser) {
-            history.push({
-                //pathname: "/login",
-            });
-        }
-    };
+    }, [mobileMenuActive]);
 
     const onInputStyleChange = (inputStyle) => {
         setInputStyle(inputStyle);
@@ -176,63 +133,9 @@ const App = () => {
             label: "Menú",
             items: [
                 {
-                    label: "Dashboard",
+                    label: "Intérprete",
                     icon: "pi pi-fw pi-home",
                     to: "/",
-                },
-                {
-                    label: "Ordenes pendientes",
-                    icon: "pi pi-fw pi-shopping-cart",
-                    to: "/productionControl",
-                },
-                {
-                    label: "Redireccionamiento",
-                    icon: "pi pi-fw pi-sort-alt",
-                    to: "/transfers",
-                    badge: dataStore.countIncomingTransfers ? <Badge value={dataStore.countIncomingTransfers} /> : "",
-                },
-                {
-                    label: "Ordenes en proceso",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    to: "/serviceInProcess",
-                },
-                {
-                    label: "Lista de maquinas",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    to: "/machineList",
-                },
-                {
-                    label: "Registro manual",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    items: [
-                        {
-                            label: "VL",
-                            icon: "pi pi-fw pi-angle-double-right",
-                            to: "/vl",
-                        },
-                        {
-                            label: "Otras Ordenes",
-                            icon: "pi pi-fw pi-angle-double-right",
-                            to: "/otherOrders",
-                        },
-                    ],
-                },
-
-                {
-                    label: "Gestion operarios",
-                    icon: "pi pi-fw pi-angle-double-right",
-                    items: [
-                        {
-                            label: "Talento humano",
-                            icon: "pi pi-fw pi-angle-double-right",
-                            to: "/talentoHumano",
-                        },
-                        {
-                            label: "Médico ocupacional",
-                            icon: "pi pi-fw pi-angle-double-right",
-                            to: "/medicoOcupacional",
-                        },
-                    ],
                 },
             ],
         },
@@ -272,18 +175,9 @@ const App = () => {
             <div className="layout-main-container">
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard} />
-                    <Route path="/productionControl" exact component={ProductionControlPage} />
-                    <Route path="/transfers" exact component={TransfersPage} />
-                    <Route path="/machineList" exact component={MachineListPage} />
-                    <Route path="/serviceInProcess" exact component={ServiceInProcessPage} />
-                    <Route path="/vl" exact component={VlPage} />
-                    <Route path="/otherOrders" exact component={OtherOrdersPage} />
-                    <Route path="/talentoHumano" exact component={HumanTalentPage} />
-                    <Route path="/medicoOcupacional" exact component={OccupationalDoctorPage} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
-                <LoadingDialogComp />
             </div>
 
             <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />

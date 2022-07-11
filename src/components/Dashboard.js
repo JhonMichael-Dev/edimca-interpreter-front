@@ -1,388 +1,377 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Menu } from "primereact/menu";
+import React, { useEffect, useState } from "react";
+import { FileUpload } from "primereact/fileupload";
+import { InputSwitch } from "primereact/inputswitch";
+import { InputText } from "primereact/inputtext";
+import { Accordion, AccordionTab } from "primereact/accordion";
 import { Button } from "primereact/button";
-import { Chart } from "primereact/chart";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { useHistory } from "react-router";
+import { Tooltip } from "primereact/tooltip";
 
-//import { ProductService } from "../service/ProductService";
-import OrderDataService from "../service/OrderDataService";
-import MachineryDataService from "../service/MachineryDataService";
-
-import { LoginPrincipalComp } from "./login/LoginPrincipalComp";
-import { MachineryIconComp } from "./machinery/MachineryIconComp";
-import { useDataStore } from "../data/DataStoreContext";
-
-const lineData = {
-    labels: ["8:00", "9:00", "10:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"],
-    datasets: [
-        {
-            label: "Ordenes Pendientes",
-            data: [20, 36, 49, 66, 56, 56, 45, 30, 20],
-            fill: false,
-            backgroundColor: "#2f4860",
-            borderColor: "#2f4860",
-            tension: 0.4,
-        },
-        {
-            label: "Ordenes En_Proceso",
-            data: [0, 30, 40, 66, 46, 44, 30, 16, 8],
-            fill: false,
-            backgroundColor: "#00bb7e",
-            borderColor: "#00bb7e",
-            tension: 0.4,
-        },
-    ],
-};
-
-const chartData = {
-    labels: ["ECANGA", "AGUTIERREZ", "TFUENTES", "GPACHACAMA", "YWANG", "MFLOR", "RPERALTA"],
-    datasets: [
-        {
-            label: "ANTEAYER",
-            backgroundColor: "rgba(0, 0, 139,0.2)",
-            borderColor: "rgba(0, 0, 139,1)",
-            pointBackgroundColor: "rgba(0, 0, 139,1)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(0, 0, 139,1)",
-            data: [75, 69, 50, 71, 59, 65, 65],
-        },
-        {
-            label: "AYER",
-            backgroundColor: "rgba(255,99,132,0.2)",
-            borderColor: "rgba(255,99,132,1)",
-            pointBackgroundColor: "rgba(255,99,132,1)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(255,99,132,1)",
-            data: [80, 66, 47, 69, 66, 67, 70],
-        },
-    ],
-};
-
-const lightOptions = {
-    plugins: {
-        legend: {
-            labels: {
-                color: "#495057",
-            },
-        },
-    },
-    scales: {
-        r: {
-            pointLabels: {
-                color: "#495057",
-            },
-            grid: {
-                color: "#d99d00",
-            },
-            angleLines: {
-                color: "#d99d00",
-            },
-        },
-    },
-};
+// Services
+import FileStorageService from "../service/FileStorageService";
 
 export const Dashboard = () => {
-    //const [products, setProducsetProductsts] = useState(null);
-    const menu1 = useRef(null);
-    const [numberOrde, selNumberOrde] = useState(0);
-    const [numberOrdeProcess, selNumberOrdeProcess] = useState(0);
-    const history = useHistory();
-    const [lstMachinery, setLstMachinery] = useState([]);
+    /*
+    Variables
+    */
+    const [leptonFile, setLeptonFile] = useState(null);
+    const [fileName, setFileName] = useState();
+    const [translate, setTranslate] = useState(false);
+    const [download, setDownload] = useState(false);
+    const chooseOptions = { label: "Choose", icon: "pi pi-fw pi-plus" };
+    const uploadOptions = { label: "Uplaod", icon: "pi pi-upload", className: "p-button-success" };
+    const cancelOptions = { label: "Cancel", icon: "pi pi-times", className: "p-button-danger" };
 
     /*
-    Store
+    Init
     */
-    const dataStore = useDataStore();
+    useEffect(() => {}, []);
 
-    useEffect(() => {
-        //const productService = new ProductService();
-        //productService.getProductsSmall().then((data) => setProducts(data));
-        numbrePendingOrde();
-        handleQueryMachineryByWh();
-    }, []);
+    /*
+    Methods
+    */
 
-    async function numbrePendingOrde() {
-        let lstPendingStatus = ["PENDIENTE"];
-        let numbreOrdenPending = [];
-        await OrderDataService.queryOrdersByStore().then((valid) => {
-            if (valid && valid.data && valid.data.success) {
-                numbreOrdenPending = valid.data.obj.filter((orderX) => lstPendingStatus.includes(orderX.status));
-                selNumberOrde(numbreOrdenPending.length);
-            }
-        });
-
-        let lstProcessStatus = ["EN_PROCESO"];
-        let numbreOrdenProcess = [];
-        await OrderDataService.queryOrdersByStore().then((valid) => {
-            if (valid && valid.data && valid.data.success) {
-                numbreOrdenProcess = valid.data.obj.filter((orderX) => lstProcessStatus.includes(orderX.status));
-                selNumberOrdeProcess(numbreOrdenProcess.length);
-            }
-        });
-    }
-
-    const onEnvClickOrder = (e) => {
-        history.push({
-            pathname: "/productionControl",
+    const invoiceUploadHandler = ({ files }) => {
+        files.map((fileX) => {
+            let fileReader = new FileReader();
+            fileReader.onload = () => {
+                setLeptonFile(null);
+                uploadInvoice(fileX);
+            };
+            fileReader.readAsText(fileX);
         });
     };
 
-    const onEnvClickService = (e) => {
-        history.push({
-            pathname: "/serviceInProcess",
+    const uploadInvoice = async (file) => {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("name", file.name);
+        formData.append("size", file.size);
+        formData.append("type", file.type);
+        setFileName(file.name);
+        FileStorageService.storeLeptonFile(formData).then((valid) => {
+            if (valid.data.success) {
+                //console.log(valid.data.obj);
+                setLeptonFile(valid.data.obj);
+                setTranslate(true);
+            } else {
+                setLeptonFile([]);
+            }
         });
     };
 
-    const handleQueryMachineryByWh = () => {
-        MachineryDataService.queryMachineryByWhMan(null).then((valid) => {
-            if (valid.data && valid.data.success) {
-                setLstMachinery(valid.data.obj[0].machineryMaintenaceList);
+    const onInputChange = (e, part, field) => {
+        const val = (e.target && e.target.value) || "";
+        let _partsLepton = { ...leptonFile };
+        //console.log(e.target.value);
+        part[field] = val;
+        _partsLepton.workList.part.map((partX) => {
+            if (partX.id === part.id) {
+                partX = part;
             }
         });
-        /*
-        MachineryDataService.getMachineAll().then((valid) => {
-            if (valid.data) {
-                let lstMachineryFilteredByMcuMan = valid.data.sort().reverse();
-                //console.log(lstMachineryFilteredByMcuMan);
-                setLstMachinery(lstMachineryFilteredByMcuMan);
+        setLeptonFile(_partsLepton);
+    };
+
+    const onDownloadSummit = () => {
+        FileStorageService.html(fileName).then((response) => {
+            if (response) {
+                //console.log(response.data);
+                const file = new Blob([response.data], { type: "application/xml" });
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                window.open(fileURL);
             }
-        });*/
+        });
+    };
+
+    const onUploadSummit = () => {
+        FileStorageService.translateFile(leptonFile).then((valid) => {
+            if (valid.data.success) {
+                console.log(valid.data.obj);
+                setDownload(true);
+            }
+        });
+    };
+    const onClear = () => {
+        setTranslate(false);
+        setDownload(false);
+        setLeptonFile(null);
     };
 
     /*
     Inner components
     */
-
-    let machineryIconComp = (rowData) => {
-        return <MachineryIconComp machineryData={rowData} type={"machine"} />;
-    };
-
-    let loginPrincipalComp = !dataStore.authPrincipalUser ? <LoginPrincipalComp setSelPrincipalUser={(ev) => dataStore.setAuthPrincipalUser(ev)} /> : "";
-
     return (
-        <div className="grid">
-            {loginPrincipalComp}
-            <div className="col-12 lg:col-6" onClick={(e) => onEnvClickOrder(e)}>
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Ordenes Pendientes</span>
-                            <div className="text-900 font-medium text-xl">{numberOrde}</div>
+        <div>
+            <Tooltip target=".custom-choose-btn" content="Choose" position="bottom" />
+            <Tooltip target=".custom-upload-btn" content="Upload" position="bottom" />
+            <Tooltip target=".custom-cancel-btn" content="Clear" position="bottom" />
+            <div className="grid" style={{ paddingTop: "1%", display: "block ruby", textAlign: "center" }}>
+                <div className="card col-12 lg:col-10">
+                    <div className="grid p-card" style={{ textAlign: "left", backgroundColor: "unset", boxShadow: "none" }}>
+                        <div className="col-12 lg:col-6">
+                            <i className="p-overlay-badge">
+                                <FileUpload
+                                    name="invoice"
+                                    contentStyle={{ fontSize: "10px", border: "none", paddingBlock: "0%" }}
+                                    headerStyle={{ border: "none", background: "none", paddingBlock: "1%" }}
+                                    customUpload={true}
+                                    uploadHandler={invoiceUploadHandler}
+                                    onRemove={onClear}
+                                    onClear={onClear}
+                                    onSelect={onClear}
+                                    accept="xml/*"
+                                    maxFileSize={1000000}
+                                    chooseOptions={chooseOptions}
+                                    uploadOptions={uploadOptions}
+                                    cancelOptions={cancelOptions}
+                                />
+                            </i>
                         </div>
-                        <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <i className="pi pi-shopping-cart text-blue-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6" onClick={(e) => onEnvClickService(e)}>
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Ordenes en proceso</span>
-                            <div className="text-green-500 font-medium text-xl">{numberOrdeProcess}</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: "2.5rem", height: "2.5rem" }}>
-                            <i className="pi pi-angle-double-right text-orange-500 text-xl" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-12">
-                <div className="card">
-                    <h5>Listado de maquinarias</h5>
-                    <DataTable value={lstMachinery} dataKey="code" responsiveLayout="scroll" scrollable scrollHeight="380px" virtualScrollerOptions={{ itemSize: 46 }}>
-                        <Column header="Maquinaria" body={machineryIconComp} style={{ width: "20%", textAlign: "center" }} sortable sortField="code"></Column>
-                        <Column header="Descripción" field="description" style={{ width: "30%", textAlign: "center", alignContent: "center" }} sortable sortField="description"></Column>
-                        <Column header="Estado" field="status" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
-                        <Column header="Est. Mantemiento" field="statusMaintenace" style={{ textAlign: "center", width: "20%", fontSize: "12px" }}></Column>
-                        <Column
-                            header="View"
-                            style={{ width: "10%" }}
-                            body={() => (
-                                <>
-                                    <Button icon="pi pi-search" type="button" className="p-button-text" />
-                                </>
-                            )}
-                        />
-                    </DataTable>
-                </div>
-            </div>
-
-            <div className="col-12 xl:col-6">
-                <div className="card" style={{ textAlign: "center" }}>
-                    <h5>Producción Diaria / ?</h5>
-                    <Chart type="line" data={lineData} style={{ width: "100%", display: "inline-block" }} />
-                </div>
-            </div>
-
-            <div className="col-12 xl:col-6">
-                <div className="card" style={{ textAlign: "center" }}>
-                    <h5>Producción Por Operador</h5>
-                    <Chart type="radar" data={chartData} options={lightOptions} style={{ width: "50%", display: "inline-block" }} />
-                </div>
-            </div>
-
-            <div className="col-12 xl:col-6">
-                <div className="card">
-                    <div className="flex justify-content-between align-items-center mb-5">
-                        <h5>TOP Servicios Transformados / Lógica de porcentajes?</h5>
-                        <div>
-                            <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu1.current.toggle(event)} />
-                            <Menu
-                                ref={menu1}
-                                popup
-                                model={[
-                                    { label: "Add New", icon: "pi pi-fw pi-plus" },
-                                    { label: "Remove", icon: "pi pi-fw pi-minus" },
-                                ]}
-                            />
+                        <div className="grid col-12 lg:col-6" style={{ textAlign: "center" }}>
+                            <div className="col-12 lg:col-12">
+                                <Button label="TRADUCIR" className="p-button-warning" icon="pi pi-check" iconPos="right" onClick={onUploadSummit} disabled={!translate} />
+                            </div>
+                            <div className="col-12 lg:col-12">
+                                <Button label="VISUALIZAR" className="p-button-warning" icon="pi pi-check" iconPos="right" onClick={onDownloadSummit} disabled={!download} />
+                            </div>
                         </div>
                     </div>
-                    <ul className="list-none p-0 m-0">
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">CORTE</span>
-                                <div className="mt-1 text-600">Contadora recta 01</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-orange-500 h-full" style={{ width: "80%" }} />
-                                </div>
-                                <span className="text-orange-500 ml-3 font-medium">%80</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">CORTE</span>
-                                <div className="mt-1 text-600">Contadora recta 02</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-cyan-500 h-full" style={{ width: "16%" }} />
-                                </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%20</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">ENRUTADO</span>
-                                <div className="mt-1 text-600">Enrutadora 01</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-pink-500 h-full" style={{ width: "67%" }} />
-                                </div>
-                                <span className="text-pink-500 ml-3 font-medium">%67</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">PERFORADO</span>
-                                <div className="mt-1 text-600">Perforadora 01</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-green-500 h-full" style={{ width: "25%" }} />
-                                </div>
-                                <span className="text-green-500 ml-3 font-medium">%25</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">PERFORADO</span>
-                                <div className="mt-1 text-600">Perforadora 02</div>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-purple-500 h-full" style={{ width: "75%" }} />
-                                </div>
-                                <span className="text-purple-500 ml-3 font-medium">%75</span>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
 
-            <div className="col-12 xl:col-6">
-                <div className="card">
-                    <div className="flex justify-content-between align-items-center mb-5">
-                        <h5>Producción Otras Tiendas</h5>
-                        <div>
-                            <Button type="button" icon="pi pi-ellipsis-v" className="p-button-rounded p-button-text p-button-plain" onClick={(event) => menu1.current.toggle(event)} />
-                            <Menu
-                                ref={menu1}
-                                popup
-                                model={[
-                                    { label: "Add New", icon: "pi pi-fw pi-plus" },
-                                    { label: "Remove", icon: "pi pi-fw pi-minus" },
-                                ]}
-                            />
-                        </div>
-                    </div>
-                    <ul className="list-none p-0 m-0">
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA MATRIZ QUITO</span>
-                            </div>
-                            <div className="mt-2 md:mt-0 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-orange-500 h-full" style={{ width: "40%" }} />
-                                </div>
-                                <span className="text-orange-500 ml-3 font-medium">%40</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA GUAMANI</span>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-cyan-500 h-full" style={{ width: "17%" }} />
-                                </div>
-                                <span className="text-cyan-500 ml-3 font-medium">%17</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA MARISCAL SUCRE</span>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-pink-500 h-full" style={{ width: "29%" }} />
-                                </div>
-                                <span className="text-pink-500 ml-3 font-medium">%29</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA SAN RAFAEL</span>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-green-500 h-full" style={{ width: "9%" }} />
-                                </div>
-                                <span className="text-green-500 ml-3 font-medium">%9</span>
-                            </div>
-                        </li>
-                        <li className="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-4">
-                            <div>
-                                <span className="text-900 font-medium mr-2 mb-1 md:mb-0">BODEGA FISICA SAN BARTOLO</span>
-                            </div>
-                            <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: "8px" }}>
-                                    <div className="bg-purple-500 h-full" style={{ width: "5%" }} />
-                                </div>
-                                <span className="text-purple-500 ml-3 font-medium">%5</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div className="grid">
+                {leptonFile !== null
+                    ? leptonFile.workList.part.map((part) => {
+                          return (
+                              <div key={part.id} className="card col-12 lg:col-12">
+                                  <h5 style={{ fontWeight: "bold" }}>ID ETIQUETA: {part.id} </h5>
+                                  <Accordion multiple activeIndex={false}>
+                                      <AccordionTab header="ENCABEZADO">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="info1" style={{ fontSize: "13px", height: "22px" }} value={part.info1} onChange={(e) => onInputChange(e, part, "info1")} />
+                                                      <label htmlFor="info1">Información 1</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="info2" style={{ fontSize: "13px", height: "22px" }} value={part.info2} onChange={(e) => onInputChange(e, part, "info2")} />
+                                                      <label htmlFor="info2">Información 2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="ean13" style={{ fontSize: "13px", height: "22px" }} value={part.ean13} onChange={(e) => onInputChange(e, part, "ean13")} />
+                                                      <label htmlFor="ean13">Código de Barras</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="detalle" style={{ fontSize: "13px", height: "22px" }} value={part.detalle} onChange={(e) => onInputChange(e, part, "detalle")} />
+                                                      <label htmlFor="detalle">Detalle</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="material" style={{ fontSize: "13px", height: "22px" }} value={part.material} onChange={(e) => onInputChange(e, part, "material")} />
+                                                      <label htmlFor="material">Material</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                      <AccordionTab header="CORTE">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <label htmlFor="veta">Veta: </label>
+                                                  <InputSwitch style={{ marginLeft: "1%" }} checked={part.veta} onChange={(e) => onInputChange(e, part, "veta")} />
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="nPiezas" style={{ fontSize: "13px", height: "22px" }} value={part.nPiezas} onChange={(e) => onInputChange(e, part, "nPiezas")} />
+                                                      <label htmlFor="nPiezas">Número de Piezas</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="largo" style={{ fontSize: "13px", height: "22px" }} value={part.largo} onChange={(e) => onInputChange(e, part, "largo")} />
+                                                      <label htmlFor="largo">Largo</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="ancho" style={{ fontSize: "13px", height: "22px" }} value={part.ancho} onChange={(e) => onInputChange(e, part, "ancho")} />
+                                                      <label htmlFor="ancho">Ancho</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                      <AccordionTab header="LAMINADO">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="lamA1" style={{ fontSize: "13px", height: "22px" }} value={part.lamA1} onChange={(e) => onInputChange(e, part, "lamA1")} />
+                                                      <label htmlFor="lamA1">A1</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="lamB2" style={{ fontSize: "13px", height: "22px" }} value={part.lamB2} onChange={(e) => onInputChange(e, part, "lamB2")} />
+                                                      <label htmlFor="lamB2">B2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="lamA2" style={{ fontSize: "13px", height: "22px" }} value={part.lamA2} onChange={(e) => onInputChange(e, part, "lamA2")} />
+                                                      <label htmlFor="lamA2">A2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="lamB1" style={{ fontSize: "13px", height: "22px" }} value={part.lamB1} onChange={(e) => onInputChange(e, part, "lamB1")} />
+                                                      <label htmlFor="lamB1">B1</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                      <AccordionTab header="CANAL">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="esp" style={{ fontSize: "13px", height: "22px" }} value={part.esp} onChange={(e) => onInputChange(e, part, "esp")} />
+                                                      <label htmlFor="esp">Espesor</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canCara" style={{ fontSize: "13px", height: "22px" }} value={part.canCara} onChange={(e) => onInputChange(e, part, "canCara")} />
+                                                      <label htmlFor="canCara">Cara</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="dbl" style={{ fontSize: "13px", height: "22px" }} value={part.dbl} onChange={(e) => onInputChange(e, part, "dbl")} />
+                                                      <label htmlFor="dbl">Distancia Borde Lateral</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canPrf" style={{ fontSize: "13px", height: "22px" }} value={part.canPrf} onChange={(e) => onInputChange(e, part, "canPrf")} />
+                                                      <label htmlFor="canPrf">Profundidad Corte</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canA1" style={{ fontSize: "13px", height: "22px" }} value={part.canA1} onChange={(e) => onInputChange(e, part, "canA1")} />
+                                                      <label htmlFor="canA1">A1</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canB2" style={{ fontSize: "13px", height: "22px" }} value={part.canB2} onChange={(e) => onInputChange(e, part, "canB2")} />
+                                                      <label htmlFor="canB2">B2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canA2" style={{ fontSize: "13px", height: "22px" }} value={part.canA2} onChange={(e) => onInputChange(e, part, "canA2")} />
+                                                      <label htmlFor="canA2">A2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="canB1" style={{ fontSize: "13px", height: "22px" }} value={part.canB1} onChange={(e) => onInputChange(e, part, "canB1")} />
+                                                      <label htmlFor="canB1">B1</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                      <AccordionTab header="PERFORACIÓN">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="dmt" style={{ fontSize: "13px", height: "22px" }} value={part.dmt} onChange={(e) => onInputChange(e, part, "dmt")} />
+                                                      <label htmlFor="dmt">Diametro</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfCara" style={{ fontSize: "13px", height: "22px" }} value={part.perfCara} onChange={(e) => onInputChange(e, part, "perfCara")} />
+                                                      <label htmlFor="perfCara">Cara</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfPrf" style={{ fontSize: "13px", height: "22px" }} value={part.perfPrf} onChange={(e) => onInputChange(e, part, "perfPrf")} />
+                                                      <label htmlFor="perfPrf">Profundidad</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="dbs" style={{ fontSize: "13px", height: "22px" }} value={part.dbs} onChange={(e) => onInputChange(e, part, "dbs")} />
+                                                      <label htmlFor="dbs">Distancia Border Superior</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="dbi" style={{ fontSize: "13px", height: "22px" }} value={part.dbi} onChange={(e) => onInputChange(e, part, "dbi")} />
+                                                      <label htmlFor="dbi">Distancia Border Inferior</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfA1" style={{ fontSize: "13px", height: "22px" }} value={part.perfA1} onChange={(e) => onInputChange(e, part, "perfA1")} />
+                                                      <label htmlFor="perfA1">A1</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfB2" style={{ fontSize: "13px", height: "22px" }} value={part.perfB2} onChange={(e) => onInputChange(e, part, "perfB2")} />
+                                                      <label htmlFor="perfB2">B2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfA2" style={{ fontSize: "13px", height: "22px" }} value={part.perfA2} onChange={(e) => onInputChange(e, part, "perfA2")} />
+                                                      <label htmlFor="perfA2">A2</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="perfB1" style={{ fontSize: "13px", height: "22px" }} value={part.perfB1} onChange={(e) => onInputChange(e, part, "perfB1")} />
+                                                      <label htmlFor="perfB1">B1</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                      <AccordionTab header="SISTEMA 32">
+                                          <div className="grid" style={{ paddingBlock: "1%" }}>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="sisCara" style={{ fontSize: "13px", height: "22px" }} value={part.sisCara} onChange={(e) => onInputChange(e, part, "sisCara")} />
+                                                      <label htmlFor="sisCara">Cara</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="sisA" style={{ fontSize: "13px", height: "22px" }} value={part.sisA} onChange={(e) => onInputChange(e, part, "sisA")} />
+                                                      <label htmlFor="sisA">A</label>
+                                                  </span>
+                                              </div>
+                                              <div className="col-6 lg:col-3" style={{ fontSize: "13px" }}>
+                                                  <span className="p-float-label" style={{ paddingBottom: "3%" }}>
+                                                      <InputText id="sisB" style={{ fontSize: "13px", height: "22px" }} value={part.sisB} onChange={(e) => onInputChange(e, part, "sisB")} />
+                                                      <label htmlFor="sisB">B</label>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </AccordionTab>
+                                  </Accordion>
+                              </div>
+                          );
+                      })
+                    : ""}
             </div>
         </div>
     );
